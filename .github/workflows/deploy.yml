@@ -49,7 +49,6 @@ jobs:
 
                     cd ~/trimly-api
                     git pull origin main
-                    cd trimly-api
 
                     echo "Creating .env file..."
                     cat > .env <<EOT
