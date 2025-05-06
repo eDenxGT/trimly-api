@@ -6,7 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"watch": "tsc -w",
-		"build": "tsc --skipLibCheck --noEmitOnError false",
+		"build": "tsc",
 		"dev": "nodemon dist/app.js",
 		"start": "node dist/app.js",
 		"con": "concurrently \"tsc --watch\" \"nodemon dist/app.js\""
