@@ -37,22 +37,20 @@ export class ExpressServer {
 
 		this._app.use(helmet());
 
-		const allowedOrigins = config.cors.ALLOWED_ORIGIN.split(",");
-
-		this._app.use(
-			cors({
-				origin: (origin, callback) => {
-					if (!origin || allowedOrigins.includes(origin)) {
+		const allowedOrigins = config.cors.ALLOWED_ORIGIN.split(',').map(o => o.trim());
+		this._app.use(cors({
+			 origin: (origin, callback) => {
+				  if (!origin || allowedOrigins.includes(origin)) {
 						callback(null, true);
-					} else {
-						callback(new Error("Not allowed by CORS"));
-					}
-				},
-				methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-				allowedHeaders: ["Authorization", "Content-Type"],
-				credentials: true,
-			})
-		);
+				  } else {
+						callback(new Error('Not allowed by CORS'));
+				  }
+			 },
+			 methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+			 allowedHeaders: ['Authorization', 'Content-Type'],
+			 credentials: true
+		}));
+		
 		// this._app.use(express.json());
 
 		this._app.use((req: Request, res: Response, next: NextFunction) => {
