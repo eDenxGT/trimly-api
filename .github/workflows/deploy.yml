@@ -1,0 +1,60 @@
+name: API Deployment
+
+on:
+    push:
+        branches:
+            - main # or 'master'
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Deploy to EC2
+              env:
+                  EC2_HOST: ${{ secrets.EC2_HOST }}
+                  EC2_USERNAME: ${{ secrets.EC2_USER }}
+                  SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+                  PORT: ${{ secrets.PORT }}
+                  MONGO_URI: ${{ secrets.MONGO_URI }}
+                  CORS_ALLOWED_ORIGIN: ${{ secrets.CORS_ALLOWED_ORIGIN }}
+                  ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+                  REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
+
+              run: |
+                  echo "$SSH_PRIVATE_KEY" > key.pem
+                  chmod 400 key.pem
+
+                  ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USERNAME@$EC2_HOST <<EOF
+                    set -e  # stop on error
+
+                    # pull repo
+                      cd ~/trimly-api
+                      git pull origin main
+
+                    cd trimly-api
+
+                    # Create .env file
+                    cat > .env <<EOT
+                    PORT=$PORT
+                    MONGO_URI=$MONGO_URI
+                    CORS_ALLOWED_ORIGIN=$CORS_ALLOWED_ORIGIN
+                    ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET
+                    REFRESH_TOKEN_SECRET=$REFRESH_TOKEN_SECRET
+                    EOT
+
+                    # Install dependencies (use npm install if no package-lock.json)
+                    if [ -f package-lock.json ]; then
+                      npm ci
+                    else
+                      npm install
+                    fi
+
+                    # Build and run
+                    echo "Building skipped."
+                    pm2 flush
+                    pm2 restart all || pm2 start dist/app.js --name trimly-api
+
+                  EOF
+
+                  rm key.pem
