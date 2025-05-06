@@ -14,7 +14,7 @@ jobs:
               env:
                   EC2_HOST: ${{ secrets.EC2_HOST }}
                   EC2_USERNAME: ${{ secrets.EC2_USER }}
-                  SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   PORT: ${{ secrets.PORT }}
                   DATABASE_URI: ${{ secrets.DATABASE_URI }}
                   CORS_ALLOWED_ORIGIN: ${{ secrets.CORS_ALLOWED_ORIGIN }}
