@@ -25,5 +25,5 @@ jobs:
             git pull origin main
             npm install
             npm run build
-            pm2 restart trimly-api || pm2 start dist/index.js --name trimly-api
+            pm2 restart trimly-api || pm2 start dist/app.js --name trimly-api
           EOF
