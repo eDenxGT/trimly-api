@@ -44,14 +44,14 @@ jobs:
                   echo "$SSH_PRIVATE_KEY" > key.pem
                   chmod 400 key.pem
 
-                  ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USERNAME@$EC2_HOST <<EOF
+                  ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USERNAME@$EC2_HOST <<'EOF'
                     set -e
 
                     cd ~/trimly-api
                     git pull origin main
 
                     echo "Creating .env file..."
-                    cat > .env <<EOT
+                    cat > .env <<'EOT'
                     PORT=$PORT
                     DATABASE_URI=$DATABASE_URI
                     CORS_ALLOWED_ORIGIN=$CORS_ALLOWED_ORIGIN
