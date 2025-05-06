@@ -13,7 +13,7 @@ jobs:
             - name: Deploy to EC2
               env:
                   EC2_HOST: ${{ secrets.EC2_HOST }}
-                  EC2_USERNAME: ${{ secrets.EC2_USER }}
+                  EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   PORT: ${{ secrets.PORT }}
                   DATABASE_URI: ${{ secrets.DATABASE_URI }}
@@ -54,7 +54,7 @@ jobs:
                     echo "Creating .env file..."
                     cat > .env <<EOT
                     PORT=$PORT
-                    MONGO_URI=$MONGO_URI
+                    DATABASE_URI=$DATABASE_URI
                     CORS_ALLOWED_ORIGIN=$CORS_ALLOWED_ORIGIN
 
                     JWT_ACCESS_KEY=$JWT_ACCESS_KEY
