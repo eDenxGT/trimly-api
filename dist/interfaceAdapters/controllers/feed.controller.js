@@ -24,7 +24,8 @@ let FeedController = class FeedController {
     _addCommentUseCase;
     _toggleCommentLikeUseCase;
     _getAllPostsForClientUseCase;
-    constructor(_addPostUseCase, _getAllPostsByBarberUseCase, _getSinglePostByPostIdUseCase, _updatePostUseCase, _deletePostUseCase, _updatePostStatusUseCase, _toggleLikePostUseCase, _addCommentUseCase, _toggleCommentLikeUseCase, _getAllPostsForClientUseCase) {
+    _getPostLikedUsersUseCase;
+    constructor(_addPostUseCase, _getAllPostsByBarberUseCase, _getSinglePostByPostIdUseCase, _updatePostUseCase, _deletePostUseCase, _updatePostStatusUseCase, _toggleLikePostUseCase, _addCommentUseCase, _toggleCommentLikeUseCase, _getAllPostsForClientUseCase, _getPostLikedUsersUseCase) {
         this._addPostUseCase = _addPostUseCase;
         this._getAllPostsByBarberUseCase = _getAllPostsByBarberUseCase;
         this._getSinglePostByPostIdUseCase = _getSinglePostByPostIdUseCase;
@@ -35,6 +36,7 @@ let FeedController = class FeedController {
         this._addCommentUseCase = _addCommentUseCase;
         this._toggleCommentLikeUseCase = _toggleCommentLikeUseCase;
         this._getAllPostsForClientUseCase = _getAllPostsForClientUseCase;
+        this._getPostLikedUsersUseCase = _getPostLikedUsersUseCase;
     }
     //? ✨=========================================================✨
     //?                     📝 POST SECTION
@@ -307,6 +309,32 @@ let FeedController = class FeedController {
             handleErrorResponse(req, res, error);
         }
     }
+    //* ─────────────────────────────────────────────────────────────
+    //*                   🛠️ Get Post Liked Users
+    //* ─────────────────────────────────────────────────────────────
+    async getPostLikedUsers(req, res) {
+        try {
+            const { postId } = req.params;
+            if (!postId) {
+                res.status(HTTP_STATUS.BAD_REQUEST).json({
+                    success: false,
+                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+                });
+                return;
+            }
+            const users = await this._getPostLikedUsersUseCase.execute({
+                postId,
+            });
+            console.log(users);
+            res.status(HTTP_STATUS.OK).json({
+                success: true,
+                users,
+            });
+        }
+        catch (error) {
+            handleErrorResponse(req, res, error);
+        }
+    }
 };
 FeedController = __decorate([
     injectable(),
@@ -320,6 +348,7 @@ FeedController = __decorate([
     __param(7, inject("IAddCommentUseCase")),
     __param(8, inject("IToggleCommentLikeUseCase")),
     __param(9, inject("IGetAllPostsForClientUseCase")),
-    __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
+    __param(10, inject("IGetPostLikedUsersUseCase")),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
 ], FeedController);
 export { FeedController };

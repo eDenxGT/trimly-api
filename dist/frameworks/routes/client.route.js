@@ -114,6 +114,9 @@ export class ClientRoutes extends BaseRoute {
         this.router.post("/client/posts/:postId/like", verifyAuth, authorizeRole(["client"]), blockStatusMiddleware.checkStatus, (req, res) => {
             feedController.toggleLikePost(req, res);
         });
+        this.router.get("/client/posts/liked-users/:postId", verifyAuth, authorizeRole(["client"]), blockStatusMiddleware.checkStatus, (req, res) => {
+            feedController.getPostLikedUsers(req, res);
+        });
         this.router.post("/client/posts/:postId/comment", verifyAuth, authorizeRole(["client"]), blockStatusMiddleware.checkStatus, (req, res) => {
             feedController.addComment(req, res);
         });

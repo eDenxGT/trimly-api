@@ -22,12 +22,11 @@ let PostRepository = class PostRepository extends BaseRepository {
             },
         };
         const aggregationPipeline = [matchStage];
-        if (!isForClient) {
-            aggregationPipeline.push({ $sort: { createdAt: -1 } }, { $skip: skip }, { $limit: limit });
-        }
-        else {
-            aggregationPipeline.push({ $sample: { size: limit } });
-        }
+        // if (!isForClient) {
+        aggregationPipeline.push({ $sort: { createdAt: -1 } }, { $skip: skip }, { $limit: limit });
+        // } else {
+        //   aggregationPipeline.push({ $sample: { size: limit } });
+        // }
         aggregationPipeline.push({
             $lookup: {
                 from: "barbers",
@@ -226,6 +225,50 @@ let PostRepository = class PostRepository extends BaseRepository {
     }
     async removeLike({ postId, userId, }) {
         return await PostModel.findOneAndUpdate({ postId }, { $pull: { likes: userId } }, { new: true });
+    }
+    async getLikedUsers({ postId, }) {
+        const likedUsers = await PostModel.aggregate([
+            { $match: { postId } },
+            { $unwind: "$likes" },
+            {
+                $lookup: {
+                    from: "clients",
+                    localField: "likes",
+                    foreignField: "userId",
+                    as: "clientUser",
+                },
+            },
+            { $unwind: { path: "$clientUser", preserveNullAndEmptyArrays: true } },
+            {
+                $lookup: {
+                    from: "barbers",
+                    localField: "likes",
+                    foreignField: "userId",
+                    as: "barberUser",
+                },
+            },
+            { $unwind: { path: "$barberUser", preserveNullAndEmptyArrays: true } },
+            {
+                $project: {
+                    userId: "$likes",
+                    fullName: {
+                        $cond: [
+                            { $ifNull: ["$clientUser.fullName", false] },
+                            "$clientUser.fullName",
+                            "$barberUser.shopName",
+                        ],
+                    },
+                    avatar: {
+                        $cond: [
+                            { $ifNull: ["$clientUser.avatar", false] },
+                            "$clientUser.avatar",
+                            "$barberUser.avatar",
+                        ],
+                    },
+                },
+            },
+        ]);
+        return likedUsers;
     }
 };
 PostRepository = __decorate([

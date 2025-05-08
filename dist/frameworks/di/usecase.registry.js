@@ -102,6 +102,7 @@ import { AddHairstyleUseCase } from "../../useCases/hairstyle-detector/add-hairs
 import { GetAllHairstylesUseCase } from "../../useCases/hairstyle-detector/get-all-hairstyles.usecase.js";
 import { UpdateHairstyleUseCase } from "../../useCases/hairstyle-detector/update-hairstyle.usecase.js";
 import { DeleteHairstyleUseCase } from "../../useCases/hairstyle-detector/delete-hairstyle.usecase.js";
+import { GetPostLikedUsersUseCase } from "../../useCases/feed/post/get-post-liked-users.usecase.js";
 export class UseCaseRegistry {
     static registerUseCases() {
         //* ====== Register UseCases ====== *//
@@ -381,6 +382,9 @@ export class UseCaseRegistry {
         });
         container.register("IDeleteHairstyleUseCase", {
             useClass: DeleteHairstyleUseCase,
+        });
+        container.register("IGetPostLikedUsersUseCase", {
+            useClass: GetPostLikedUsersUseCase,
         });
         //* ====== Register Bcrypts ====== *//
         container.register("IPasswordBcrypt", {
