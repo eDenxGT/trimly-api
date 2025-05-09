@@ -357,7 +357,6 @@ export class FeedController implements IFeedController {
         postId,
       });
 
-      console.log(users);
 
       res.status(HTTP_STATUS.OK).json({
         success: true,

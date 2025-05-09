@@ -30,7 +30,6 @@ let DirectChatSocketHandler = class DirectChatSocketHandler {
     }
     handleSendMessage = async (data) => {
         try {
-            console.log(data);
             socketLogger.info("Message sent", {
                 socketId: this._socket.id,
                 userId: this._socket.data.userId,

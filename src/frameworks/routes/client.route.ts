@@ -339,7 +339,6 @@ export class ClientRoutes extends BaseRoute {
       "/client/refresh-token",
       decodeToken,
       (req: Request, res: Response) => {
-        console.log("refreshing client", req.body);
         authController.handleTokenRefresh(req, res);
       }
     );

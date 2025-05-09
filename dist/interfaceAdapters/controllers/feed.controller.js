@@ -325,7 +325,6 @@ let FeedController = class FeedController {
             const users = await this._getPostLikedUsersUseCase.execute({
                 postId,
             });
-            console.log(users);
             res.status(HTTP_STATUS.OK).json({
                 success: true,
                 users,

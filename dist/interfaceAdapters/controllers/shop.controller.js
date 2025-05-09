@@ -55,7 +55,6 @@ let ShopController = class ShopController {
             const shops = await this._getAllNearestShopsUseCase.execute(search, amenities, Array.isArray(userLocation)
                 ? userLocation.map((loc) => Number(loc))
                 : [], sortBy, sortOrder, page ? Number(page) : 1, limit ? Number(limit) : 9);
-            // console.log(shops);
             res.status(HTTP_STATUS.OK).json({
                 success: true,
                 shops,
@@ -72,7 +71,6 @@ let ShopController = class ShopController {
         try {
             const { shopId, forType } = req.query;
             const shop = await this._getShopDetailsByShopIdUseCase.execute(String(shopId), String(forType));
-            console.log(shop);
             res.status(HTTP_STATUS.OK).json({
                 success: true,
                 user: shop,

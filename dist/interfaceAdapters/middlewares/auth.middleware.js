@@ -68,7 +68,6 @@ const extractToken = (req) => {
 //* ─────────────────────────────────────────────────────────────
 const isBlacklisted = async (token) => {
     try {
-        console.log("Checking blacklist for token:", token);
         const result = await redisClient.get(token);
         return result !== null;
     }
@@ -101,21 +100,19 @@ export const decodeToken = async (req, res, next) => {
     try {
         const token = extractToken(req);
         if (!token) {
-            console.log("no token");
             res.status(HTTP_STATUS.UNAUTHORIZED).json({
                 message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
             });
             return;
         }
         if (await isBlacklisted(token.access_token)) {
-            console.log("token is black listed is worked");
             res.status(HTTP_STATUS.FORBIDDEN).json({
                 message: ERROR_MESSAGES.TOKEN_BLACKLISTED,
             });
             return;
         }
         const user = tokenService.decodeAccessToken(token?.access_token);
-        console.log(`Decoded`, user);
+        // console.log(`Decoded`, user);
         req.user = {
             userId: user?.userId,
             email: user?.email,

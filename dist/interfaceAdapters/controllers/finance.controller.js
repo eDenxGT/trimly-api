@@ -176,7 +176,6 @@ let FinanceController = class FinanceController {
                 sortField: sortField,
                 sortDirection: sortDirection,
             });
-            console.log(result);
             res.status(200).json(result);
         }
         catch (error) {

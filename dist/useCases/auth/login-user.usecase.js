@@ -53,7 +53,6 @@ let LoginUserUseCase = class LoginUserUseCase {
         }
         if (user.password) {
             const isPasswordMatch = await this._passwordBcrypt.compare(user.password, userData.password);
-            console.log(user.password, isPasswordMatch);
             if (!isPasswordMatch) {
                 throw new CustomError(ERROR_MESSAGES.INVALID_CREDENTIALS, HTTP_STATUS.FORBIDDEN);
             }

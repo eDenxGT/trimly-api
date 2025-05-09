@@ -16,7 +16,6 @@ let CommunityRepository = class CommunityRepository extends BaseRepository {
         super(CommunityModel);
     }
     async findAllCommunitiesForListing({ filter, userId, search, page, limit, }) {
-        console.log(userId);
         const skip = (page - 1) * limit;
         const pipeline = [];
         if (search.trim()) {

@@ -120,7 +120,6 @@ export class BarberRoutes extends BaseRoute {
         this.router
             .route("/barber/services")
             .get(verifyAuth, authorizeRole(["barber"]), blockStatusMiddleware.checkStatus, (req, res) => {
-            console.log("getting services", req.body);
             serviceController.getAllServicesByBarberId(req, res);
         })
             .post(verifyAuth, authorizeRole(["barber"]), blockStatusMiddleware.checkStatus, (req, res) => {
@@ -167,7 +166,6 @@ export class BarberRoutes extends BaseRoute {
             authController.logout(req, res);
         });
         this.router.post("/barber/refresh-token", decodeToken, (req, res) => {
-            console.log("refreshing barber", req.body);
             authController.handleTokenRefresh(req, res);
         });
     }

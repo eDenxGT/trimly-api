@@ -140,7 +140,6 @@ let ChatController = class ChatController {
         try {
             const { userId } = req.user;
             const { search, page, limit } = req.query;
-            console.log(req.query);
             if (!userId) {
                 res.status(HTTP_STATUS.BAD_REQUEST).json({
                     success: false,
@@ -276,7 +275,6 @@ let ChatController = class ChatController {
     async deleteCommunity(req, res) {
         try {
             const { communityId } = req.query;
-            console.log(req.query);
             if (!communityId) {
                 res.status(HTTP_STATUS.BAD_REQUEST).json({
                     success: false,
@@ -362,7 +360,6 @@ let ChatController = class ChatController {
                 userId,
                 chatId: String(chatId),
             });
-            console.log("fetched chat", chat);
             res.status(HTTP_STATUS.OK).json({
                 success: true,
                 chat,

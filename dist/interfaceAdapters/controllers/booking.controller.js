@@ -38,7 +38,6 @@ let BookingController = class BookingController {
             const { role, userId } = req.user;
             if ((type && type === "client") || type === "barber") {
                 const bookings = await this._getAllBookingsByUserUseCase.execute(userId, role);
-                // console.log(bookings);
                 res.status(HTTP_STATUS.OK).json({ success: true, bookings });
                 return;
             }
@@ -104,7 +103,7 @@ let BookingController = class BookingController {
         }
     }
     //* ─────────────────────────────────────────────────────────────
-    //*                 🛠️  Handle Payment Failure
+    //*                 🛠️  Handle Cancel Booking
     //* ─────────────────────────────────────────────────────────────
     async cancelBooking(req, res) {
         try {
@@ -120,7 +119,7 @@ let BookingController = class BookingController {
         }
     }
     //* ─────────────────────────────────────────────────────────────
-    //*                 🛠️  Handle Payment Failure
+    //*                 🛠️  Handle Booking Complete
     //* ─────────────────────────────────────────────────────────────
     async updateBookingComplete(req, res) {
         try {

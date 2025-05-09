@@ -56,7 +56,6 @@ export class AdminRoutes extends BaseRoute {
         this.router
             .route("/admin/shop/:shopId")
             .put(verifyAuth, authorizeRole(["admin"]), (req, res) => {
-            console.log(req.body);
             shopController.updateShopStatus(req, res);
         });
         //* ─────────────────────────────────────────────────────────────
@@ -138,7 +137,6 @@ export class AdminRoutes extends BaseRoute {
             authController.logout(req, res);
         });
         this.router.post("/admin/refresh-token", decodeToken, (req, res) => {
-            console.log("refreshing Admin", req.body);
             authController.handleTokenRefresh(req, res);
         });
     }
