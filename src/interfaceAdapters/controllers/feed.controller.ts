@@ -348,7 +348,7 @@ export class FeedController implements IFeedController {
       if (!postId) {
         res.status(HTTP_STATUS.BAD_REQUEST).json({
           success: false,
-          message: ERROR_MESSAGES.MISSING_PARAMETERS,
+          message: ERROR_MESSAGES.MISSING_PARAMETERS, 
         });
         return;
       }
