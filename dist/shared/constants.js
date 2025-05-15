@@ -141,6 +141,7 @@ export const ERROR_MESSAGES = {
     START_TIME_MUST_BE_BEFORE_END_TIME: "Start time must be before end time.",
     HAIRSTYLE_ALREADY_EXISTS: "Hairstyle with this name already exists",
     HAIRSTYLE_NOT_FOUND: "Hairstyle not found",
+    BOOKING_LIMIT_EXCEEDED_FOR_TODAY: "Your Booking limit exceeded"
 };
 export const DIRECT_CHAT_EVENTS = {
     SEND_MESSAGE: "direct-chat:send-message",
