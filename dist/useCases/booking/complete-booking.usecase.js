@@ -15,14 +15,17 @@ import { parse, format, addMinutes } from "date-fns";
 import { CustomError } from "../../entities/utils/custom.error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
 import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
+import { formatDate } from "../../shared/utils/date-formatter.js";
 let CompleteBookingUseCase = class CompleteBookingUseCase {
     _bookingRepository;
     _transactionRepository;
     _incrementWalletBalanceUseCase;
-    constructor(_bookingRepository, _transactionRepository, _incrementWalletBalanceUseCase) {
+    _sendNotificationByUserUseCase;
+    constructor(_bookingRepository, _transactionRepository, _incrementWalletBalanceUseCase, _sendNotificationByUserUseCase) {
         this._bookingRepository = _bookingRepository;
         this._transactionRepository = _transactionRepository;
         this._incrementWalletBalanceUseCase = _incrementWalletBalanceUseCase;
+        this._sendNotificationByUserUseCase = _sendNotificationByUserUseCase;
     }
     async execute(bookingId, role) {
         const booking = await this._bookingRepository.findOne({ bookingId });
@@ -61,6 +64,14 @@ let CompleteBookingUseCase = class CompleteBookingUseCase {
             amount: booking.total,
             role: role,
         });
+        await this._sendNotificationByUserUseCase.execute({
+            receiverId: booking.shopId,
+            message: `Booking completed for ${formatDate(booking.date.toString())} at ${booking.startTime}.`,
+        });
+        await this._sendNotificationByUserUseCase.execute({
+            receiverId: booking.clientId,
+            message: `Your booking is completed for ${formatDate(booking.date.toString())} at ${booking.startTime}.`,
+        });
     }
 };
 CompleteBookingUseCase = __decorate([
@@ -68,6 +79,7 @@ CompleteBookingUseCase = __decorate([
     __param(0, inject("IBookingRepository")),
     __param(1, inject("ITransactionRepository")),
     __param(2, inject("IIncrementWalletBalanceUseCase")),
-    __metadata("design:paramtypes", [Object, Object, Object])
+    __param(3, inject("ISendNotificationByUserUseCase")),
+    __metadata("design:paramtypes", [Object, Object, Object, Object])
 ], CompleteBookingUseCase);
 export { CompleteBookingUseCase };

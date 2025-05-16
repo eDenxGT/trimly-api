@@ -2,14 +2,15 @@ import { Server } from "socket.io";
 import { config } from "../../shared/config.js";
 import { DirectChatEvents } from "../../interfaceAdapters/websockets/events/direct-chat.events.js";
 import { CommunityChatEvents } from "../../interfaceAdapters/websockets/events/community-chat.events.js";
+import { NotificationEvents } from "../../interfaceAdapters/websockets/events/notification.events.js";
+import { SocketService } from "../../interfaceAdapters/services/socket.service.js";
 export class SocketServer {
     _io;
     constructor(httpServer) {
         this._io = new Server(httpServer, {
-            cors: {
-                origin: config.cors.ALLOWED_ORIGIN,
-            },
+            cors: { origin: config.cors.ALLOWED_ORIGIN },
         });
+        SocketService.setIO(this._io);
     }
     getIO() {
         return this._io;
@@ -21,6 +22,8 @@ export class SocketServer {
             directChatEvents.register();
             const communityChatEvents = new CommunityChatEvents(socket, this._io);
             communityChatEvents.register();
+            const notificationEvents = new NotificationEvents(socket, this._io);
+            notificationEvents.register();
         });
     }
 }

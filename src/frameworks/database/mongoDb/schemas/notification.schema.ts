@@ -21,6 +21,6 @@ export const notificationSchema = new Schema<INotificationModel>(
     },
   },
   {
-    timestamps: { createdAt: true, updatedAt: false },
+    timestamps: { createdAt: true, updatedAt: true },
   }
 );

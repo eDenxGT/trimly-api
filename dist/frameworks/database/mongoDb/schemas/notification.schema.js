@@ -17,5 +17,5 @@ export const notificationSchema = new Schema({
         default: false,
     },
 }, {
-    timestamps: { createdAt: true, updatedAt: false },
+    timestamps: { createdAt: true, updatedAt: true },
 });

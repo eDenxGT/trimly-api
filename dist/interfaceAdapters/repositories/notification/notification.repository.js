@@ -15,7 +15,7 @@ let NotificationRepository = class NotificationRepository extends BaseRepository
         super(NotificationModel);
     }
     async getNotificationsByUser({ userId }) {
-        return await NotificationModel.find({ userId });
+        return await NotificationModel.find({ userId }).sort({ createdAt: -1 });
     }
 };
 NotificationRepository = __decorate([

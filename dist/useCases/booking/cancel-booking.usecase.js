@@ -15,16 +15,19 @@ import { parse, format } from "date-fns";
 import { CustomError } from "../../entities/utils/custom.error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
 import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
+import { formatDate } from "../../shared/utils/date-formatter.js";
 let CancelBookingUseCase = class CancelBookingUseCase {
     _bookingRepository;
     _barberRepository;
     _walletRepository;
     _transactionRepository;
-    constructor(_bookingRepository, _barberRepository, _walletRepository, _transactionRepository) {
+    _sendNotificationByUserUseCase;
+    constructor(_bookingRepository, _barberRepository, _walletRepository, _transactionRepository, _sendNotificationByUserUseCase) {
         this._bookingRepository = _bookingRepository;
         this._barberRepository = _barberRepository;
         this._walletRepository = _walletRepository;
         this._transactionRepository = _transactionRepository;
+        this._sendNotificationByUserUseCase = _sendNotificationByUserUseCase;
     }
     async execute(bookingId) {
         const booking = await this._bookingRepository.findOne({ bookingId });
@@ -74,6 +77,14 @@ let CancelBookingUseCase = class CancelBookingUseCase {
                 referenceId: bookingId,
             }),
         ]);
+        await this._sendNotificationByUserUseCase.execute({
+            receiverId: booking.shopId,
+            message: `Booking cancelled for ${formatDate(booking.date.toString())} at ${booking.startTime}.`,
+        });
+        await this._sendNotificationByUserUseCase.execute({
+            receiverId: booking.clientId,
+            message: `Your booking is cancelled for ${formatDate(booking.date.toString())} at ${booking.startTime}.`,
+        });
     }
 };
 CancelBookingUseCase = __decorate([
@@ -82,6 +93,7 @@ CancelBookingUseCase = __decorate([
     __param(1, inject("IBarberRepository")),
     __param(2, inject("IWalletRepository")),
     __param(3, inject("ITransactionRepository")),
-    __metadata("design:paramtypes", [Object, Object, Object, Object])
+    __param(4, inject("ISendNotificationByUserUseCase")),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object])
 ], CancelBookingUseCase);
 export { CancelBookingUseCase };

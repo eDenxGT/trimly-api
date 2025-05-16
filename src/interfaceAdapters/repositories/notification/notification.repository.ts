@@ -15,6 +15,6 @@ export class NotificationRepository
     super(NotificationModel);
   }
   async getNotificationsByUser({ userId }: { userId: string }) {
-    return await NotificationModel.find({ userId });
+    return await NotificationModel.find({ userId }).sort({ createdAt: -1 });
   }
 }

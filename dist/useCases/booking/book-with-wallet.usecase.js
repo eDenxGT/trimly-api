@@ -15,16 +15,19 @@ import { CustomError } from "../../entities/utils/custom.error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
 import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
 import { parseISO, setHours, setMinutes } from "date-fns";
+import { formatDate } from "../../shared/utils/date-formatter.js";
 let BookWithWalletUseCase = class BookWithWalletUseCase {
     _walletRepository;
     _createWalletUseCase;
     _bookingRepository;
     _transactionRepository;
-    constructor(_walletRepository, _createWalletUseCase, _bookingRepository, _transactionRepository) {
+    _sendNotificationByUserUseCase;
+    constructor(_walletRepository, _createWalletUseCase, _bookingRepository, _transactionRepository, _sendNotificationByUserUseCase) {
         this._walletRepository = _walletRepository;
         this._createWalletUseCase = _createWalletUseCase;
         this._bookingRepository = _bookingRepository;
         this._transactionRepository = _transactionRepository;
+        this._sendNotificationByUserUseCase = _sendNotificationByUserUseCase;
     }
     async execute({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
         const bookingDateObj = parseISO(date);
@@ -92,6 +95,14 @@ let BookWithWalletUseCase = class BookWithWalletUseCase {
             status: "success",
             referenceId: bookingId,
         });
+        await this._sendNotificationByUserUseCase.execute({
+            receiverId: shopId,
+            message: `📅 New booking scheduled for ${formatDate(bookingDateTime.toString())} at ${startTime}.`,
+        });
+        await this._sendNotificationByUserUseCase.execute({
+            receiverId: clientId,
+            message: `Your booking is confirmed for ${formatDate(bookingDateTime.toString())} at ${startTime} ✅`,
+        });
     }
 };
 BookWithWalletUseCase = __decorate([
@@ -100,6 +111,7 @@ BookWithWalletUseCase = __decorate([
     __param(1, inject("ICreateWalletUseCase")),
     __param(2, inject("IBookingRepository")),
     __param(3, inject("ITransactionRepository")),
-    __metadata("design:paramtypes", [Object, Object, Object, Object])
+    __param(4, inject("ISendNotificationByUserUseCase")),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object])
 ], BookWithWalletUseCase);
 export { BookWithWalletUseCase };

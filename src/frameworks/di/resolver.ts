@@ -39,6 +39,8 @@ import { HairstyleDetectorController } from "../../interfaceAdapters/controllers
 import { IHairstyleDetectorController } from "../../entities/controllerInterfaces/hairstyle-detector/hairstyle-detector-controller.interface.js";
 import { NotificationController } from "../../interfaceAdapters/controllers/notification.controller.js";
 import { INotificationController } from "../../entities/controllerInterfaces/notifications/notification-controller.interface.js";
+import { NotificationSocketHandler } from "../../interfaceAdapters/websockets/handlers/notification.handler.js";
+import { INotificationSocketHandler } from "../../entities/socketHandlerInterfaces/notification-handler.interface.js";
 
 // Registering all registries using a single class
 DependencyInjection.registerAll();

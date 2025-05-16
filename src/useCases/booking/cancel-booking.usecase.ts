@@ -8,6 +8,8 @@ import { IBarberRepository } from "../../entities/repositoryInterfaces/users/bar
 import { ITransactionRepository } from "../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
 import { IWalletRepository } from "../../entities/repositoryInterfaces/finance/wallet-repository.interface.js";
 import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
+import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
+import { formatDate } from "../../shared/utils/date-formatter.js";
 
 @injectable()
 export class CancelBookingUseCase implements ICancelBookingUseCase {
@@ -18,7 +20,9 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
     private _barberRepository: IBarberRepository,
     @inject("IWalletRepository") private _walletRepository: IWalletRepository,
     @inject("ITransactionRepository")
-    private _transactionRepository: ITransactionRepository
+    private _transactionRepository: ITransactionRepository,
+    @inject("ISendNotificationByUserUseCase")
+    private _sendNotificationByUserUseCase: ISendNotificationByUserUseCase,
   ) {}
 
   async execute(bookingId: string): Promise<void> {
@@ -98,5 +102,19 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
         referenceId: bookingId,
       }),
     ]);
+
+    await this._sendNotificationByUserUseCase.execute({
+      receiverId: booking.shopId,
+      message: `Booking cancelled for ${formatDate(
+        booking.date.toString()
+      )} at ${booking.startTime}.`,
+    });
+
+    await this._sendNotificationByUserUseCase.execute({
+      receiverId: booking.clientId,
+      message: `Your booking is cancelled for ${formatDate(
+        booking.date.toString()
+      )} at ${booking.startTime}.`,
+    });
   }
 }

@@ -8,6 +8,8 @@ import { EmailService } from "../../interfaceAdapters/services/email.service.js"
 import { JWTService } from "../../interfaceAdapters/services/jwt.service.js";
 import { S3Service } from "../../interfaceAdapters/services/s3.service.js";
 import { GoogleCalendarService } from "../../interfaceAdapters/services/google-calendar.service.js";
+//* ====== Socket Handler Imports ====== *//
+import { NotificationSocketHandler } from "../../interfaceAdapters/websockets/handlers/notification.handler.js";
 import { RegisterUserUseCase } from "../../useCases/auth/register-user.usecase.js";
 import { SendOtpEmailUseCase } from "../../useCases/auth/send-otp-email.usecase.js";
 import { VerifyOtpUseCase } from "../../useCases/auth/verify-otp.usecase.js";
@@ -104,6 +106,8 @@ import { UpdateHairstyleUseCase } from "../../useCases/hairstyle-detector/update
 import { DeleteHairstyleUseCase } from "../../useCases/hairstyle-detector/delete-hairstyle.usecase.js";
 import { GetPostLikedUsersUseCase } from "../../useCases/feed/post/get-post-liked-users.usecase.js";
 import { GetNotificationsByUserUseCase } from "../../useCases/notification/get-notifications-by-user.usecase.js";
+import { SendNotificationByUserUseCase } from "../../useCases/notification/send-notification-by-user.usecase.js";
+import { SocketService } from "../../interfaceAdapters/services/socket.service.js";
 export class UseCaseRegistry {
     static registerUseCases() {
         //* ====== Register UseCases ====== *//
@@ -390,6 +394,9 @@ export class UseCaseRegistry {
         container.register("IGetNotificationsByUserUseCase", {
             useClass: GetNotificationsByUserUseCase,
         });
+        container.register("ISendNotificationByUserUseCase", {
+            useClass: SendNotificationByUserUseCase,
+        });
         //* ====== Register Bcrypts ====== *//
         container.register("IPasswordBcrypt", {
             useClass: PasswordBcrypt,
@@ -418,6 +425,13 @@ export class UseCaseRegistry {
         });
         container.register("IGoogleCalendarService", {
             useClass: GoogleCalendarService,
+        });
+        container.register("ISocketService", {
+            useClass: SocketService,
+        });
+        //* ====== Register Socket Handlers ====== *//
+        container.register("INotificationSocketHandler", {
+            useClass: NotificationSocketHandler,
         });
     }
 }

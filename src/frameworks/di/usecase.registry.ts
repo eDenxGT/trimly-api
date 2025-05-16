@@ -20,6 +20,10 @@ import { IS3Service } from "../../entities/serviceInterfaces/s3-service.interfac
 import { IGoogleCalendarService } from "../../entities/serviceInterfaces/google-calendar-service.interface.js";
 import { GoogleCalendarService } from "../../interfaceAdapters/services/google-calendar.service.js";
 
+//* ====== Socket Handler Imports ====== *//
+import { NotificationSocketHandler } from "../../interfaceAdapters/websockets/handlers/notification.handler.js";
+import { INotificationSocketHandler } from "../../entities/socketHandlerInterfaces/notification-handler.interface.js";
+
 //* ====== UseCase Imports ====== *//
 import { IRegisterUserUseCase } from "../../entities/useCaseInterfaces/auth/register-usecase.interface.js";
 import { RegisterUserUseCase } from "../../useCases/auth/register-user.usecase.js";
@@ -213,6 +217,10 @@ import { GetPostLikedUsersUseCase } from "../../useCases/feed/post/get-post-like
 import { IGetPostLikedUsersUseCase } from "../../entities/useCaseInterfaces/feed/post/get-post-liked-users-usecase.interface.js";
 import { IGetNotificationsByUserUseCase } from "../../entities/useCaseInterfaces/notifications/get-notifications-by-user-usecase.interface.js";
 import { GetNotificationsByUserUseCase } from "../../useCases/notification/get-notifications-by-user.usecase.js";
+import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
+import { SendNotificationByUserUseCase } from "../../useCases/notification/send-notification-by-user.usecase.js";
+import { SocketService } from "../../interfaceAdapters/services/socket.service.js";
+import { ISocketService } from "../../entities/serviceInterfaces/socket-service.interface.js";
 
 export class UseCaseRegistry {
   static registerUseCases(): void {
@@ -695,17 +703,21 @@ export class UseCaseRegistry {
       useClass: DeleteHairstyleUseCase,
     });
 
-    container.register<IGetPostLikedUsersUseCase>(
-      "IGetPostLikedUsersUseCase",
-      {
-        useClass: GetPostLikedUsersUseCase,
-      }
-    );
+    container.register<IGetPostLikedUsersUseCase>("IGetPostLikedUsersUseCase", {
+      useClass: GetPostLikedUsersUseCase,
+    });
 
     container.register<IGetNotificationsByUserUseCase>(
       "IGetNotificationsByUserUseCase",
       {
         useClass: GetNotificationsByUserUseCase,
+      }
+    );
+
+    container.register<ISendNotificationByUserUseCase>(
+      "ISendNotificationByUserUseCase",
+      {
+        useClass: SendNotificationByUserUseCase,
       }
     );
 
@@ -746,5 +758,17 @@ export class UseCaseRegistry {
     container.register<IGoogleCalendarService>("IGoogleCalendarService", {
       useClass: GoogleCalendarService,
     });
+
+    container.register<ISocketService>("ISocketService", {
+      useClass: SocketService,
+    });
+
+    //* ====== Register Socket Handlers ====== *//
+    container.register<INotificationSocketHandler>(
+      "INotificationSocketHandler",
+      {
+        useClass: NotificationSocketHandler,
+      }
+    );
   }
 }

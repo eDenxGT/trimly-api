@@ -3,7 +3,7 @@ import { authorizeRole, decodeToken, verifyAuth, } from "../../interfaceAdapters
 //* ====== BaseRoute Import ====== *//
 import { BaseRoute } from "./base.route.js";
 //* ====== Controller Imports ====== *//
-import { authController, blockStatusMiddleware, bookingController, chatController, feedController, financeController, meetingController, s3Controller, serviceController, userController, dashboardController, hairstyleDetectorController, } from "../di/resolver.js";
+import { authController, blockStatusMiddleware, bookingController, chatController, feedController, financeController, meetingController, s3Controller, serviceController, userController, dashboardController, hairstyleDetectorController, notificationController, } from "../di/resolver.js";
 export class BarberRoutes extends BaseRoute {
     constructor() {
         super();
@@ -25,6 +25,12 @@ export class BarberRoutes extends BaseRoute {
         //* ─────────────────────────────────────────────────────────────
         this.router.get("/barber/dashboard", verifyAuth, authorizeRole(["barber"]), blockStatusMiddleware.checkStatus, (req, res) => {
             dashboardController.getBarberDashboardData(req, res);
+        });
+        //* ─────────────────────────────────────────────────────────────
+        //*                 🛠️ Notifications Endpoints
+        //* ─────────────────────────────────────────────────────────────
+        this.router.get("/barber/notifications", verifyAuth, authorizeRole(["barber"]), blockStatusMiddleware.checkStatus, (req, res) => {
+            notificationController.getNotificationsByUser(req, res);
         });
         //* ─────────────────────────────────────────────────────────────
         //*                    🛠️ Booking Endpoints

@@ -14,13 +14,16 @@ import { inject, injectable } from "tsyringe";
 import crypto from "crypto";
 import { config } from "../../shared/config.js";
 import { CustomError } from "../../entities/utils/custom.error.js";
-import { HTTP_STATUS } from "../../shared/constants.js";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+import { formatDate } from "../../shared/utils/date-formatter.js";
 let VerifyPaymentUseCase = class VerifyPaymentUseCase {
     _bookingRepository;
     _transactionRepository;
-    constructor(_bookingRepository, _transactionRepository) {
+    _sendNotificationByUserUseCase;
+    constructor(_bookingRepository, _transactionRepository, _sendNotificationByUserUseCase) {
         this._bookingRepository = _bookingRepository;
         this._transactionRepository = _transactionRepository;
+        this._sendNotificationByUserUseCase = _sendNotificationByUserUseCase;
     }
     async execute(razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId) {
         const secret = config.payment.RAZORPAY_SECRET;
@@ -34,12 +37,25 @@ let VerifyPaymentUseCase = class VerifyPaymentUseCase {
         }
         await this._bookingRepository.update({ bookingId }, { status: "confirmed" });
         await this._transactionRepository.update({ referenceId: bookingId, source: "booking" }, { status: "success" });
+        const booking = await this._bookingRepository.findOne({ bookingId });
+        if (!booking) {
+            throw new CustomError(ERROR_MESSAGES.BOOKING_NOT_FOUND, HTTP_STATUS.NOT_FOUND);
+        }
+        await this._sendNotificationByUserUseCase.execute({
+            receiverId: booking.shopId,
+            message: `📅 New booking scheduled for ${formatDate(booking.date.toString())} at ${booking.startTime}.`,
+        });
+        await this._sendNotificationByUserUseCase.execute({
+            receiverId: booking.clientId,
+            message: `Your booking is confirmed for ${formatDate(booking.date.toString())} at ${booking.startTime} ✅`,
+        });
     }
 };
 VerifyPaymentUseCase = __decorate([
     injectable(),
     __param(0, inject("IBookingRepository")),
     __param(1, inject("ITransactionRepository")),
-    __metadata("design:paramtypes", [Object, Object])
+    __param(2, inject("ISendNotificationByUserUseCase")),
+    __metadata("design:paramtypes", [Object, Object, Object])
 ], VerifyPaymentUseCase);
 export { VerifyPaymentUseCase };

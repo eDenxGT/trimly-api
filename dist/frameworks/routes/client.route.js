@@ -77,7 +77,7 @@ export class ClientRoutes extends BaseRoute {
             financeController.withdrawFromWallet(req, res);
         });
         //* ─────────────────────────────────────────────────────────────
-        //*                   🛠️ S3 Endpoints
+        //*                 🛠️ Notifications Endpoints
         //* ─────────────────────────────────────────────────────────────
         this.router.get("/client/notifications", verifyAuth, authorizeRole(["client"]), blockStatusMiddleware.checkStatus, (req, res) => {
             notificationController.getNotificationsByUser(req, res);

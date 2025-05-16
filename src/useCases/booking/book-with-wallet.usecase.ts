@@ -8,6 +8,8 @@ import { CustomError } from "../../entities/utils/custom.error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
 import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
 import { parseISO, setHours, setMinutes } from "date-fns";
+import { formatDate } from "../../shared/utils/date-formatter.js";
+import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
 
 @injectable()
 export class BookWithWalletUseCase implements IBookWithWalletUseCase {
@@ -18,7 +20,9 @@ export class BookWithWalletUseCase implements IBookWithWalletUseCase {
     @inject("IBookingRepository")
     private _bookingRepository: IBookingRepository,
     @inject("ITransactionRepository")
-    private _transactionRepository: ITransactionRepository
+    private _transactionRepository: ITransactionRepository,
+    @inject("ISendNotificationByUserUseCase")
+    private _sendNotificationByUserUseCase: ISendNotificationByUserUseCase
   ) {}
 
   async execute({
@@ -105,22 +109,21 @@ export class BookWithWalletUseCase implements IBookWithWalletUseCase {
     const bookingId = generateUniqueId("booking");
     const transactionId = generateUniqueId("transaction");
 
-    
     await this._bookingRepository.save({
-        bookedTimeSlots,
-        bookingId,
-        clientId,
-        date: bookingDateTime,
-        duration,
-        services,
-        shopId,
-        status: "confirmed",
-        startTime,
-        total,
+      bookedTimeSlots,
+      bookingId,
+      clientId,
+      date: bookingDateTime,
+      duration,
+      services,
+      shopId,
+      status: "confirmed",
+      startTime,
+      total,
     });
-    
+
     await this._walletRepository.decrementBalance(clientId, total);
-    
+
     await this._transactionRepository.save({
       transactionId,
       userId: clientId,
@@ -129,6 +132,20 @@ export class BookWithWalletUseCase implements IBookWithWalletUseCase {
       source: "booking",
       status: "success",
       referenceId: bookingId,
+    });
+
+    await this._sendNotificationByUserUseCase.execute({
+      receiverId: shopId,
+      message: `📅 New booking scheduled for ${formatDate(
+        bookingDateTime.toString()
+      )} at ${startTime}.`,
+    });
+
+    await this._sendNotificationByUserUseCase.execute({
+      receiverId: clientId,
+      message: `Your booking is confirmed for ${formatDate(
+        bookingDateTime.toString()
+      )} at ${startTime} ✅`,
     });
   }
 }
