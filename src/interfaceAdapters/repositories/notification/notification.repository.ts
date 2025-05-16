@@ -14,4 +14,7 @@ export class NotificationRepository
   constructor() {
     super(NotificationModel);
   }
+  async getNotificationsByUser({ userId }: { userId: string }) {
+    return await NotificationModel.find({ userId });
+  }
 }

@@ -211,6 +211,8 @@ import { IDeleteHairstyleUseCase } from "../../entities/useCaseInterfaces/hairst
 import { DeleteHairstyleUseCase } from "../../useCases/hairstyle-detector/delete-hairstyle.usecase.js";
 import { GetPostLikedUsersUseCase } from "../../useCases/feed/post/get-post-liked-users.usecase.js";
 import { IGetPostLikedUsersUseCase } from "../../entities/useCaseInterfaces/feed/post/get-post-liked-users-usecase.interface.js";
+import { IGetNotificationsByUserUseCase } from "../../entities/useCaseInterfaces/notifications/get-notifications-by-user-usecase.interface.js";
+import { GetNotificationsByUserUseCase } from "../../useCases/notification/get-notifications-by-user.usecase.js";
 
 export class UseCaseRegistry {
   static registerUseCases(): void {
@@ -697,6 +699,13 @@ export class UseCaseRegistry {
       "IGetPostLikedUsersUseCase",
       {
         useClass: GetPostLikedUsersUseCase,
+      }
+    );
+
+    container.register<IGetNotificationsByUserUseCase>(
+      "IGetNotificationsByUserUseCase",
+      {
+        useClass: GetNotificationsByUserUseCase,
       }
     );
 

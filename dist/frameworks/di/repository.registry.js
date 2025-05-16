@@ -20,6 +20,7 @@ import { CommunityRepository } from "../../interfaceAdapters/repositories/chat/c
 import { CommunityMessageRepository } from "../../interfaceAdapters/repositories/chat/community/community-message.repository.js";
 import { MeetingRoomRepository } from "../../interfaceAdapters/repositories/chat/meeting-room.repository.js";
 import { HairstyleRepository } from "../../interfaceAdapters/repositories/hairstyle/hairstyle.repository.js";
+import { NotificationRepository } from "../../interfaceAdapters/repositories/notification/notification.repository.js";
 export class RepositoryRegistry {
     static registerRepositories() {
         //* ====== Register Repositories ====== *//
@@ -82,6 +83,9 @@ export class RepositoryRegistry {
         });
         container.register("IHairstyleRepository", {
             useClass: HairstyleRepository,
+        });
+        container.register("INotificationRepository", {
+            useClass: NotificationRepository,
         });
     }
 }

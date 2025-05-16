@@ -2,7 +2,7 @@
 //* ====== BaseRoute Import ====== *//
 import { BaseRoute } from "./base.route.js";
 import { authorizeRole, decodeToken, verifyAuth, } from "../../interfaceAdapters/middlewares/auth.middleware.js";
-import { authController, blockStatusMiddleware, bookingController, chatController, dashboardController, feedController, financeController, reviewController, s3Controller, shopController, userController, } from "../di/resolver.js";
+import { authController, blockStatusMiddleware, bookingController, chatController, dashboardController, feedController, financeController, notificationController, reviewController, s3Controller, shopController, userController, } from "../di/resolver.js";
 export class ClientRoutes extends BaseRoute {
     constructor() {
         super();
@@ -75,6 +75,12 @@ export class ClientRoutes extends BaseRoute {
         });
         this.router.post("/client/wallet/withdraw", verifyAuth, authorizeRole(["client"]), blockStatusMiddleware.checkStatus, (req, res) => {
             financeController.withdrawFromWallet(req, res);
+        });
+        //* ─────────────────────────────────────────────────────────────
+        //*                   🛠️ S3 Endpoints
+        //* ─────────────────────────────────────────────────────────────
+        this.router.get("/client/notifications", verifyAuth, authorizeRole(["client"]), blockStatusMiddleware.checkStatus, (req, res) => {
+            notificationController.getNotificationsByUser(req, res);
         });
         //* ─────────────────────────────────────────────────────────────
         //*                   🛠️ S3 Endpoints

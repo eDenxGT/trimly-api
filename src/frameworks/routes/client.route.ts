@@ -18,6 +18,7 @@ import {
   dashboardController,
   feedController,
   financeController,
+  notificationController,
   reviewController,
   s3Controller,
   shopController,
@@ -179,6 +180,19 @@ export class ClientRoutes extends BaseRoute {
       }
     );
 
+    //* ─────────────────────────────────────────────────────────────
+    //*                 🛠️ Notifications Endpoints
+    //* ─────────────────────────────────────────────────────────────
+    this.router.get(
+      "/client/notifications",
+      verifyAuth,
+      authorizeRole(["client"]),
+      blockStatusMiddleware.checkStatus as RequestHandler,
+      (req: Request, res: Response) => {
+        notificationController.getNotificationsByUser(req, res);
+      }
+    );
+    
     //* ─────────────────────────────────────────────────────────────
     //*                   🛠️ S3 Endpoints
     //* ─────────────────────────────────────────────────────────────

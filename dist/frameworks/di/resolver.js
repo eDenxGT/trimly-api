@@ -19,6 +19,7 @@ import { S3Controller } from "../../interfaceAdapters/controllers/s3.controller.
 import { MeetingController } from "../../interfaceAdapters/controllers/meeting.controller.js";
 import { DashboardController } from "../../interfaceAdapters/controllers/dashboard.controller.js";
 import { HairstyleDetectorController } from "../../interfaceAdapters/controllers/hairstyle-detector.controller.js";
+import { NotificationController } from "../../interfaceAdapters/controllers/notification.controller.js";
 // Registering all registries using a single class
 DependencyInjection.registerAll();
 //* ====== Middleware Resolving ====== *//
@@ -36,6 +37,7 @@ export const chatController = container.resolve(ChatController);
 export const meetingController = container.resolve(MeetingController);
 export const dashboardController = container.resolve(DashboardController);
 export const hairstyleDetectorController = container.resolve(HairstyleDetectorController);
+export const notificationController = container.resolve(NotificationController);
 export const s3Controller = container.resolve(S3Controller);
 //* ====== Socket Handler Resolving ====== *//
 export const directChatSocketHandler = container.resolve(DirectChatSocketHandler);
