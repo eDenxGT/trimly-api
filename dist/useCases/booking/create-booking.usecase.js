@@ -10,13 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { setHours, setMinutes, parseISO } from "date-fns";
 import { inject, injectable } from "tsyringe";
 import { config } from "../../shared/config.js";
 import Razorpay from "razorpay";
 import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
 import { CustomError } from "../../entities/utils/custom.error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper.js";
 let CreateBookingUseCase = class CreateBookingUseCase {
     _bookingRepository;
     _transactionRepository;
@@ -25,15 +25,7 @@ let CreateBookingUseCase = class CreateBookingUseCase {
         this._transactionRepository = _transactionRepository;
     }
     async execute({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
-        const bookingDateObj = parseISO(date);
-        console.log("Booking date", bookingDateObj);
-        const [time, modifier] = startTime.split(" ");
-        let [hours, minutes] = time.split(":").map(Number);
-        if (modifier.toLowerCase() === "pm" && hours < 12)
-            hours += 12;
-        if (modifier.toLowerCase() === "am" && hours === 12)
-            hours = 0;
-        const bookingDateTime = setMinutes(setHours(bookingDateObj, hours), minutes);
+        const bookingDateTime = getBookingDateTimeUTC(date, startTime);
         if (bookingDateTime.getTime() <= Date.now()) {
             throw new CustomError(ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, HTTP_STATUS.BAD_REQUEST);
         }

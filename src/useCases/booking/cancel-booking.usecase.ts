@@ -10,6 +10,7 @@ import { IWalletRepository } from "../../entities/repositoryInterfaces/finance/w
 import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
 import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
 import { formatDate } from "../../shared/utils/date-formatter.js";
+import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper.js";
 
 @injectable()
 export class CancelBookingUseCase implements ICancelBookingUseCase {
@@ -35,18 +36,19 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
     }
     if (booking.status === "cancelled") return;
 
-    const bookingDate = new Date(booking.date);
-    const startTimeStr = booking.startTime;
+    const bookingDate = getBookingDateTimeUTC(booking.date, booking.startTime);
 
-    const fullDateTimeStr = `${format(
-      bookingDate,
-      "yyyy-MM-dd"
-    )} ${startTimeStr}`;
-    const bookingStartTime = parse(
-      fullDateTimeStr,
-      "yyyy-MM-dd h:mm a",
-      new Date()
-    );
+    // const startTimeStr = booking.startTime;
+
+    // const fullDateTimeStr = `${format(
+    //   bookingDate,
+    //   "yyyy-MM-dd"
+    // )} ${startTimeStr}`;
+    // const bookingStartTime = parse(
+    //   fullDateTimeStr,
+    //   "yyyy-MM-dd h:mm a",
+    //   new Date()
+    // );
 
     const now = new Date();
 
@@ -67,7 +69,7 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
       return;
     }
 
-    const diffInMs = bookingStartTime.getTime() - now.getTime();
+    const diffInMs = bookingDate.getTime() - now.getTime();
     const diffInMinutes = diffInMs / (1000 * 60);
     if (diffInMinutes < 60) {
       throw new CustomError(

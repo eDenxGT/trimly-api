@@ -30,22 +30,6 @@ let BookWithWalletUseCase = class BookWithWalletUseCase {
         this._sendNotificationByUserUseCase = _sendNotificationByUserUseCase;
     }
     async execute({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
-        // const bookingDateObj = parseISO(date);
-        // console.log("Booking date", bookingDateObj, date);
-        // const [time, modifier] = startTime.split(" ");
-        // let [hours, minutes] = time.split(":").map(Number);
-        // if (modifier.toLowerCase() === "pm" && hours < 12) hours += 12;
-        // if (modifier.toLowerCase() === "am" && hours === 12) hours = 0;
-        // const bookingDateTime = setMinutes(
-        //   setHours(bookingDateObj, hours),
-        //   minutes
-        // );
-        // if (bookingDateTime.getTime() <= Date.now()) {
-        //   throw new CustomError(
-        //     ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE,
-        //     HTTP_STATUS.BAD_REQUEST
-        //   );
-        // }
         const bookingDateTime = getBookingDateTimeUTC(date, startTime);
         if (bookingDateTime.getTime() <= Date.now()) {
             throw new CustomError(ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, HTTP_STATUS.BAD_REQUEST);

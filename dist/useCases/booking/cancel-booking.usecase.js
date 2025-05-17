@@ -11,11 +11,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 import { inject, injectable } from "tsyringe";
-import { parse, format } from "date-fns";
 import { CustomError } from "../../entities/utils/custom.error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
 import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
 import { formatDate } from "../../shared/utils/date-formatter.js";
+import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper.js";
 let CancelBookingUseCase = class CancelBookingUseCase {
     _bookingRepository;
     _barberRepository;
@@ -36,10 +36,17 @@ let CancelBookingUseCase = class CancelBookingUseCase {
         }
         if (booking.status === "cancelled")
             return;
-        const bookingDate = new Date(booking.date);
-        const startTimeStr = booking.startTime;
-        const fullDateTimeStr = `${format(bookingDate, "yyyy-MM-dd")} ${startTimeStr}`;
-        const bookingStartTime = parse(fullDateTimeStr, "yyyy-MM-dd h:mm a", new Date());
+        const bookingDate = getBookingDateTimeUTC(booking.date, booking.startTime);
+        // const startTimeStr = booking.startTime;
+        // const fullDateTimeStr = `${format(
+        //   bookingDate,
+        //   "yyyy-MM-dd"
+        // )} ${startTimeStr}`;
+        // const bookingStartTime = parse(
+        //   fullDateTimeStr,
+        //   "yyyy-MM-dd h:mm a",
+        //   new Date()
+        // );
         const now = new Date();
         if (booking.status === "pending") {
             await this._bookingRepository.update({ bookingId }, { status: "cancelled" });
@@ -51,7 +58,7 @@ let CancelBookingUseCase = class CancelBookingUseCase {
             });
             return;
         }
-        const diffInMs = bookingStartTime.getTime() - now.getTime();
+        const diffInMs = bookingDate.getTime() - now.getTime();
         const diffInMinutes = diffInMs / (1000 * 60);
         if (diffInMinutes < 60) {
             throw new CustomError(ERROR_MESSAGES.CANCEL_BOOKING_BEFORE_1_HOUR, HTTP_STATUS.BAD_REQUEST);

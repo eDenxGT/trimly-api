@@ -9,6 +9,7 @@ import { ICompleteBookingUseCase } from "../../entities/useCaseInterfaces/bookin
 import { IIncrementWalletBalanceUseCase } from "../../entities/useCaseInterfaces/finance/wallet/increment-wallet-balance-usecase.interface.js";
 import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
 import { formatDate } from "../../shared/utils/date-formatter.js";
+import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper.js";
 
 @injectable()
 export class CompleteBookingUseCase implements ICompleteBookingUseCase {
@@ -32,17 +33,22 @@ export class CompleteBookingUseCase implements ICompleteBookingUseCase {
       );
     }
 
-    const bookingDate = new Date(booking.date);
-    const startTimeStr = booking.startTime;
+    // const bookingDate = new Date(booking.date);
+    // const startTimeStr = booking.startTime;
 
-    const fullDateTimeStr = `${format(
-      bookingDate,
-      "yyyy-MM-dd"
-    )} ${startTimeStr}`;
-    const bookingStartTime = parse(
-      fullDateTimeStr,
-      "yyyy-MM-dd h:mm a",
-      new Date()
+    // const fullDateTimeStr = `${format(
+    //   bookingDate,
+    //   "yyyy-MM-dd"
+    // )} ${startTimeStr}`;
+    // const bookingStartTime = parse(
+    //   fullDateTimeStr,
+    //   "yyyy-MM-dd h:mm a",
+    //   new Date()
+    // );
+
+    const bookingStartTime = getBookingDateTimeUTC(
+      booking.date,
+      booking.startTime
     );
 
     const bookingEndTime = addMinutes(bookingStartTime, booking.duration);
