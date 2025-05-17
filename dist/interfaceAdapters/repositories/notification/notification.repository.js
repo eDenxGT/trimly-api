@@ -14,8 +14,11 @@ let NotificationRepository = class NotificationRepository extends BaseRepository
     constructor() {
         super(NotificationModel);
     }
-    async getNotificationsByUser({ userId }) {
+    async getNotificationsByUser({ userId, }) {
         return await NotificationModel.find({ userId }).sort({ createdAt: -1 });
+    }
+    async markAllNotificationsAsReadByUser({ userId, }) {
+        await NotificationModel.updateMany({ userId }, { isRead: true }, { new: true });
     }
 };
 NotificationRepository = __decorate([

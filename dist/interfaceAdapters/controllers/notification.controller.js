@@ -15,8 +15,12 @@ import { handleErrorResponse } from "../../shared/utils/error.handler.js";
 import { HTTP_STATUS } from "../../shared/constants.js";
 let NotificationController = class NotificationController {
     _getNotificationsByUserUseCase;
-    constructor(_getNotificationsByUserUseCase) {
+    _markAllNotificationsAsReadByUserUseCase;
+    _markSingleNotificationAsReadByUserUseCase;
+    constructor(_getNotificationsByUserUseCase, _markAllNotificationsAsReadByUserUseCase, _markSingleNotificationAsReadByUserUseCase) {
         this._getNotificationsByUserUseCase = _getNotificationsByUserUseCase;
+        this._markAllNotificationsAsReadByUserUseCase = _markAllNotificationsAsReadByUserUseCase;
+        this._markSingleNotificationAsReadByUserUseCase = _markSingleNotificationAsReadByUserUseCase;
     }
     async getNotificationsByUser(req, res) {
         try {
@@ -24,8 +28,33 @@ let NotificationController = class NotificationController {
             const notifications = await this._getNotificationsByUserUseCase.execute({
                 userId,
             });
-            console.log("notifications", notifications);
             res.status(HTTP_STATUS.OK).json({ success: true, notifications });
+        }
+        catch (error) {
+            handleErrorResponse(req, res, error);
+        }
+    }
+    async markAllNotificationsAsReadByUser(req, res) {
+        try {
+            const { userId } = req.user;
+            await this._markAllNotificationsAsReadByUserUseCase.execute({
+                userId,
+            });
+            res.status(HTTP_STATUS.OK).json({ success: true });
+        }
+        catch (error) {
+            handleErrorResponse(req, res, error);
+        }
+    }
+    async markSingleNotificationAsReadByUser(req, res) {
+        try {
+            const { userId } = req.user;
+            const { notificationId } = req.params;
+            await this._markSingleNotificationAsReadByUserUseCase.execute({
+                userId,
+                notificationId,
+            });
+            res.status(HTTP_STATUS.OK).json({ success: true });
         }
         catch (error) {
             handleErrorResponse(req, res, error);
@@ -35,6 +64,8 @@ let NotificationController = class NotificationController {
 NotificationController = __decorate([
     injectable(),
     __param(0, inject("IGetNotificationsByUserUseCase")),
-    __metadata("design:paramtypes", [Object])
+    __param(1, inject("IMarkAllNotificationsAsReadByUserUseCase")),
+    __param(2, inject("IMarkSingleNotificationAsReadByUserUseCase")),
+    __metadata("design:paramtypes", [Object, Object, Object])
 ], NotificationController);
 export { NotificationController };

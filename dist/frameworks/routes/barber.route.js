@@ -32,6 +32,12 @@ export class BarberRoutes extends BaseRoute {
         this.router.get("/barber/notifications", verifyAuth, authorizeRole(["barber"]), blockStatusMiddleware.checkStatus, (req, res) => {
             notificationController.getNotificationsByUser(req, res);
         });
+        this.router.patch("/barber/notifications/read", verifyAuth, authorizeRole(["barber"]), blockStatusMiddleware.checkStatus, (req, res) => {
+            notificationController.markAllNotificationsAsReadByUser(req, res);
+        });
+        this.router.patch("/barber/notifications/:notificationId/read", verifyAuth, authorizeRole(["barber"]), blockStatusMiddleware.checkStatus, (req, res) => {
+            notificationController.markSingleNotificationAsReadByUser(req, res);
+        });
         //* ─────────────────────────────────────────────────────────────
         //*                    🛠️ Booking Endpoints
         //* ─────────────────────────────────────────────────────────────

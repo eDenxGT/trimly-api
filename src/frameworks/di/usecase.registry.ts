@@ -221,6 +221,10 @@ import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces
 import { SendNotificationByUserUseCase } from "../../useCases/notification/send-notification-by-user.usecase.js";
 import { SocketService } from "../../interfaceAdapters/services/socket.service.js";
 import { ISocketService } from "../../entities/serviceInterfaces/socket-service.interface.js";
+import { MarkSingleNotificationAsReadByUserUseCase } from "../../useCases/notification/mark-single-notification-as-read-by-user.usecase.js";
+import { IMarkSingleNotificationAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-single-notification-as-read-by-user-usecase.interface.js";
+import { MarkAllNotificationsAsReadByUserUseCase } from "../../useCases/notification/mark-all-notifications-as-read-by-user.usecase.js";
+import { IMarkAllNotificationsAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-all-notifications-as-read-by-user-usecase.interface.js";
 
 export class UseCaseRegistry {
   static registerUseCases(): void {
@@ -718,6 +722,20 @@ export class UseCaseRegistry {
       "ISendNotificationByUserUseCase",
       {
         useClass: SendNotificationByUserUseCase,
+      }
+    );
+
+    container.register<IMarkAllNotificationsAsReadByUserUseCase>(
+      "IMarkAllNotificationsAsReadByUserUseCase",
+      {
+        useClass: MarkAllNotificationsAsReadByUserUseCase,
+      }
+    );
+
+    container.register<IMarkSingleNotificationAsReadByUserUseCase>(
+      "IMarkSingleNotificationAsReadByUserUseCase",
+      {
+        useClass: MarkSingleNotificationAsReadByUserUseCase,
       }
     );
 

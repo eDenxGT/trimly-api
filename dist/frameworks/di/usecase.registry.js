@@ -108,6 +108,8 @@ import { GetPostLikedUsersUseCase } from "../../useCases/feed/post/get-post-like
 import { GetNotificationsByUserUseCase } from "../../useCases/notification/get-notifications-by-user.usecase.js";
 import { SendNotificationByUserUseCase } from "../../useCases/notification/send-notification-by-user.usecase.js";
 import { SocketService } from "../../interfaceAdapters/services/socket.service.js";
+import { MarkSingleNotificationAsReadByUserUseCase } from "../../useCases/notification/mark-single-notification-as-read-by-user.usecase.js";
+import { MarkAllNotificationsAsReadByUserUseCase } from "../../useCases/notification/mark-all-notifications-as-read-by-user.usecase.js";
 export class UseCaseRegistry {
     static registerUseCases() {
         //* ====== Register UseCases ====== *//
@@ -396,6 +398,12 @@ export class UseCaseRegistry {
         });
         container.register("ISendNotificationByUserUseCase", {
             useClass: SendNotificationByUserUseCase,
+        });
+        container.register("IMarkAllNotificationsAsReadByUserUseCase", {
+            useClass: MarkAllNotificationsAsReadByUserUseCase,
+        });
+        container.register("IMarkSingleNotificationAsReadByUserUseCase", {
+            useClass: MarkSingleNotificationAsReadByUserUseCase,
         });
         //* ====== Register Bcrypts ====== *//
         container.register("IPasswordBcrypt", {

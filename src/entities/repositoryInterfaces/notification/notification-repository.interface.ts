@@ -8,4 +8,10 @@ export interface INotificationRepository
   }: {
     userId: string;
   }): Promise<INotificationEntity[]>;
+
+  markAllNotificationsAsReadByUser({
+    userId,
+  }: {
+    userId: string;
+  }): Promise<void>;
 }

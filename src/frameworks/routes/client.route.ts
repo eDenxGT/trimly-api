@@ -192,7 +192,27 @@ export class ClientRoutes extends BaseRoute {
         notificationController.getNotificationsByUser(req, res);
       }
     );
-    
+
+    this.router.patch(
+      "/client/notifications/read",
+      verifyAuth,
+      authorizeRole(["client"]),
+      blockStatusMiddleware.checkStatus as RequestHandler,
+      (req: Request, res: Response) => {
+        notificationController.markAllNotificationsAsReadByUser(req, res);
+      }
+    );
+
+    this.router.patch(
+      "/client/notifications/:notificationId/read",
+      verifyAuth,
+      authorizeRole(["client"]),
+      blockStatusMiddleware.checkStatus as RequestHandler,
+      (req: Request, res: Response) => {
+        notificationController.markSingleNotificationAsReadByUser(req, res);
+      }
+    );
+
     //* ─────────────────────────────────────────────────────────────
     //*                   🛠️ S3 Endpoints
     //* ─────────────────────────────────────────────────────────────
