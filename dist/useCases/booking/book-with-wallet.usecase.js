@@ -14,8 +14,9 @@ import { inject, injectable } from "tsyringe";
 import { CustomError } from "../../entities/utils/custom.error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
 import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
-import { parseISO, setHours, setMinutes } from "date-fns";
+import { format, parse } from "date-fns";
 import { formatDate } from "../../shared/utils/date-formatter.js";
+import { fromZonedTime } from "date-fns-tz";
 let BookWithWalletUseCase = class BookWithWalletUseCase {
     _walletRepository;
     _createWalletUseCase;
@@ -30,14 +31,27 @@ let BookWithWalletUseCase = class BookWithWalletUseCase {
         this._sendNotificationByUserUseCase = _sendNotificationByUserUseCase;
     }
     async execute({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
-        const bookingDateObj = parseISO(date);
-        const [time, modifier] = startTime.split(" ");
-        let [hours, minutes] = time.split(":").map(Number);
-        if (modifier.toLowerCase() === "pm" && hours < 12)
-            hours += 12;
-        if (modifier.toLowerCase() === "am" && hours === 12)
-            hours = 0;
-        const bookingDateTime = setMinutes(setHours(bookingDateObj, hours), minutes);
+        // const bookingDateObj = parseISO(date);
+        // console.log("Booking date", bookingDateObj, date);
+        // const [time, modifier] = startTime.split(" ");
+        // let [hours, minutes] = time.split(":").map(Number);
+        // if (modifier.toLowerCase() === "pm" && hours < 12) hours += 12;
+        // if (modifier.toLowerCase() === "am" && hours === 12) hours = 0;
+        // const bookingDateTime = setMinutes(
+        //   setHours(bookingDateObj, hours),
+        //   minutes
+        // );
+        // if (bookingDateTime.getTime() <= Date.now()) {
+        //   throw new CustomError(
+        //     ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE,
+        //     HTTP_STATUS.BAD_REQUEST
+        //   );
+        // }
+        console.log("Date", date, "startTime", startTime);
+        const localDateStr = format(new Date(date), "yyyy-MM-dd");
+        const localDateTimeString = `${localDateStr} ${startTime}`;
+        const parsedLocal = parse(localDateTimeString, "yyyy-MM-dd hh:mm a", new Date());
+        const bookingDateTime = fromZonedTime(parsedLocal, "Asia/Kolkata");
         if (bookingDateTime.getTime() <= Date.now()) {
             throw new CustomError(ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, HTTP_STATUS.BAD_REQUEST);
         }

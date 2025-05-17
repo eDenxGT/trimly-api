@@ -42,6 +42,7 @@ export class CreateBookingUseCase implements ICreateBookingUseCase {
 		bookingId: string;
 	}> {
 		const bookingDateObj = parseISO(date);
+		console.log("Booking date", bookingDateObj);
 
 		const [time, modifier] = startTime.split(" ");
 		let [hours, minutes] = time.split(":").map(Number);

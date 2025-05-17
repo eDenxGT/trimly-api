@@ -26,6 +26,7 @@ let CreateBookingUseCase = class CreateBookingUseCase {
     }
     async execute({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
         const bookingDateObj = parseISO(date);
+        console.log("Booking date", bookingDateObj);
         const [time, modifier] = startTime.split(" ");
         let [hours, minutes] = time.split(":").map(Number);
         if (modifier.toLowerCase() === "pm" && hours < 12)
