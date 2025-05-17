@@ -11,6 +11,7 @@ import { format, parse, parseISO, setHours, setMinutes } from "date-fns";
 import { formatDate } from "../../shared/utils/date-formatter.js";
 import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
+import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper.js";
 
 @injectable()
 export class BookWithWalletUseCase implements IBookWithWalletUseCase {
@@ -62,22 +63,8 @@ export class BookWithWalletUseCase implements IBookWithWalletUseCase {
     //     HTTP_STATUS.BAD_REQUEST
     //   );
     // }
-    console.log("Date", date, "startTime", startTime);
-    const localDateString = formatInTimeZone(date, "Asia/Kolkata", "yyyy-MM-dd");
-    const fullDateTimeString = `${localDateString} ${startTime}`;
     
-    // Parse it (this will act like UTC, but we treat it as IST)
-    const parsedLocal = parse(fullDateTimeString, "yyyy-MM-dd hh:mm a", new Date());
-    
-    // Convert it from IST to real UTC
-    const bookingDateTime = fromZonedTime(parsedLocal, "Asia/Kolkata");
-    
-    console.log("✅ Final UTC Date:", bookingDateTime);
-    console.log(
-      "ISO booking date",
-      bookingDateTime,
-      format(new Date(bookingDateTime), "yyyy-MM-dd hh:mm a")
-    );
+    const bookingDateTime = getBookingDateTimeUTC(date, startTime);
 
     if (bookingDateTime.getTime() <= Date.now()) {
       throw new CustomError(
