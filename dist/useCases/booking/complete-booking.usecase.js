@@ -33,17 +33,6 @@ let CompleteBookingUseCase = class CompleteBookingUseCase {
         if (!booking) {
             throw new CustomError(ERROR_MESSAGES.BOOKING_NOT_FOUND, HTTP_STATUS.NOT_FOUND);
         }
-        // const bookingDate = new Date(booking.date);
-        // const startTimeStr = booking.startTime;
-        // const fullDateTimeStr = `${format(
-        //   bookingDate,
-        //   "yyyy-MM-dd"
-        // )} ${startTimeStr}`;
-        // const bookingStartTime = parse(
-        //   fullDateTimeStr,
-        //   "yyyy-MM-dd h:mm a",
-        //   new Date()
-        // );
         const bookingStartTime = getBookingDateTimeUTC(booking.date, booking.startTime);
         const bookingEndTime = addMinutes(bookingStartTime, booking.duration);
         const now = new Date();
