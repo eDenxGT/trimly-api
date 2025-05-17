@@ -74,6 +74,8 @@ export class BookWithWalletUseCase implements IBookWithWalletUseCase {
 
     const bookingDateTime = fromZonedTime(parsedLocal, "Asia/Kolkata");
 
+    console.log("ISO booking date", bookingDateTime);
+
     if (bookingDateTime.getTime() <= Date.now()) {
       throw new CustomError(
         ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE,
