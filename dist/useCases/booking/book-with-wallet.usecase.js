@@ -53,6 +53,22 @@ let BookWithWalletUseCase = class BookWithWalletUseCase {
         if (cancelledBookings.length > 5) {
             // throw new CustomError(ERROR_MESSAGES.MORE_THAN_5_CANCELLED_BOOKING, HTTP_STATUS.BAD_REQUEST);
         }
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date();
+        endOfDay.setHours(23, 59, 59, 999);
+        const bookings = await this._bookingRepository.find({
+            clientId,
+            shopId,
+            status: "confirmed",
+            createdAt: {
+                $gte: startOfDay,
+                $lte: endOfDay,
+            },
+        });
+        if (bookings.length >= 3) {
+            throw new CustomError(ERROR_MESSAGES.BOOKING_LIMIT_EXCEEDED_FOR_TODAY, HTTP_STATUS.BAD_REQUEST);
+        }
         const wallet = await this._walletRepository.findOne({ ownerId: clientId });
         if (!wallet) {
             await this._createWalletUseCase.execute({
