@@ -52,6 +52,7 @@ let BookWithWalletUseCase = class BookWithWalletUseCase {
         const localDateTimeString = `${localDateStr} ${startTime}`;
         const parsedLocal = parse(localDateTimeString, "yyyy-MM-dd hh:mm a", new Date());
         const bookingDateTime = fromZonedTime(parsedLocal, "Asia/Kolkata");
+        console.log("ISO booking date", bookingDateTime, format(new Date(bookingDateTime), "yyyy-MM-dd hh:mm a"));
         if (bookingDateTime.getTime() <= Date.now()) {
             throw new CustomError(ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, HTTP_STATUS.BAD_REQUEST);
         }

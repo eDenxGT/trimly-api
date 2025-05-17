@@ -74,7 +74,11 @@ export class BookWithWalletUseCase implements IBookWithWalletUseCase {
 
     const bookingDateTime = fromZonedTime(parsedLocal, "Asia/Kolkata");
 
-    console.log("ISO booking date", bookingDateTime);
+    console.log(
+      "ISO booking date",
+      bookingDateTime,
+      format(new Date(bookingDateTime), "yyyy-MM-dd hh:mm a")
+    );
 
     if (bookingDateTime.getTime() <= Date.now()) {
       throw new CustomError(
