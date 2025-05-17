@@ -38,18 +38,6 @@ export class CancelBookingUseCase implements ICancelBookingUseCase {
 
     const bookingDate = getBookingDateTimeUTC(booking.date, booking.startTime);
 
-    // const startTimeStr = booking.startTime;
-
-    // const fullDateTimeStr = `${format(
-    //   bookingDate,
-    //   "yyyy-MM-dd"
-    // )} ${startTimeStr}`;
-    // const bookingStartTime = parse(
-    //   fullDateTimeStr,
-    //   "yyyy-MM-dd h:mm a",
-    //   new Date()
-    // );
-
     const now = new Date();
 
     if (booking.status === "pending") {

@@ -20,9 +20,9 @@ export function getBookingDateTimeUTC(
   );
   const bookingDateTimeUTC = fromZonedTime(parsedLocal, timeZone);
 
-  console.log("Input Date:", date, "Start Time:", startTime);
-  console.log("Final UTC booking datetime:", bookingDateTimeUTC);
-  console.log("Formatted:", format(bookingDateTimeUTC, "yyyy-MM-dd hh:mm a"));
+//   console.log("Input Date:", date, "Start Time:", startTime);
+//   console.log("Final UTC booking datetime:", bookingDateTimeUTC);
+//   console.log("Formatted:", format(bookingDateTimeUTC, "yyyy-MM-dd hh:mm a"));
 
   return bookingDateTimeUTC;
 }

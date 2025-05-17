@@ -33,19 +33,6 @@ export class CompleteBookingUseCase implements ICompleteBookingUseCase {
       );
     }
 
-    // const bookingDate = new Date(booking.date);
-    // const startTimeStr = booking.startTime;
-
-    // const fullDateTimeStr = `${format(
-    //   bookingDate,
-    //   "yyyy-MM-dd"
-    // )} ${startTimeStr}`;
-    // const bookingStartTime = parse(
-    //   fullDateTimeStr,
-    //   "yyyy-MM-dd h:mm a",
-    //   new Date()
-    // );
-
     const bookingStartTime = getBookingDateTimeUTC(
       booking.date,
       booking.startTime
