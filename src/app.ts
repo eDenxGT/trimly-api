@@ -1,4 +1,4 @@
-//* ====== Node module-alias Imports( to import using @/ ) ====== *//
+//* ====== Node module-alias Imports ( to import using @/ ) ====== *//
 // import "module-alias/register.js";
 
 //* ====== DI Imports ====== *//
