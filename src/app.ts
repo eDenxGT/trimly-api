@@ -32,7 +32,7 @@ const socketServer = new SocketServer(httpServer);
 
 //* ====== Socket Events Setup ====== *//
 socketServer.onConnection((socket) => {
-  // set user id in socket data
+  // set user id in socket data 
   const userStore = SocketUserStore.getInstance();
 
   socket.on("registerUser", ({ userId }) => {
