@@ -230,7 +230,7 @@ export class BarberRepository
                 $expr: {
                   $and: [
                     { $eq: ["$shopId", "$$shopUserId"] },
-                    { $eq: ["$status", "confirmed"] },
+                    { $in: ["$status", ["confirmed", "pending"]] },
                   ],
                 },
               },

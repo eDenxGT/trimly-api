@@ -1,3 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts", "src/types.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}
+
+
+// * OLD CONFIG (ESM)
 // {
 // 	"compilerOptions": {
 // 		/* Visit https://aka.ms/tsconfig to read more about this file */
@@ -31,20 +51,3 @@
 // 	"include": ["src/**/*.ts", "src/types.d.ts"],
 // 	"exclude": ["node_modules", "dist"]
 // }
-{
-  "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
-  },
-  "include": ["src/**/*.ts", "src/types.d.ts"],
-  "exclude": ["node_modules", "dist"]
-}

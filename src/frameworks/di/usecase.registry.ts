@@ -19,6 +19,8 @@ import { S3Service } from "../../interfaceAdapters/services/s3.service";
 import { IS3Service } from "../../entities/serviceInterfaces/s3-service.interface";
 import { IGoogleCalendarService } from "../../entities/serviceInterfaces/google-calendar-service.interface";
 import { GoogleCalendarService } from "../../interfaceAdapters/services/google-calendar.service";
+import { SocketService } from "../../interfaceAdapters/services/socket.service";
+import { ISocketService } from "../../entities/serviceInterfaces/socket-service.interface";
 
 //* ====== Socket Handler Imports ====== *//
 import { NotificationSocketHandler } from "../../interfaceAdapters/websockets/handlers/notification.handler";
@@ -219,12 +221,12 @@ import { IGetNotificationsByUserUseCase } from "../../entities/useCaseInterfaces
 import { GetNotificationsByUserUseCase } from "../../useCases/notification/get-notifications-by-user.usecase";
 import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface";
 import { SendNotificationByUserUseCase } from "../../useCases/notification/send-notification-by-user.usecase";
-import { SocketService } from "../../interfaceAdapters/services/socket.service";
-import { ISocketService } from "../../entities/serviceInterfaces/socket-service.interface";
 import { MarkSingleNotificationAsReadByUserUseCase } from "../../useCases/notification/mark-single-notification-as-read-by-user.usecase";
 import { IMarkSingleNotificationAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-single-notification-as-read-by-user-usecase.interface";
 import { MarkAllNotificationsAsReadByUserUseCase } from "../../useCases/notification/mark-all-notifications-as-read-by-user.usecase";
 import { IMarkAllNotificationsAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-all-notifications-as-read-by-user-usecase.interface";
+import { ICheckBookingEligibilityUseCase } from "../../entities/useCaseInterfaces/booking/checking-booking-eligibility-usecase.interface";
+import { CheckBookingEligibilityUseCase } from "../../useCases/booking/checking-booking-eligibility.usecase";
 
 export class UseCaseRegistry {
   static registerUseCases(): void {
@@ -736,6 +738,13 @@ export class UseCaseRegistry {
       "IMarkSingleNotificationAsReadByUserUseCase",
       {
         useClass: MarkSingleNotificationAsReadByUserUseCase,
+      }
+    );
+
+    container.register<ICheckBookingEligibilityUseCase>(
+      "ICheckBookingEligibilityUseCase",
+      {
+        useClass: CheckBookingEligibilityUseCase,
       }
     );
 

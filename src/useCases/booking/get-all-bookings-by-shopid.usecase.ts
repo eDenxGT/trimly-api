@@ -4,20 +4,22 @@ import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/
 import { IGetAllBookingsByShopIdUseCase } from "../../entities/useCaseInterfaces/booking/get-all-bookings-by-shopid-usecase.interface";
 
 @injectable()
-export class GetAllBookingsByShopIdUseCase implements IGetAllBookingsByShopIdUseCase {
-	constructor(
-		@inject("IBookingRepository")
-		private _bookingRepository: IBookingRepository
-	) {}
+export class GetAllBookingsByShopIdUseCase
+  implements IGetAllBookingsByShopIdUseCase
+{
+  constructor(
+    @inject("IBookingRepository")
+    private _bookingRepository: IBookingRepository
+  ) {}
 
-	async execute(shopId: string, role: string): Promise<IBookingEntity[]> {
-		let filter;
-		if (role === "client") {
-			filter = { shopId, status: "confirmed" };
-		} else {
-			filter = { shopId };
-		}
-		const bookings = await this._bookingRepository.find(filter);
-		return bookings;
-	}
+  async execute(shopId: string, role: string): Promise<IBookingEntity[]> {
+    let filter;
+    if (role === "client") {
+      filter = { shopId, status: { $in: ["confirmed", "pending"] } };
+    } else {
+      filter = { shopId };
+    }
+    const bookings = await this._bookingRepository.find(filter);
+    return bookings;
+  }
 }
