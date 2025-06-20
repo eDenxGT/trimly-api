@@ -25,14 +25,14 @@ exports.CheckBookingEligibilityUseCase = void 0;
 const tsyringe_1 = require("tsyringe");
 const custom_error_1 = require("../../entities/utils/custom.error");
 const constants_1 = require("../../shared/constants");
-const get_booking_date_time_utc_helper_1 = require("../../shared/utils/get-booking-date-time-utc.helper");
 let CheckBookingEligibilityUseCase = class CheckBookingEligibilityUseCase {
     constructor(_bookingRepository) {
         this._bookingRepository = _bookingRepository;
     }
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
-            const bookingDateTime = (0, get_booking_date_time_utc_helper_1.getBookingDateTimeUTC)(date, startTime);
+            const bookingDateTime = new Date(new Date(date).setHours(0, 0, 0, 0));
+            // const bookingDateTime = getBookingDateTimeUTC(date, startTime);
             // console.log(
             //   "bookingDateTime -> ",
             //   bookingDateTime,

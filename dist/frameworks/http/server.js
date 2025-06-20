@@ -14,7 +14,6 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const config_1 = require("../../shared/config");
 //* ====== Middleware Imports ====== *//
 const not_found_middleware_1 = require("../../interfaceAdapters/middlewares/not-found.middleware");
-const error_middleware_1 = require("../../interfaceAdapters/middlewares/error.middleware");
 //* ====== Route Imports ====== *//
 const auth_route_1 = require("../routes/auth.route");
 const private_route_1 = require("../routes/private/private.route");
@@ -56,7 +55,7 @@ class ExpressServer {
     }
     //* ====== Error Configurations ====== *//
     configureErrorHandling() {
-        this._app.use(error_middleware_1.errorHandler);
+        // this._app.use(errorHandler);
     }
     //* ====== Get App ====== *//
     getApp() {
