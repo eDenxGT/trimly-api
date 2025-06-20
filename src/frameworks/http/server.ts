@@ -71,7 +71,7 @@ export class ExpressServer {
 
 	//* ====== Error Configurations ====== *//
 	private configureErrorHandling(): void {
-		this._app.use(errorHandler);
+		// this._app.use(errorHandler);
 	}
 
 	//* ====== Get App ====== *//

@@ -33,7 +33,8 @@ export class CheckBookingEligibilityUseCase
     startTime: string;
     total: number;
   }): Promise<{ bookingDateTime: Date }> {
-    const bookingDateTime = getBookingDateTimeUTC(date, startTime);
+    const bookingDateTime = new Date(new Date(date).setHours(0, 0, 0, 0));
+    // const bookingDateTime = getBookingDateTimeUTC(date, startTime);
 
     // console.log(
     //   "bookingDateTime -> ",
