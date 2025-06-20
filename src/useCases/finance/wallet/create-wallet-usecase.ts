@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { ICreateWalletUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/create-wallet-usecase.interface.js";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
-import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface.js";
-import { IWalletEntity } from "../../../entities/models/wallet.entity.js";
+import { ICreateWalletUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/create-wallet-usecase.interface";
+import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper";
+import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface";
+import { IWalletEntity } from "../../../entities/models/wallet.entity";
 
 @injectable()
 export class CreateWalletUseCase implements ICreateWalletUseCase {

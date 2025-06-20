@@ -1,16 +1,18 @@
-import { Server } from "socket.io";
-import { config } from "../../shared/config.js";
-import { DirectChatEvents } from "../../interfaceAdapters/websockets/events/direct-chat.events.js";
-import { CommunityChatEvents } from "../../interfaceAdapters/websockets/events/community-chat.events.js";
-import { NotificationEvents } from "../../interfaceAdapters/websockets/events/notification.events.js";
-import { SocketService } from "../../interfaceAdapters/services/socket.service.js";
-export class SocketServer {
-    _io;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SocketServer = void 0;
+const socket_io_1 = require("socket.io");
+const config_1 = require("../../shared/config");
+const direct_chat_events_1 = require("../../interfaceAdapters/websockets/events/direct-chat.events");
+const community_chat_events_1 = require("../../interfaceAdapters/websockets/events/community-chat.events");
+const notification_events_1 = require("../../interfaceAdapters/websockets/events/notification.events");
+const socket_service_1 = require("../../interfaceAdapters/services/socket.service");
+class SocketServer {
     constructor(httpServer) {
-        this._io = new Server(httpServer, {
-            cors: { origin: config.cors.ALLOWED_ORIGIN },
+        this._io = new socket_io_1.Server(httpServer, {
+            cors: { origin: config_1.config.cors.ALLOWED_ORIGIN },
         });
-        SocketService.setIO(this._io);
+        socket_service_1.SocketService.setIO(this._io);
     }
     getIO() {
         return this._io;
@@ -18,12 +20,13 @@ export class SocketServer {
     onConnection(callback) {
         this._io.on("connection", (socket) => {
             callback(socket);
-            const directChatEvents = new DirectChatEvents(socket, this._io);
+            const directChatEvents = new direct_chat_events_1.DirectChatEvents(socket, this._io);
             directChatEvents.register();
-            const communityChatEvents = new CommunityChatEvents(socket, this._io);
+            const communityChatEvents = new community_chat_events_1.CommunityChatEvents(socket, this._io);
             communityChatEvents.register();
-            const notificationEvents = new NotificationEvents(socket, this._io);
+            const notificationEvents = new notification_events_1.NotificationEvents(socket, this._io);
             notificationEvents.register();
         });
     }
 }
+exports.SocketServer = SocketServer;

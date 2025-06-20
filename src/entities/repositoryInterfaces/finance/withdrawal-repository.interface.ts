@@ -1,5 +1,5 @@
-import { IWithdrawalEntity } from "../../models/withdrawal.entity.js";
-import { IBaseRepository } from "../base-repository.interface.js";
+import { IWithdrawalEntity } from "../../models/withdrawal.entity";
+import { IBaseRepository } from "../base-repository.interface";
 
 export interface IWithdrawalRepository
 	extends IBaseRepository<IWithdrawalEntity> {

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IRejectWithdrawalUseCase } from "../../../entities/useCaseInterfaces/finance/withdrawal/reject-withdrawal-usecase.interface.js";
-import { IWithdrawalRepository } from "../../../entities/repositoryInterfaces/finance/withdrawal-repository.interface.js";
-import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
-import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface.js";
+import { IRejectWithdrawalUseCase } from "../../../entities/useCaseInterfaces/finance/withdrawal/reject-withdrawal-usecase.interface";
+import { IWithdrawalRepository } from "../../../entities/repositoryInterfaces/finance/withdrawal-repository.interface";
+import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface";
+import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface";
 
 @injectable()
 export class RejectWithdrawalUseCase implements IRejectWithdrawalUseCase {

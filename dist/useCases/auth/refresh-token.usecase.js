@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,18 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RefreshTokenUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const custom_error_1 = require("../../entities/utils/custom.error");
+const constants_1 = require("../../shared/constants");
 let RefreshTokenUseCase = class RefreshTokenUseCase {
-    _tokenService;
     constructor(_tokenService) {
         this._tokenService = _tokenService;
     }
     execute(refreshToken) {
         const payload = this._tokenService.verifyRefreshToken(refreshToken);
         if (!payload) {
-            throw new CustomError(ERROR_MESSAGES.INVALID_TOKEN, HTTP_STATUS.BAD_REQUEST);
+            throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.INVALID_TOKEN, constants_1.HTTP_STATUS.BAD_REQUEST);
         }
         return {
             role: payload.role,
@@ -33,9 +35,9 @@ let RefreshTokenUseCase = class RefreshTokenUseCase {
         };
     }
 };
-RefreshTokenUseCase = __decorate([
-    injectable(),
-    __param(0, inject("ITokenService")),
+exports.RefreshTokenUseCase = RefreshTokenUseCase;
+exports.RefreshTokenUseCase = RefreshTokenUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("ITokenService")),
     __metadata("design:paramtypes", [Object])
 ], RefreshTokenUseCase);
-export { RefreshTokenUseCase };

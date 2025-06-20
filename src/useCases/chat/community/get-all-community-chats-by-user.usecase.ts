@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { ICommunityChatRoomEntity } from "../../../entities/models/chat/community-chat-room.entity.js";
-import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface.js";
-import { IGetAllCommunityChatsByUserUseCase } from "../../../entities/useCaseInterfaces/chat/community/get-all-community-chats-by-user-usecase.interface.js";
+import { ICommunityChatRoomEntity } from "../../../entities/models/chat/community-chat-room.entity";
+import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface";
+import { IGetAllCommunityChatsByUserUseCase } from "../../../entities/useCaseInterfaces/chat/community/get-all-community-chats-by-user-usecase.interface";
 
 @injectable()
 export class GetAllCommunityChatsByUserUseCase

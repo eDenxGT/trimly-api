@@ -1,445 +1,449 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UseCaseRegistry = void 0;
 //* ====== Module Imports ====== *//
-import { container } from "tsyringe";
-import { PasswordBcrypt } from "../security/password.bcrypt.js";
-import { UserExistenceService } from "../../interfaceAdapters/services/user-existence.service.js";
-import { OtpService } from "../../interfaceAdapters/services/otp.service.js";
-import { OtpBcrypt } from "../security/otp.bcrypt.js";
-import { EmailService } from "../../interfaceAdapters/services/email.service.js";
-import { JWTService } from "../../interfaceAdapters/services/jwt.service.js";
-import { S3Service } from "../../interfaceAdapters/services/s3.service.js";
-import { GoogleCalendarService } from "../../interfaceAdapters/services/google-calendar.service.js";
+const tsyringe_1 = require("tsyringe");
+const password_bcrypt_1 = require("../security/password.bcrypt");
+const user_existence_service_1 = require("../../interfaceAdapters/services/user-existence.service");
+const otp_service_1 = require("../../interfaceAdapters/services/otp.service");
+const otp_bcrypt_1 = require("../security/otp.bcrypt");
+const email_service_1 = require("../../interfaceAdapters/services/email.service");
+const jwt_service_1 = require("../../interfaceAdapters/services/jwt.service");
+const s3_service_1 = require("../../interfaceAdapters/services/s3.service");
+const google_calendar_service_1 = require("../../interfaceAdapters/services/google-calendar.service");
 //* ====== Socket Handler Imports ====== *//
-import { NotificationSocketHandler } from "../../interfaceAdapters/websockets/handlers/notification.handler.js";
-import { RegisterUserUseCase } from "../../useCases/auth/register-user.usecase.js";
-import { SendOtpEmailUseCase } from "../../useCases/auth/send-otp-email.usecase.js";
-import { VerifyOtpUseCase } from "../../useCases/auth/verify-otp.usecase.js";
-import { LoginUserUseCase } from "../../useCases/auth/login-user.usecase.js";
-import { RefreshTokenUseCase } from "../../useCases/auth/refresh-token.usecase.js";
-import { GenerateTokenUseCase } from "../../useCases/auth/generate-token.usecase.js";
-import { RevokeRefreshTokenUseCase } from "../../useCases/auth/revoke-refresh-token.usecase.js";
-import { BlackListTokenUseCase } from "../../useCases/auth/blacklist-token.usecase.js";
-import { ForgotPasswordUseCase } from "../../useCases/auth/forgot-password.usecase.js";
-import { ResetPasswordUseCase } from "../../useCases/auth/reset-password.usecase.js";
-import { GoogleUseCase } from "../../useCases/auth/google.usecase.js";
-import { SendEmailUseCase } from "../../useCases/common/send-email.usecase.js";
-import { UpdateUserDetailsUseCase } from "../../useCases/users/update-user-details.usecase.js";
-import { ChangeUserPasswordUseCase } from "../../useCases/users/change-user-password.usecase.js";
-import { AddServiceUseCase } from "../../useCases/shop/service/add-service.usecase.js";
-import { GetAllServicesUseCase } from "../../useCases/shop/service/get-all-services.usecase.js";
-import { UpdateServiceUseCase } from "../../useCases/shop/service/update-service.usecase.js";
-import { DeleteServiceUseCase } from "../../useCases/shop/service/delete-service.usecase.js";
-import { GetAllShopsUseCase } from "../../useCases/shop/get-all-shops.usecase.js";
-import { UpdateShopStatusUseCase } from "../../useCases/shop/update-shop-status.usecase.js";
-import { GetAllUsersUseCase } from "../../useCases/users/get-all-users.usecase.js";
-import { UpdateUserStatusUseCase } from "../../useCases/users/update-user-status.usecase.js";
-import { GetUserDetailsUseCase } from "../../useCases/users/get-user-details.usecase.js";
-import { GetAllNearestShopsUseCase } from "../../useCases/shop/get-all-nearest-shops.usecase.js";
-import { GetShopDetailsByShopIdUseCase } from "../../useCases/shop/get-shop-details-by-shopid.usecase.js";
-import { CreateBookingUseCase } from "../../useCases/booking/create-booking.usecase.js";
-import { VerifyPaymentUseCase } from "../../useCases/booking/verify-payment.usecase.js";
-import { HandleFailurePaymentUseCase } from "../../useCases/booking/handle-failure-payment.usecase.js";
-import { GetAllBookingsByShopIdUseCase } from "../../useCases/booking/get-all-bookings-by-shopid.usecase.js";
-import { GetAllBookingsByUserUseCase } from "../../useCases/booking/get-all-bookings-by-user.usecase.js";
-import { CancelBookingUseCase } from "../../useCases/booking/cancel-booking.usecase.js";
-import { GetWalletOverviewUseCase } from "../../useCases/finance/get-wallet-overview.usecase.js";
-import { GetWalletByUserUseCase } from "../../useCases/finance/wallet/get-wallet-by-user.usecase.js";
-import { GetTransactionByUserUseCase } from "../../useCases/finance/transaction/get-transaction-by-user.usecase.js";
-import { GetWithdrawalByUserUseCase } from "../../useCases/finance/withdrawal/get-withdrawal-by-user-usecase.js";
-import { TopUpWalletUseCase } from "../../useCases/finance/wallet/topup-wallet.usecase.js";
-import { RazorpayService } from "../../interfaceAdapters/services/razorpay.service.js";
-import { VerifyTopUpPaymentUseCase } from "../../useCases/finance/wallet/verify-topup-payment.usecase.js";
-import { UpdateWalletBalanceUseCase } from "../../useCases/finance/wallet/update-wallet-balance.usecase.js";
-import { WithdrawFromWalletUseCase } from "../../useCases/finance/withdrawal/withdraw-from-wallet.usecase.js";
-import { HandleTopUpPaymentFailureUseCase } from "../../useCases/finance/wallet/handle-topup-failure-payment.usecase.js";
-import { AddShopReviewUseCase } from "../../useCases/review/add-shop-review.usecase.js";
-import { AddPostUseCase } from "../../useCases/feed/post/add-post.usecase.js";
-import { GetAllPostsByBarberUseCase } from "../../useCases/feed/post/get-all-posts-by-barber.usecase.js";
-import { GetSinglePostByPostIdUseCase } from "../../useCases/feed/post/get-single-post-by-postid.usecase.js";
-import { UpdatePostUseCase } from "../../useCases/feed/post/update-post.usecase.js";
-import { DeletePostUseCase } from "../../useCases/feed/post/delete-post.usecase.js";
-import { UpdatePostStatusUseCase } from "../../useCases/feed/post/update-post-status.usecase.js";
-import { ToggleLikePostUseCase } from "../../useCases/feed/post/toggle-like-post.usecase.js";
-import { AddCommentUseCase } from "../../useCases/feed/comment/add-comment.usecase.js";
-import { ToggleCommentLikeUseCase } from "../../useCases/feed/comment/toggle-comment-like.usecase.js";
-import { GetAllPostsForClientUseCase } from "../../useCases/feed/post/get-all-posts-for-client.usecase.js";
-import { CreateWalletUseCase } from "../../useCases/finance/wallet/create-wallet-usecase.js";
-import { CompleteBookingUseCase } from "../../useCases/booking/complete-booking.usecase.js";
-import { IncrementWalletBalanceUseCase } from "./../../useCases/finance/wallet/increment-wallet-balance.usecase.js";
-import { DecrementWalletBalanceUseCase } from "../../useCases/finance/wallet/decrement-wallet-balance.usecase.js";
-import { GetAllUserWithdrawalsUseCase } from "../../useCases/finance/withdrawal/get-all-user-withdrawals.usecase.js";
-import { ApproveWithdrawalUseCase } from "../../useCases/finance/withdrawal/approve-withdrawal.usecase.js";
-import { RejectWithdrawalUseCase } from "../../useCases/finance/withdrawal/reject-withdrawal.usecase.js";
-import { BookWithWalletUseCase } from "../../useCases/booking/book-with-wallet.usecase.js";
-import { GetChatByUserUseCase } from "../../useCases/chat/direct-chat/get-chat-by-user.usecase.js";
-import { CreateChatRoomUseCase } from "../../useCases/chat/direct-chat/create-chat-room.usecase.js";
-import { GetAllChatsByUserUseCase } from "../../useCases/chat/direct-chat/get-all-chats-by-user.usecase.js";
-import { GetChatByChatIdUseCase } from "../../useCases/chat/direct-chat/get-chat-by-chatid.usecase.js";
-import { SendDirectMessageUseCase } from "../../useCases/chat/direct-chat/send-direct-messsage.usecase.js";
-import { CreateCommunityUseCase } from "../../useCases/chat/community/create-community.usecase.js";
-import { GetAllCommunitiesForAdminUseCase } from "../../useCases/chat/community/get-all-communities-for-admin.usecase.js";
-import { GetCommunityForEditUseCase } from "../../useCases/chat/community/get-community-for-edit.usecase.js";
-import { EditCommunityUseCase } from "../../useCases/chat/community/edit-community.usecase.js";
-import { UpdateCommunityStatusUseCase } from "../../useCases/chat/community/update-community-status.usecase.js";
-import { DeleteCommunityUseCase } from "../../useCases/chat/community/delete-community.usecase.js";
-import { GetAllCommunitiesForBarberUseCase } from "../../useCases/chat/community/get-all-communities-for-barber.usecase.js";
-import { BarberJoinCommunityUseCase } from "../../useCases/chat/community/barber-join-community.usecase.js";
-import { GetAllCommunityChatsByUserUseCase } from "../../useCases/chat/community/get-all-community-chats-by-user.usecase.js";
-import { GetCommunityChatUseCase } from "../../useCases/chat/community/get-community-chat-by-user.usecase.js";
-import { SendCommunityMessageUseCase } from "../../useCases/chat/community/send-community-message.usecase.js";
-import { GetCommunityByCommunityIdUseCase } from "../../useCases/chat/community/get-community-by-communityid.usecase.js";
-import { ReadDirectMessageUseCase } from "../../useCases/chat/direct-chat/read-direct-message.usecase.js";
-import { GeneratePresignedUrlUseCase } from "../../useCases/s3/generate-presigned-url.usecase.js";
-import { ScheduleMeetingUseCase } from "../../useCases/chat/meeting/schedule-meeting.usecase.js";
-import { GetMeetingByCommunityIdUseCase } from "../../useCases/chat/meeting/get-meeting-by-communityid.usecase.js";
-import { GetAllMeetingsForListingUseCase } from "../../useCases/chat/meeting/get-all-meetings-for-listing.usecase.js";
-import { UpdateMeetingDetailsUseCase } from "../../useCases/chat/meeting/update-meeting-details.usecase.js";
-import { CancelMeetingUseCase } from "../../useCases/chat/meeting/cancel-meeting.usecase.js";
-import { CompleteMeetingUseCase } from "../../useCases/chat/meeting/complete-meeting.usecase.js";
-import { GetNearest3ShopsForClientUseCase } from "../../useCases/shop/get-nearest-3-shops-for-client.usecase.js";
-import { GetLastBookingByUserUseCase } from "../../useCases/booking/get-last-booking-by-user.usecase.js";
-import { GetBarberDashboardDataUseCase } from "../../useCases/dashboard/get-barber-dashboard-data.usecase.js";
-import { GetAdminDashboardDataUseCase } from "../../useCases/dashboard/get-admin-dashboard-data.usecase.js";
-import { GetHairstylesByFaceShapeUseCase } from "../../useCases/hairstyle-detector/get-hairstyles-by-face-shape.usecase.js";
-import { AddHairstyleUseCase } from "../../useCases/hairstyle-detector/add-hairstyle.usecase.js";
-import { GetAllHairstylesUseCase } from "../../useCases/hairstyle-detector/get-all-hairstyles.usecase.js";
-import { UpdateHairstyleUseCase } from "../../useCases/hairstyle-detector/update-hairstyle.usecase.js";
-import { DeleteHairstyleUseCase } from "../../useCases/hairstyle-detector/delete-hairstyle.usecase.js";
-import { GetPostLikedUsersUseCase } from "../../useCases/feed/post/get-post-liked-users.usecase.js";
-import { GetNotificationsByUserUseCase } from "../../useCases/notification/get-notifications-by-user.usecase.js";
-import { SendNotificationByUserUseCase } from "../../useCases/notification/send-notification-by-user.usecase.js";
-import { SocketService } from "../../interfaceAdapters/services/socket.service.js";
-import { MarkSingleNotificationAsReadByUserUseCase } from "../../useCases/notification/mark-single-notification-as-read-by-user.usecase.js";
-import { MarkAllNotificationsAsReadByUserUseCase } from "../../useCases/notification/mark-all-notifications-as-read-by-user.usecase.js";
-export class UseCaseRegistry {
+const notification_handler_1 = require("../../interfaceAdapters/websockets/handlers/notification.handler");
+const register_user_usecase_1 = require("../../useCases/auth/register-user.usecase");
+const send_otp_email_usecase_1 = require("../../useCases/auth/send-otp-email.usecase");
+const verify_otp_usecase_1 = require("../../useCases/auth/verify-otp.usecase");
+const login_user_usecase_1 = require("../../useCases/auth/login-user.usecase");
+const refresh_token_usecase_1 = require("../../useCases/auth/refresh-token.usecase");
+const generate_token_usecase_1 = require("../../useCases/auth/generate-token.usecase");
+const revoke_refresh_token_usecase_1 = require("../../useCases/auth/revoke-refresh-token.usecase");
+const blacklist_token_usecase_1 = require("../../useCases/auth/blacklist-token.usecase");
+const forgot_password_usecase_1 = require("../../useCases/auth/forgot-password.usecase");
+const reset_password_usecase_1 = require("../../useCases/auth/reset-password.usecase");
+const google_usecase_1 = require("../../useCases/auth/google.usecase");
+const send_email_usecase_1 = require("../../useCases/common/send-email.usecase");
+const update_user_details_usecase_1 = require("../../useCases/users/update-user-details.usecase");
+const change_user_password_usecase_1 = require("../../useCases/users/change-user-password.usecase");
+const add_service_usecase_1 = require("../../useCases/shop/service/add-service.usecase");
+const get_all_services_usecase_1 = require("../../useCases/shop/service/get-all-services.usecase");
+const update_service_usecase_1 = require("../../useCases/shop/service/update-service.usecase");
+const delete_service_usecase_1 = require("../../useCases/shop/service/delete-service.usecase");
+const get_all_shops_usecase_1 = require("../../useCases/shop/get-all-shops.usecase");
+const update_shop_status_usecase_1 = require("../../useCases/shop/update-shop-status.usecase");
+const get_all_users_usecase_1 = require("../../useCases/users/get-all-users.usecase");
+const update_user_status_usecase_1 = require("../../useCases/users/update-user-status.usecase");
+const get_user_details_usecase_1 = require("../../useCases/users/get-user-details.usecase");
+const get_all_nearest_shops_usecase_1 = require("../../useCases/shop/get-all-nearest-shops.usecase");
+const get_shop_details_by_shopid_usecase_1 = require("../../useCases/shop/get-shop-details-by-shopid.usecase");
+const create_booking_usecase_1 = require("../../useCases/booking/create-booking.usecase");
+const verify_payment_usecase_1 = require("../../useCases/booking/verify-payment.usecase");
+const handle_failure_payment_usecase_1 = require("../../useCases/booking/handle-failure-payment.usecase");
+const get_all_bookings_by_shopid_usecase_1 = require("../../useCases/booking/get-all-bookings-by-shopid.usecase");
+const get_all_bookings_by_user_usecase_1 = require("../../useCases/booking/get-all-bookings-by-user.usecase");
+const cancel_booking_usecase_1 = require("../../useCases/booking/cancel-booking.usecase");
+const get_wallet_overview_usecase_1 = require("../../useCases/finance/get-wallet-overview.usecase");
+const get_wallet_by_user_usecase_1 = require("../../useCases/finance/wallet/get-wallet-by-user.usecase");
+const get_transaction_by_user_usecase_1 = require("../../useCases/finance/transaction/get-transaction-by-user.usecase");
+const get_withdrawal_by_user_usecase_1 = require("../../useCases/finance/withdrawal/get-withdrawal-by-user-usecase");
+const topup_wallet_usecase_1 = require("../../useCases/finance/wallet/topup-wallet.usecase");
+const razorpay_service_1 = require("../../interfaceAdapters/services/razorpay.service");
+const verify_topup_payment_usecase_1 = require("../../useCases/finance/wallet/verify-topup-payment.usecase");
+const update_wallet_balance_usecase_1 = require("../../useCases/finance/wallet/update-wallet-balance.usecase");
+const withdraw_from_wallet_usecase_1 = require("../../useCases/finance/withdrawal/withdraw-from-wallet.usecase");
+const handle_topup_failure_payment_usecase_1 = require("../../useCases/finance/wallet/handle-topup-failure-payment.usecase");
+const add_shop_review_usecase_1 = require("../../useCases/review/add-shop-review.usecase");
+const add_post_usecase_1 = require("../../useCases/feed/post/add-post.usecase");
+const get_all_posts_by_barber_usecase_1 = require("../../useCases/feed/post/get-all-posts-by-barber.usecase");
+const get_single_post_by_postid_usecase_1 = require("../../useCases/feed/post/get-single-post-by-postid.usecase");
+const update_post_usecase_1 = require("../../useCases/feed/post/update-post.usecase");
+const delete_post_usecase_1 = require("../../useCases/feed/post/delete-post.usecase");
+const update_post_status_usecase_1 = require("../../useCases/feed/post/update-post-status.usecase");
+const toggle_like_post_usecase_1 = require("../../useCases/feed/post/toggle-like-post.usecase");
+const add_comment_usecase_1 = require("../../useCases/feed/comment/add-comment.usecase");
+const toggle_comment_like_usecase_1 = require("../../useCases/feed/comment/toggle-comment-like.usecase");
+const get_all_posts_for_client_usecase_1 = require("../../useCases/feed/post/get-all-posts-for-client.usecase");
+const create_wallet_usecase_1 = require("../../useCases/finance/wallet/create-wallet-usecase");
+const complete_booking_usecase_1 = require("../../useCases/booking/complete-booking.usecase");
+const increment_wallet_balance_usecase_1 = require("./../../useCases/finance/wallet/increment-wallet-balance.usecase");
+const decrement_wallet_balance_usecase_1 = require("../../useCases/finance/wallet/decrement-wallet-balance.usecase");
+const get_all_user_withdrawals_usecase_1 = require("../../useCases/finance/withdrawal/get-all-user-withdrawals.usecase");
+const approve_withdrawal_usecase_1 = require("../../useCases/finance/withdrawal/approve-withdrawal.usecase");
+const reject_withdrawal_usecase_1 = require("../../useCases/finance/withdrawal/reject-withdrawal.usecase");
+const book_with_wallet_usecase_1 = require("../../useCases/booking/book-with-wallet.usecase");
+const get_chat_by_user_usecase_1 = require("../../useCases/chat/direct-chat/get-chat-by-user.usecase");
+const create_chat_room_usecase_1 = require("../../useCases/chat/direct-chat/create-chat-room.usecase");
+const get_all_chats_by_user_usecase_1 = require("../../useCases/chat/direct-chat/get-all-chats-by-user.usecase");
+const get_chat_by_chatid_usecase_1 = require("../../useCases/chat/direct-chat/get-chat-by-chatid.usecase");
+const send_direct_messsage_usecase_1 = require("../../useCases/chat/direct-chat/send-direct-messsage.usecase");
+const create_community_usecase_1 = require("../../useCases/chat/community/create-community.usecase");
+const get_all_communities_for_admin_usecase_1 = require("../../useCases/chat/community/get-all-communities-for-admin.usecase");
+const get_community_for_edit_usecase_1 = require("../../useCases/chat/community/get-community-for-edit.usecase");
+const edit_community_usecase_1 = require("../../useCases/chat/community/edit-community.usecase");
+const update_community_status_usecase_1 = require("../../useCases/chat/community/update-community-status.usecase");
+const delete_community_usecase_1 = require("../../useCases/chat/community/delete-community.usecase");
+const get_all_communities_for_barber_usecase_1 = require("../../useCases/chat/community/get-all-communities-for-barber.usecase");
+const barber_join_community_usecase_1 = require("../../useCases/chat/community/barber-join-community.usecase");
+const get_all_community_chats_by_user_usecase_1 = require("../../useCases/chat/community/get-all-community-chats-by-user.usecase");
+const get_community_chat_by_user_usecase_1 = require("../../useCases/chat/community/get-community-chat-by-user.usecase");
+const send_community_message_usecase_1 = require("../../useCases/chat/community/send-community-message.usecase");
+const get_community_by_communityid_usecase_1 = require("../../useCases/chat/community/get-community-by-communityid.usecase");
+const read_direct_message_usecase_1 = require("../../useCases/chat/direct-chat/read-direct-message.usecase");
+const generate_presigned_url_usecase_1 = require("../../useCases/s3/generate-presigned-url.usecase");
+const schedule_meeting_usecase_1 = require("../../useCases/chat/meeting/schedule-meeting.usecase");
+const get_meeting_by_communityid_usecase_1 = require("../../useCases/chat/meeting/get-meeting-by-communityid.usecase");
+const get_all_meetings_for_listing_usecase_1 = require("../../useCases/chat/meeting/get-all-meetings-for-listing.usecase");
+const update_meeting_details_usecase_1 = require("../../useCases/chat/meeting/update-meeting-details.usecase");
+const cancel_meeting_usecase_1 = require("../../useCases/chat/meeting/cancel-meeting.usecase");
+const complete_meeting_usecase_1 = require("../../useCases/chat/meeting/complete-meeting.usecase");
+const get_nearest_3_shops_for_client_usecase_1 = require("../../useCases/shop/get-nearest-3-shops-for-client.usecase");
+const get_last_booking_by_user_usecase_1 = require("../../useCases/booking/get-last-booking-by-user.usecase");
+const get_barber_dashboard_data_usecase_1 = require("../../useCases/dashboard/get-barber-dashboard-data.usecase");
+const get_admin_dashboard_data_usecase_1 = require("../../useCases/dashboard/get-admin-dashboard-data.usecase");
+const get_hairstyles_by_face_shape_usecase_1 = require("../../useCases/hairstyle-detector/get-hairstyles-by-face-shape.usecase");
+const add_hairstyle_usecase_1 = require("../../useCases/hairstyle-detector/add-hairstyle.usecase");
+const get_all_hairstyles_usecase_1 = require("../../useCases/hairstyle-detector/get-all-hairstyles.usecase");
+const update_hairstyle_usecase_1 = require("../../useCases/hairstyle-detector/update-hairstyle.usecase");
+const delete_hairstyle_usecase_1 = require("../../useCases/hairstyle-detector/delete-hairstyle.usecase");
+const get_post_liked_users_usecase_1 = require("../../useCases/feed/post/get-post-liked-users.usecase");
+const get_notifications_by_user_usecase_1 = require("../../useCases/notification/get-notifications-by-user.usecase");
+const send_notification_by_user_usecase_1 = require("../../useCases/notification/send-notification-by-user.usecase");
+const socket_service_1 = require("../../interfaceAdapters/services/socket.service");
+const mark_single_notification_as_read_by_user_usecase_1 = require("../../useCases/notification/mark-single-notification-as-read-by-user.usecase");
+const mark_all_notifications_as_read_by_user_usecase_1 = require("../../useCases/notification/mark-all-notifications-as-read-by-user.usecase");
+class UseCaseRegistry {
     static registerUseCases() {
         //* ====== Register UseCases ====== *//
-        container.register("IRegisterUserUseCase", {
-            useClass: RegisterUserUseCase,
+        tsyringe_1.container.register("IRegisterUserUseCase", {
+            useClass: register_user_usecase_1.RegisterUserUseCase,
         });
-        container.register("ISendOtpEmailUseCase", {
-            useClass: SendOtpEmailUseCase,
+        tsyringe_1.container.register("ISendOtpEmailUseCase", {
+            useClass: send_otp_email_usecase_1.SendOtpEmailUseCase,
         });
-        container.register("IVerifyOtpUseCase", {
-            useClass: VerifyOtpUseCase,
+        tsyringe_1.container.register("IVerifyOtpUseCase", {
+            useClass: verify_otp_usecase_1.VerifyOtpUseCase,
         });
-        container.register("ILoginUserUseCase", {
-            useClass: LoginUserUseCase,
+        tsyringe_1.container.register("ILoginUserUseCase", {
+            useClass: login_user_usecase_1.LoginUserUseCase,
         });
-        container.register("IRefreshTokenUseCase", {
-            useClass: RefreshTokenUseCase,
+        tsyringe_1.container.register("IRefreshTokenUseCase", {
+            useClass: refresh_token_usecase_1.RefreshTokenUseCase,
         });
-        container.register("IGenerateTokenUseCase", {
-            useClass: GenerateTokenUseCase,
+        tsyringe_1.container.register("IGenerateTokenUseCase", {
+            useClass: generate_token_usecase_1.GenerateTokenUseCase,
         });
-        container.register("IRevokeRefreshTokenUseCase", {
-            useClass: RevokeRefreshTokenUseCase,
+        tsyringe_1.container.register("IRevokeRefreshTokenUseCase", {
+            useClass: revoke_refresh_token_usecase_1.RevokeRefreshTokenUseCase,
         });
-        container.register("IBlackListTokenUseCase", {
-            useClass: BlackListTokenUseCase,
+        tsyringe_1.container.register("IBlackListTokenUseCase", {
+            useClass: blacklist_token_usecase_1.BlackListTokenUseCase,
         });
-        container.register("IForgotPasswordUseCase", {
-            useClass: ForgotPasswordUseCase,
+        tsyringe_1.container.register("IForgotPasswordUseCase", {
+            useClass: forgot_password_usecase_1.ForgotPasswordUseCase,
         });
-        container.register("IResetPasswordUseCase", {
-            useClass: ResetPasswordUseCase,
+        tsyringe_1.container.register("IResetPasswordUseCase", {
+            useClass: reset_password_usecase_1.ResetPasswordUseCase,
         });
-        container.register("IGoogleUseCase", {
-            useClass: GoogleUseCase,
+        tsyringe_1.container.register("IGoogleUseCase", {
+            useClass: google_usecase_1.GoogleUseCase,
         });
-        container.register("ISendEmailUseCase", {
-            useClass: SendEmailUseCase,
+        tsyringe_1.container.register("ISendEmailUseCase", {
+            useClass: send_email_usecase_1.SendEmailUseCase,
         });
-        container.register("IUpdateUserDetailsUseCase", {
-            useClass: UpdateUserDetailsUseCase,
+        tsyringe_1.container.register("IUpdateUserDetailsUseCase", {
+            useClass: update_user_details_usecase_1.UpdateUserDetailsUseCase,
         });
-        container.register("IChangeUserPasswordUseCase", {
-            useClass: ChangeUserPasswordUseCase,
+        tsyringe_1.container.register("IChangeUserPasswordUseCase", {
+            useClass: change_user_password_usecase_1.ChangeUserPasswordUseCase,
         });
-        container.register("IAddServiceUseCase", {
-            useClass: AddServiceUseCase,
+        tsyringe_1.container.register("IAddServiceUseCase", {
+            useClass: add_service_usecase_1.AddServiceUseCase,
         });
-        container.register("IGetAllServicesUseCase", {
-            useClass: GetAllServicesUseCase,
+        tsyringe_1.container.register("IGetAllServicesUseCase", {
+            useClass: get_all_services_usecase_1.GetAllServicesUseCase,
         });
-        container.register("IUpdateServiceUseCase", {
-            useClass: UpdateServiceUseCase,
+        tsyringe_1.container.register("IUpdateServiceUseCase", {
+            useClass: update_service_usecase_1.UpdateServiceUseCase,
         });
-        container.register("IDeleteServiceUseCase", {
-            useClass: DeleteServiceUseCase,
+        tsyringe_1.container.register("IDeleteServiceUseCase", {
+            useClass: delete_service_usecase_1.DeleteServiceUseCase,
         });
-        container.register("IGetAllShopsUseCase", {
-            useClass: GetAllShopsUseCase,
+        tsyringe_1.container.register("IGetAllShopsUseCase", {
+            useClass: get_all_shops_usecase_1.GetAllShopsUseCase,
         });
-        container.register("IUpdateShopStatusUseCase", {
-            useClass: UpdateShopStatusUseCase,
+        tsyringe_1.container.register("IUpdateShopStatusUseCase", {
+            useClass: update_shop_status_usecase_1.UpdateShopStatusUseCase,
         });
-        container.register("IGetAllUsersUseCase", {
-            useClass: GetAllUsersUseCase,
+        tsyringe_1.container.register("IGetAllUsersUseCase", {
+            useClass: get_all_users_usecase_1.GetAllUsersUseCase,
         });
-        container.register("IUpdateUserStatusUseCase", {
-            useClass: UpdateUserStatusUseCase,
+        tsyringe_1.container.register("IUpdateUserStatusUseCase", {
+            useClass: update_user_status_usecase_1.UpdateUserStatusUseCase,
         });
-        container.register("IGetUserDetailsUseCase", {
-            useClass: GetUserDetailsUseCase,
+        tsyringe_1.container.register("IGetUserDetailsUseCase", {
+            useClass: get_user_details_usecase_1.GetUserDetailsUseCase,
         });
-        container.register("IGetAllNearestShopsUseCase", {
-            useClass: GetAllNearestShopsUseCase,
+        tsyringe_1.container.register("IGetAllNearestShopsUseCase", {
+            useClass: get_all_nearest_shops_usecase_1.GetAllNearestShopsUseCase,
         });
-        container.register("IGetShopDetailsByShopIdUseCase", {
-            useClass: GetShopDetailsByShopIdUseCase,
+        tsyringe_1.container.register("IGetShopDetailsByShopIdUseCase", {
+            useClass: get_shop_details_by_shopid_usecase_1.GetShopDetailsByShopIdUseCase,
         });
-        container.register("IGetAllBookingsByShopIdUseCase", {
-            useClass: GetAllBookingsByShopIdUseCase,
+        tsyringe_1.container.register("IGetAllBookingsByShopIdUseCase", {
+            useClass: get_all_bookings_by_shopid_usecase_1.GetAllBookingsByShopIdUseCase,
         });
-        container.register("ICreateBookingUseCase", {
-            useClass: CreateBookingUseCase,
+        tsyringe_1.container.register("ICreateBookingUseCase", {
+            useClass: create_booking_usecase_1.CreateBookingUseCase,
         });
-        container.register("IVerifyPaymentUseCase", {
-            useClass: VerifyPaymentUseCase,
+        tsyringe_1.container.register("IVerifyPaymentUseCase", {
+            useClass: verify_payment_usecase_1.VerifyPaymentUseCase,
         });
-        container.register("IHandleFailurePaymentUseCase", {
-            useClass: HandleFailurePaymentUseCase,
+        tsyringe_1.container.register("IHandleFailurePaymentUseCase", {
+            useClass: handle_failure_payment_usecase_1.HandleFailurePaymentUseCase,
         });
-        container.register("IGetAllBookingsByUserUseCase", { useClass: GetAllBookingsByUserUseCase });
-        container.register("ICancelBookingUseCase", {
-            useClass: CancelBookingUseCase,
+        tsyringe_1.container.register("IGetAllBookingsByUserUseCase", { useClass: get_all_bookings_by_user_usecase_1.GetAllBookingsByUserUseCase });
+        tsyringe_1.container.register("ICancelBookingUseCase", {
+            useClass: cancel_booking_usecase_1.CancelBookingUseCase,
         });
-        container.register("ICompleteBookingUseCase", {
-            useClass: CompleteBookingUseCase,
+        tsyringe_1.container.register("ICompleteBookingUseCase", {
+            useClass: complete_booking_usecase_1.CompleteBookingUseCase,
         });
-        container.register("IGetWalletOverviewUseCase", {
-            useClass: GetWalletOverviewUseCase,
+        tsyringe_1.container.register("IGetWalletOverviewUseCase", {
+            useClass: get_wallet_overview_usecase_1.GetWalletOverviewUseCase,
         });
-        container.register("IGetWalletByUserUseCase", {
-            useClass: GetWalletByUserUseCase,
+        tsyringe_1.container.register("IGetWalletByUserUseCase", {
+            useClass: get_wallet_by_user_usecase_1.GetWalletByUserUseCase,
         });
-        container.register("IGetTransactionByUserUseCase", {
-            useClass: GetTransactionByUserUseCase,
+        tsyringe_1.container.register("IGetTransactionByUserUseCase", {
+            useClass: get_transaction_by_user_usecase_1.GetTransactionByUserUseCase,
         });
-        container.register("IGetWithdrawalByUserUseCase", {
-            useClass: GetWithdrawalByUserUseCase,
+        tsyringe_1.container.register("IGetWithdrawalByUserUseCase", {
+            useClass: get_withdrawal_by_user_usecase_1.GetWithdrawalByUserUseCase,
         });
-        container.register("ITopUpWalletUseCase", {
-            useClass: TopUpWalletUseCase,
+        tsyringe_1.container.register("ITopUpWalletUseCase", {
+            useClass: topup_wallet_usecase_1.TopUpWalletUseCase,
         });
-        container.register("IVerifyTopUpPaymentUseCase", {
-            useClass: VerifyTopUpPaymentUseCase,
+        tsyringe_1.container.register("IVerifyTopUpPaymentUseCase", {
+            useClass: verify_topup_payment_usecase_1.VerifyTopUpPaymentUseCase,
         });
-        container.register("IUpdateWalletBalanceUseCase", {
-            useClass: UpdateWalletBalanceUseCase,
+        tsyringe_1.container.register("IUpdateWalletBalanceUseCase", {
+            useClass: update_wallet_balance_usecase_1.UpdateWalletBalanceUseCase,
         });
-        container.register("IWithdrawFromWalletUseCase", {
-            useClass: WithdrawFromWalletUseCase,
+        tsyringe_1.container.register("IWithdrawFromWalletUseCase", {
+            useClass: withdraw_from_wallet_usecase_1.WithdrawFromWalletUseCase,
         });
-        container.register("IHandleTopUpPaymentFailureUseCase", {
-            useClass: HandleTopUpPaymentFailureUseCase,
+        tsyringe_1.container.register("IHandleTopUpPaymentFailureUseCase", {
+            useClass: handle_topup_failure_payment_usecase_1.HandleTopUpPaymentFailureUseCase,
         });
-        container.register("IAddShopReviewUseCase", {
-            useClass: AddShopReviewUseCase,
+        tsyringe_1.container.register("IAddShopReviewUseCase", {
+            useClass: add_shop_review_usecase_1.AddShopReviewUseCase,
         });
-        container.register("IAddPostUseCase", {
-            useClass: AddPostUseCase,
+        tsyringe_1.container.register("IAddPostUseCase", {
+            useClass: add_post_usecase_1.AddPostUseCase,
         });
-        container.register("IGetAllPostsByBarberUseCase", {
-            useClass: GetAllPostsByBarberUseCase,
+        tsyringe_1.container.register("IGetAllPostsByBarberUseCase", {
+            useClass: get_all_posts_by_barber_usecase_1.GetAllPostsByBarberUseCase,
         });
-        container.register("IGetSinglePostByPostIdUseCase", {
-            useClass: GetSinglePostByPostIdUseCase,
+        tsyringe_1.container.register("IGetSinglePostByPostIdUseCase", {
+            useClass: get_single_post_by_postid_usecase_1.GetSinglePostByPostIdUseCase,
         });
-        container.register("IUpdatePostUseCase", {
-            useClass: UpdatePostUseCase,
+        tsyringe_1.container.register("IUpdatePostUseCase", {
+            useClass: update_post_usecase_1.UpdatePostUseCase,
         });
-        container.register("IDeletePostUseCase", {
-            useClass: DeletePostUseCase,
+        tsyringe_1.container.register("IDeletePostUseCase", {
+            useClass: delete_post_usecase_1.DeletePostUseCase,
         });
-        container.register("IUpdatePostStatusUseCase", {
-            useClass: UpdatePostStatusUseCase,
+        tsyringe_1.container.register("IUpdatePostStatusUseCase", {
+            useClass: update_post_status_usecase_1.UpdatePostStatusUseCase,
         });
-        container.register("IToggleLikePostUseCase", {
-            useClass: ToggleLikePostUseCase,
+        tsyringe_1.container.register("IToggleLikePostUseCase", {
+            useClass: toggle_like_post_usecase_1.ToggleLikePostUseCase,
         });
-        container.register("IAddCommentUseCase", {
-            useClass: AddCommentUseCase,
+        tsyringe_1.container.register("IAddCommentUseCase", {
+            useClass: add_comment_usecase_1.AddCommentUseCase,
         });
-        container.register("IToggleCommentLikeUseCase", {
-            useClass: ToggleCommentLikeUseCase,
+        tsyringe_1.container.register("IToggleCommentLikeUseCase", {
+            useClass: toggle_comment_like_usecase_1.ToggleCommentLikeUseCase,
         });
-        container.register("IGetAllPostsForClientUseCase", {
-            useClass: GetAllPostsForClientUseCase,
+        tsyringe_1.container.register("IGetAllPostsForClientUseCase", {
+            useClass: get_all_posts_for_client_usecase_1.GetAllPostsForClientUseCase,
         });
-        container.register("ICreateWalletUseCase", {
-            useClass: CreateWalletUseCase,
+        tsyringe_1.container.register("ICreateWalletUseCase", {
+            useClass: create_wallet_usecase_1.CreateWalletUseCase,
         });
-        container.register("IIncrementWalletBalanceUseCase", {
-            useClass: IncrementWalletBalanceUseCase,
+        tsyringe_1.container.register("IIncrementWalletBalanceUseCase", {
+            useClass: increment_wallet_balance_usecase_1.IncrementWalletBalanceUseCase,
         });
-        container.register("IDecrementWalletBalanceUseCase", {
-            useClass: DecrementWalletBalanceUseCase,
+        tsyringe_1.container.register("IDecrementWalletBalanceUseCase", {
+            useClass: decrement_wallet_balance_usecase_1.DecrementWalletBalanceUseCase,
         });
-        container.register("IGetAllUserWithdrawalsUseCase", {
-            useClass: GetAllUserWithdrawalsUseCase,
+        tsyringe_1.container.register("IGetAllUserWithdrawalsUseCase", {
+            useClass: get_all_user_withdrawals_usecase_1.GetAllUserWithdrawalsUseCase,
         });
-        container.register("IApproveWithdrawalUseCase", {
-            useClass: ApproveWithdrawalUseCase,
+        tsyringe_1.container.register("IApproveWithdrawalUseCase", {
+            useClass: approve_withdrawal_usecase_1.ApproveWithdrawalUseCase,
         });
-        container.register("IRejectWithdrawalUseCase", {
-            useClass: RejectWithdrawalUseCase,
+        tsyringe_1.container.register("IRejectWithdrawalUseCase", {
+            useClass: reject_withdrawal_usecase_1.RejectWithdrawalUseCase,
         });
-        container.register("IBookWithWalletUseCase", {
-            useClass: BookWithWalletUseCase,
+        tsyringe_1.container.register("IBookWithWalletUseCase", {
+            useClass: book_with_wallet_usecase_1.BookWithWalletUseCase,
         });
-        container.register("IGetChatByUserUseCase", {
-            useClass: GetChatByUserUseCase,
+        tsyringe_1.container.register("IGetChatByUserUseCase", {
+            useClass: get_chat_by_user_usecase_1.GetChatByUserUseCase,
         });
-        container.register("ICreateChatRoomUseCase", {
-            useClass: CreateChatRoomUseCase,
+        tsyringe_1.container.register("ICreateChatRoomUseCase", {
+            useClass: create_chat_room_usecase_1.CreateChatRoomUseCase,
         });
-        container.register("IGetAllChatsByUserUseCase", {
-            useClass: GetAllChatsByUserUseCase,
+        tsyringe_1.container.register("IGetAllChatsByUserUseCase", {
+            useClass: get_all_chats_by_user_usecase_1.GetAllChatsByUserUseCase,
         });
-        container.register("IGetChatByChatIdUseCase", {
-            useClass: GetChatByChatIdUseCase,
+        tsyringe_1.container.register("IGetChatByChatIdUseCase", {
+            useClass: get_chat_by_chatid_usecase_1.GetChatByChatIdUseCase,
         });
-        container.register("ISendDirectMessageUseCase", {
-            useClass: SendDirectMessageUseCase,
+        tsyringe_1.container.register("ISendDirectMessageUseCase", {
+            useClass: send_direct_messsage_usecase_1.SendDirectMessageUseCase,
         });
-        container.register("ICreateCommunityUseCase", {
-            useClass: CreateCommunityUseCase,
+        tsyringe_1.container.register("ICreateCommunityUseCase", {
+            useClass: create_community_usecase_1.CreateCommunityUseCase,
         });
-        container.register("IGetAllCommunitiesForAdminUseCase", {
-            useClass: GetAllCommunitiesForAdminUseCase,
+        tsyringe_1.container.register("IGetAllCommunitiesForAdminUseCase", {
+            useClass: get_all_communities_for_admin_usecase_1.GetAllCommunitiesForAdminUseCase,
         });
-        container.register("IGetCommunityForEditUseCase", {
-            useClass: GetCommunityForEditUseCase,
+        tsyringe_1.container.register("IGetCommunityForEditUseCase", {
+            useClass: get_community_for_edit_usecase_1.GetCommunityForEditUseCase,
         });
-        container.register("IEditCommunityUseCase", {
-            useClass: EditCommunityUseCase,
+        tsyringe_1.container.register("IEditCommunityUseCase", {
+            useClass: edit_community_usecase_1.EditCommunityUseCase,
         });
-        container.register("IUpdateCommunityStatusUseCase", {
-            useClass: UpdateCommunityStatusUseCase,
+        tsyringe_1.container.register("IUpdateCommunityStatusUseCase", {
+            useClass: update_community_status_usecase_1.UpdateCommunityStatusUseCase,
         });
-        container.register("IDeleteCommunityUseCase", {
-            useClass: DeleteCommunityUseCase,
+        tsyringe_1.container.register("IDeleteCommunityUseCase", {
+            useClass: delete_community_usecase_1.DeleteCommunityUseCase,
         });
-        container.register("IGetAllCommunitiesForBarberUseCase", {
-            useClass: GetAllCommunitiesForBarberUseCase,
+        tsyringe_1.container.register("IGetAllCommunitiesForBarberUseCase", {
+            useClass: get_all_communities_for_barber_usecase_1.GetAllCommunitiesForBarberUseCase,
         });
-        container.register("IBarberJoinCommunityUseCase", {
-            useClass: BarberJoinCommunityUseCase,
+        tsyringe_1.container.register("IBarberJoinCommunityUseCase", {
+            useClass: barber_join_community_usecase_1.BarberJoinCommunityUseCase,
         });
-        container.register("IGetAllCommunityChatsByUserUseCase", {
-            useClass: GetAllCommunityChatsByUserUseCase,
+        tsyringe_1.container.register("IGetAllCommunityChatsByUserUseCase", {
+            useClass: get_all_community_chats_by_user_usecase_1.GetAllCommunityChatsByUserUseCase,
         });
-        container.register("IGetCommunityChatUseCase", {
-            useClass: GetCommunityChatUseCase,
+        tsyringe_1.container.register("IGetCommunityChatUseCase", {
+            useClass: get_community_chat_by_user_usecase_1.GetCommunityChatUseCase,
         });
-        container.register("ISendCommunityMessageUseCase", {
-            useClass: SendCommunityMessageUseCase,
+        tsyringe_1.container.register("ISendCommunityMessageUseCase", {
+            useClass: send_community_message_usecase_1.SendCommunityMessageUseCase,
         });
-        container.register("IGetCommunityByCommunityIdUseCase", {
-            useClass: GetCommunityByCommunityIdUseCase,
+        tsyringe_1.container.register("IGetCommunityByCommunityIdUseCase", {
+            useClass: get_community_by_communityid_usecase_1.GetCommunityByCommunityIdUseCase,
         });
-        container.register("IReadDirectMessageUseCase", {
-            useClass: ReadDirectMessageUseCase,
+        tsyringe_1.container.register("IReadDirectMessageUseCase", {
+            useClass: read_direct_message_usecase_1.ReadDirectMessageUseCase,
         });
-        container.register("IGeneratePresignedUrlUseCase", {
-            useClass: GeneratePresignedUrlUseCase,
+        tsyringe_1.container.register("IGeneratePresignedUrlUseCase", {
+            useClass: generate_presigned_url_usecase_1.GeneratePresignedUrlUseCase,
         });
-        container.register("IScheduleMeetingUseCase", {
-            useClass: ScheduleMeetingUseCase,
+        tsyringe_1.container.register("IScheduleMeetingUseCase", {
+            useClass: schedule_meeting_usecase_1.ScheduleMeetingUseCase,
         });
-        container.register("IGetMeetingByCommunityIdUseCase", {
-            useClass: GetMeetingByCommunityIdUseCase,
+        tsyringe_1.container.register("IGetMeetingByCommunityIdUseCase", {
+            useClass: get_meeting_by_communityid_usecase_1.GetMeetingByCommunityIdUseCase,
         });
-        container.register("IGetAllMeetingsForListingUseCase", {
-            useClass: GetAllMeetingsForListingUseCase,
+        tsyringe_1.container.register("IGetAllMeetingsForListingUseCase", {
+            useClass: get_all_meetings_for_listing_usecase_1.GetAllMeetingsForListingUseCase,
         });
-        container.register("IUpdateMeetingDetailsUseCase", {
-            useClass: UpdateMeetingDetailsUseCase,
+        tsyringe_1.container.register("IUpdateMeetingDetailsUseCase", {
+            useClass: update_meeting_details_usecase_1.UpdateMeetingDetailsUseCase,
         });
-        container.register("ICancelMeetingUseCase", {
-            useClass: CancelMeetingUseCase,
+        tsyringe_1.container.register("ICancelMeetingUseCase", {
+            useClass: cancel_meeting_usecase_1.CancelMeetingUseCase,
         });
-        container.register("ICompleteMeetingUseCase", {
-            useClass: CompleteMeetingUseCase,
+        tsyringe_1.container.register("ICompleteMeetingUseCase", {
+            useClass: complete_meeting_usecase_1.CompleteMeetingUseCase,
         });
-        container.register("IGetNearest3ShopsForClientUseCase", {
-            useClass: GetNearest3ShopsForClientUseCase,
+        tsyringe_1.container.register("IGetNearest3ShopsForClientUseCase", {
+            useClass: get_nearest_3_shops_for_client_usecase_1.GetNearest3ShopsForClientUseCase,
         });
-        container.register("IGetLastBookingByUserUseCase", {
-            useClass: GetLastBookingByUserUseCase,
+        tsyringe_1.container.register("IGetLastBookingByUserUseCase", {
+            useClass: get_last_booking_by_user_usecase_1.GetLastBookingByUserUseCase,
         });
-        container.register("IGetBarberDashboardDataUseCase", {
-            useClass: GetBarberDashboardDataUseCase,
+        tsyringe_1.container.register("IGetBarberDashboardDataUseCase", {
+            useClass: get_barber_dashboard_data_usecase_1.GetBarberDashboardDataUseCase,
         });
-        container.register("IGetAdminDashboardDataUseCase", {
-            useClass: GetAdminDashboardDataUseCase,
+        tsyringe_1.container.register("IGetAdminDashboardDataUseCase", {
+            useClass: get_admin_dashboard_data_usecase_1.GetAdminDashboardDataUseCase,
         });
-        container.register("IGetHairstylesByFaceShapeUseCase", {
-            useClass: GetHairstylesByFaceShapeUseCase,
+        tsyringe_1.container.register("IGetHairstylesByFaceShapeUseCase", {
+            useClass: get_hairstyles_by_face_shape_usecase_1.GetHairstylesByFaceShapeUseCase,
         });
-        container.register("IAddHairstyleUseCase", {
-            useClass: AddHairstyleUseCase,
+        tsyringe_1.container.register("IAddHairstyleUseCase", {
+            useClass: add_hairstyle_usecase_1.AddHairstyleUseCase,
         });
-        container.register("IGetAllHairstylesUseCase", {
-            useClass: GetAllHairstylesUseCase,
+        tsyringe_1.container.register("IGetAllHairstylesUseCase", {
+            useClass: get_all_hairstyles_usecase_1.GetAllHairstylesUseCase,
         });
-        container.register("IUpdateHairstyleUseCase", {
-            useClass: UpdateHairstyleUseCase,
+        tsyringe_1.container.register("IUpdateHairstyleUseCase", {
+            useClass: update_hairstyle_usecase_1.UpdateHairstyleUseCase,
         });
-        container.register("IDeleteHairstyleUseCase", {
-            useClass: DeleteHairstyleUseCase,
+        tsyringe_1.container.register("IDeleteHairstyleUseCase", {
+            useClass: delete_hairstyle_usecase_1.DeleteHairstyleUseCase,
         });
-        container.register("IGetPostLikedUsersUseCase", {
-            useClass: GetPostLikedUsersUseCase,
+        tsyringe_1.container.register("IGetPostLikedUsersUseCase", {
+            useClass: get_post_liked_users_usecase_1.GetPostLikedUsersUseCase,
         });
-        container.register("IGetNotificationsByUserUseCase", {
-            useClass: GetNotificationsByUserUseCase,
+        tsyringe_1.container.register("IGetNotificationsByUserUseCase", {
+            useClass: get_notifications_by_user_usecase_1.GetNotificationsByUserUseCase,
         });
-        container.register("ISendNotificationByUserUseCase", {
-            useClass: SendNotificationByUserUseCase,
+        tsyringe_1.container.register("ISendNotificationByUserUseCase", {
+            useClass: send_notification_by_user_usecase_1.SendNotificationByUserUseCase,
         });
-        container.register("IMarkAllNotificationsAsReadByUserUseCase", {
-            useClass: MarkAllNotificationsAsReadByUserUseCase,
+        tsyringe_1.container.register("IMarkAllNotificationsAsReadByUserUseCase", {
+            useClass: mark_all_notifications_as_read_by_user_usecase_1.MarkAllNotificationsAsReadByUserUseCase,
         });
-        container.register("IMarkSingleNotificationAsReadByUserUseCase", {
-            useClass: MarkSingleNotificationAsReadByUserUseCase,
+        tsyringe_1.container.register("IMarkSingleNotificationAsReadByUserUseCase", {
+            useClass: mark_single_notification_as_read_by_user_usecase_1.MarkSingleNotificationAsReadByUserUseCase,
         });
         //* ====== Register Bcrypts ====== *//
-        container.register("IPasswordBcrypt", {
-            useClass: PasswordBcrypt,
+        tsyringe_1.container.register("IPasswordBcrypt", {
+            useClass: password_bcrypt_1.PasswordBcrypt,
         });
-        container.register("IOtpBcrypt", {
-            useClass: OtpBcrypt,
+        tsyringe_1.container.register("IOtpBcrypt", {
+            useClass: otp_bcrypt_1.OtpBcrypt,
         });
         //* ====== Register Services ====== *//
-        container.register("IUserExistenceService", {
-            useClass: UserExistenceService,
+        tsyringe_1.container.register("IUserExistenceService", {
+            useClass: user_existence_service_1.UserExistenceService,
         });
-        container.register("IOtpService", {
-            useClass: OtpService,
+        tsyringe_1.container.register("IOtpService", {
+            useClass: otp_service_1.OtpService,
         });
-        container.register("IEmailService", {
-            useClass: EmailService,
+        tsyringe_1.container.register("IEmailService", {
+            useClass: email_service_1.EmailService,
         });
-        container.register("ITokenService", {
-            useClass: JWTService,
+        tsyringe_1.container.register("ITokenService", {
+            useClass: jwt_service_1.JWTService,
         });
-        container.register("IRazorpayService", {
-            useClass: RazorpayService,
+        tsyringe_1.container.register("IRazorpayService", {
+            useClass: razorpay_service_1.RazorpayService,
         });
-        container.register("IS3Service", {
-            useClass: S3Service,
+        tsyringe_1.container.register("IS3Service", {
+            useClass: s3_service_1.S3Service,
         });
-        container.register("IGoogleCalendarService", {
-            useClass: GoogleCalendarService,
+        tsyringe_1.container.register("IGoogleCalendarService", {
+            useClass: google_calendar_service_1.GoogleCalendarService,
         });
-        container.register("ISocketService", {
-            useClass: SocketService,
+        tsyringe_1.container.register("ISocketService", {
+            useClass: socket_service_1.SocketService,
         });
         //* ====== Register Socket Handlers ====== *//
-        container.register("INotificationSocketHandler", {
-            useClass: NotificationSocketHandler,
+        tsyringe_1.container.register("INotificationSocketHandler", {
+            useClass: notification_handler_1.NotificationSocketHandler,
         });
     }
 }
+exports.UseCaseRegistry = UseCaseRegistry;

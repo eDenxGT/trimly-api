@@ -1,24 +1,24 @@
 import { inject, injectable } from "tsyringe";
 import { Request, Response } from "express";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { CustomRequest } from "../middlewares/auth.middleware";
 import {
 	ERROR_MESSAGES,
 	HTTP_STATUS,
 	SUCCESS_MESSAGES,
 	TRole,
-} from "../../shared/constants.js";
-import { IGetWalletOverviewUseCase } from "../../entities/useCaseInterfaces/finance/wallet/get-wallet-overview-usecase.interface.js";
-import { ITopUpWalletUseCase } from "../../entities/useCaseInterfaces/finance/wallet/topup-wallet-usecase.interface.js";
-import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
-import { IVerifyTopUpPaymentUseCase } from "../../entities/useCaseInterfaces/finance/wallet/verify-topup-payment-usecase.interface.js";
-import { IUpdateWalletBalanceUseCase } from "../../entities/useCaseInterfaces/finance/wallet/update-wallet-balance-usecase.interface.js";
-import { IHandleTopUpPaymentFailureUseCase } from "../../entities/useCaseInterfaces/finance/wallet/handle-topup-failure-payment-usecase.interface.js";
-import { IFinanceController } from "./../../entities/controllerInterfaces/finance/finance-controller.interface.js";
-import { IWithdrawFromWalletUseCase } from "../../entities/useCaseInterfaces/finance/withdrawal/withdraw-from-wallet-usecase.interface.js";
-import { IGetAllUserWithdrawalsUseCase } from "../../entities/useCaseInterfaces/finance/withdrawal/get-all-user-withdrawals-usecase.interface.js";
-import { IRejectWithdrawalUseCase } from "../../entities/useCaseInterfaces/finance/withdrawal/reject-withdrawal-usecase.interface.js";
-import { IApproveWithdrawalUseCase } from "../../entities/useCaseInterfaces/finance/withdrawal/approve-withdrawal-usecase.interface.js";
+} from "../../shared/constants";
+import { IGetWalletOverviewUseCase } from "../../entities/useCaseInterfaces/finance/wallet/get-wallet-overview-usecase.interface";
+import { ITopUpWalletUseCase } from "../../entities/useCaseInterfaces/finance/wallet/topup-wallet-usecase.interface";
+import { generateUniqueId } from "../../shared/utils/unique-uuid.helper";
+import { IVerifyTopUpPaymentUseCase } from "../../entities/useCaseInterfaces/finance/wallet/verify-topup-payment-usecase.interface";
+import { IUpdateWalletBalanceUseCase } from "../../entities/useCaseInterfaces/finance/wallet/update-wallet-balance-usecase.interface";
+import { IHandleTopUpPaymentFailureUseCase } from "../../entities/useCaseInterfaces/finance/wallet/handle-topup-failure-payment-usecase.interface";
+import { IFinanceController } from "./../../entities/controllerInterfaces/finance/finance-controller.interface";
+import { IWithdrawFromWalletUseCase } from "../../entities/useCaseInterfaces/finance/withdrawal/withdraw-from-wallet-usecase.interface";
+import { IGetAllUserWithdrawalsUseCase } from "../../entities/useCaseInterfaces/finance/withdrawal/get-all-user-withdrawals-usecase.interface";
+import { IRejectWithdrawalUseCase } from "../../entities/useCaseInterfaces/finance/withdrawal/reject-withdrawal-usecase.interface";
+import { IApproveWithdrawalUseCase } from "../../entities/useCaseInterfaces/finance/withdrawal/approve-withdrawal-usecase.interface";
 
 @injectable()
 export class FinanceController implements IFinanceController {

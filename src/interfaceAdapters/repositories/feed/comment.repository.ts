@@ -1,11 +1,11 @@
 import { injectable } from "tsyringe";
-import { ICommentRepository } from "../../../entities/repositoryInterfaces/feed/comment-repository.interface.js";
+import { ICommentRepository } from "../../../entities/repositoryInterfaces/feed/comment-repository.interface";
 import {
   CommentModel,
   ICommentModel,
-} from "../../../frameworks/database/mongoDb/models/comment.model.js";
-import { BaseRepository } from "../base.repository.js";
-import { ICommentEntity } from "../../../entities/models/comment.entity.js";
+} from "../../../frameworks/database/mongoDb/models/comment.model";
+import { BaseRepository } from "../base.repository";
+import { ICommentEntity } from "../../../entities/models/comment.entity";
 
 @injectable()
 export class CommentRepository

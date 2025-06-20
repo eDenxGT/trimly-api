@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IDirectMessageModel } from "../../models/chat/direct-message.model.js";
+import { IDirectMessageModel } from "../../models/chat/direct-message.model";
 
 export const directMessageSchema = new Schema<IDirectMessageModel>(
   {

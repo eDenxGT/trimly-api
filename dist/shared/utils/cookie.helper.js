@@ -1,6 +1,9 @@
-import { config } from "../config.js";
-export const setAuthCookies = (res, accessToken, refreshToken, accessTokenName, refreshTokenName) => {
-    const isProduction = config.server.NODE_ENV === "production";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.clearAuthCookies = exports.updateCookieWithAccessToken = exports.setAuthCookies = void 0;
+const config_1 = require("../config");
+const setAuthCookies = (res, accessToken, refreshToken, accessTokenName, refreshTokenName) => {
+    const isProduction = config_1.config.server.NODE_ENV === "production";
     res.cookie(accessTokenName, accessToken, {
         httpOnly: true,
         secure: isProduction,
@@ -12,15 +15,18 @@ export const setAuthCookies = (res, accessToken, refreshToken, accessTokenName, 
         sameSite: "strict",
     });
 };
-export const updateCookieWithAccessToken = (res, accessToken, accessTokenName) => {
-    const isProduction = config.server.NODE_ENV === "production";
+exports.setAuthCookies = setAuthCookies;
+const updateCookieWithAccessToken = (res, accessToken, accessTokenName) => {
+    const isProduction = config_1.config.server.NODE_ENV === "production";
     res.cookie(accessTokenName, accessToken, {
         httpOnly: true,
         secure: isProduction,
         sameSite: "strict",
     });
 };
-export const clearAuthCookies = (res, accessTokenName, refreshTokenName) => {
+exports.updateCookieWithAccessToken = updateCookieWithAccessToken;
+const clearAuthCookies = (res, accessTokenName, refreshTokenName) => {
     res.clearCookie(accessTokenName);
     res.clearCookie(refreshTokenName);
 };
+exports.clearAuthCookies = clearAuthCookies;

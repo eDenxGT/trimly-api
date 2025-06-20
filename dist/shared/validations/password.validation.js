@@ -1,5 +1,8 @@
-import { z } from "zod";
-export const passwordSchema = z
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.passwordSchema = void 0;
+const zod_1 = require("zod");
+exports.passwordSchema = zod_1.z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })
     .regex(/[A-Z]/, {

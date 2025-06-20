@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,36 +11,48 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AddShopReviewUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const unique_uuid_helper_1 = require("../../shared/utils/unique-uuid.helper");
+const custom_error_1 = require("../../entities/utils/custom.error");
+const constants_1 = require("../../shared/constants");
 let AddShopReviewUseCase = class AddShopReviewUseCase {
-    _reviewRepository;
     constructor(_reviewRepository) {
         this._reviewRepository = _reviewRepository;
     }
-    async execute(shopId, userId, rating, reviewText) {
-        const isReviewExisting = await this._reviewRepository.findOne({
-            shopId,
-            reviewerId: userId,
-        });
-        if (isReviewExisting) {
-            throw new CustomError(ERROR_MESSAGES.REVIEW_EXISTING, HTTP_STATUS.BAD_REQUEST);
-        }
-        await this._reviewRepository.save({
-            reviewId: generateUniqueId("review"),
-            shopId,
-            reviewerId: userId,
-            rating,
-            reviewText,
-            createdAt: new Date(),
+    execute(shopId, userId, rating, reviewText) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const isReviewExisting = yield this._reviewRepository.findOne({
+                shopId,
+                reviewerId: userId,
+            });
+            if (isReviewExisting) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.REVIEW_EXISTING, constants_1.HTTP_STATUS.BAD_REQUEST);
+            }
+            yield this._reviewRepository.save({
+                reviewId: (0, unique_uuid_helper_1.generateUniqueId)("review"),
+                shopId,
+                reviewerId: userId,
+                rating,
+                reviewText,
+                createdAt: new Date(),
+            });
         });
     }
 };
-AddShopReviewUseCase = __decorate([
-    injectable(),
-    __param(0, inject("IReviewRepository")),
+exports.AddShopReviewUseCase = AddShopReviewUseCase;
+exports.AddShopReviewUseCase = AddShopReviewUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IReviewRepository")),
     __metadata("design:paramtypes", [Object])
 ], AddShopReviewUseCase);
-export { AddShopReviewUseCase };

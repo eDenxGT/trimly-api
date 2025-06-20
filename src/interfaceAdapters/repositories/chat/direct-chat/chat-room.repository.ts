@@ -1,13 +1,13 @@
 import { injectable } from "tsyringe";
-import { IChatRoomRepository } from "../../../../entities/repositoryInterfaces/chat/direct-chat/chat-room-repository.interface.js";
-import { BaseRepository } from "../../base.repository.js";
+import { IChatRoomRepository } from "../../../../entities/repositoryInterfaces/chat/direct-chat/chat-room-repository.interface";
+import { BaseRepository } from "../../base.repository";
 import {
   ChatRoomModel,
   IChatRoomModel,
-} from "../../../../frameworks/database/mongoDb/models/chat/chat-room.model.js";
-import { IChatRoomEntity } from "../../../../entities/models/chat/chat-room.entity.js";
-import { CommunityModel } from "../../../../frameworks/database/mongoDb/models/chat/community-chat-room.model.js";
-import { ICommunityChatRoomEntity } from "../../../../entities/models/chat/community-chat-room.entity.js";
+} from "../../../../frameworks/database/mongoDb/models/chat/chat-room.model";
+import { IChatRoomEntity } from "../../../../entities/models/chat/chat-room.entity";
+import { CommunityModel } from "../../../../frameworks/database/mongoDb/models/chat/community-chat-room.model";
+import { ICommunityChatRoomEntity } from "../../../../entities/models/chat/community-chat-room.entity";
 
 @injectable()
 export class ChatRoomRepository

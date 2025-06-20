@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IBarberJoinCommunityUseCase } from "../../../entities/useCaseInterfaces/chat/community/barber-join-community-usecase.interface.js";
-import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
+import { IBarberJoinCommunityUseCase } from "../../../entities/useCaseInterfaces/chat/community/barber-join-community-usecase.interface";
+import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 
 @injectable()
 export class BarberJoinCommunityUseCase implements IBarberJoinCommunityUseCase {

@@ -1,91 +1,101 @@
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { JWTService } from "../services/jwt.service.js";
-import { redisClient } from "./../../frameworks/cache/redis.client.js";
-const tokenService = new JWTService();
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.decodeToken = exports.authorizeRole = exports.verifyAuth = void 0;
+const constants_1 = require("../../shared/constants");
+const jwt_service_1 = require("../services/jwt.service");
+const redis_client_1 = require("./../../frameworks/cache/redis.client");
+const tokenService = new jwt_service_1.JWTService();
 //* ─────────────────────────────────────────────────────────────
 //*                  🛠️ VerifyAuth Middleware
 //* ─────────────────────────────────────────────────────────────
-export const verifyAuth = async (req, res, next) => {
+const verifyAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = extractToken(req);
         if (!token) {
-            res.status(HTTP_STATUS.UNAUTHORIZED).json({
+            res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
                 success: false,
-                message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+                message: constants_1.ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
             });
             return;
         }
-        if (await isBlacklisted(token.access_token)) {
-            res.status(HTTP_STATUS.FORBIDDEN).json({
+        if (yield isBlacklisted(token.access_token)) {
+            res.status(constants_1.HTTP_STATUS.FORBIDDEN).json({
                 success: false,
-                message: ERROR_MESSAGES.TOKEN_BLACKLISTED,
+                message: constants_1.ERROR_MESSAGES.TOKEN_BLACKLISTED,
             });
             return;
         }
         const user = tokenService.verifyAccessToken(token.access_token);
         if (!user || !user.userId) {
-            res.status(HTTP_STATUS.UNAUTHORIZED).json({
-                message: ERROR_MESSAGES.TOKEN_EXPIRED,
+            res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
+                message: constants_1.ERROR_MESSAGES.TOKEN_EXPIRED,
             });
             return;
         }
-        req.user = {
-            ...user,
-            access_token: token.access_token,
-            refresh_token: token.refresh_token,
-        };
+        req.user = Object.assign(Object.assign({}, user), { access_token: token.access_token, refresh_token: token.refresh_token });
         next();
     }
     catch (error) {
         if (error.name === "TokenExpiredError") {
             console.log(error.name);
-            res.status(HTTP_STATUS.UNAUTHORIZED).json({
-                message: ERROR_MESSAGES.TOKEN_EXPIRED,
+            res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
+                message: constants_1.ERROR_MESSAGES.TOKEN_EXPIRED,
             });
             return;
         }
         console.log("Invalid token response sent");
-        res.status(HTTP_STATUS.UNAUTHORIZED).json({
-            message: ERROR_MESSAGES.INVALID_TOKEN,
+        res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
+            message: constants_1.ERROR_MESSAGES.INVALID_TOKEN,
         });
         return;
     }
-};
+});
+exports.verifyAuth = verifyAuth;
 //* ─────────────────────────────────────────────────────────────
 //*                 🛠️ Extract Token Helper Fn
 //* ─────────────────────────────────────────────────────────────
 const extractToken = (req) => {
+    var _a, _b, _c, _d;
     const userType = req.path.split("/")[1];
     if (!userType)
         return null;
     return {
-        access_token: req.cookies?.[`${userType}_access_token`] ?? null,
-        refresh_token: req.cookies?.[`${userType}_refresh_token`] ?? null,
+        access_token: (_b = (_a = req.cookies) === null || _a === void 0 ? void 0 : _a[`${userType}_access_token`]) !== null && _b !== void 0 ? _b : null,
+        refresh_token: (_d = (_c = req.cookies) === null || _c === void 0 ? void 0 : _c[`${userType}_refresh_token`]) !== null && _d !== void 0 ? _d : null,
     };
 };
 //* ─────────────────────────────────────────────────────────────
 //*                  🛠️ Blacklist checker Fn
 //* ─────────────────────────────────────────────────────────────
-const isBlacklisted = async (token) => {
+const isBlacklisted = (token) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = await redisClient.get(token);
+        const result = yield redis_client_1.redisClient.get(token);
         return result !== null;
     }
     catch (error) {
         console.error("Redis error:", error);
         return false;
     }
-};
+});
 //* ─────────────────────────────────────────────────────────────
 //*                 🛠️ Authorize Role Middleware
 //* ─────────────────────────────────────────────────────────────
-export const authorizeRole = (allowedRoles) => {
+const authorizeRole = (allowedRoles) => {
     return (req, res, next) => {
         const user = req.user;
         if (!user || !allowedRoles.includes(user.role)) {
-            res.status(HTTP_STATUS.FORBIDDEN).json({
+            res.status(constants_1.HTTP_STATUS.FORBIDDEN).json({
                 success: false,
-                message: ERROR_MESSAGES.NOT_ALLOWED,
+                message: constants_1.ERROR_MESSAGES.NOT_ALLOWED,
                 userRole: user ? user.role : "none",
             });
             return;
@@ -93,34 +103,36 @@ export const authorizeRole = (allowedRoles) => {
         next();
     };
 };
+exports.authorizeRole = authorizeRole;
 //* ─────────────────────────────────────────────────────────────
 //*                 🛠️ Decode Token Middleware
 //* ─────────────────────────────────────────────────────────────
-export const decodeToken = async (req, res, next) => {
+const decodeToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = extractToken(req);
         if (!token) {
-            res.status(HTTP_STATUS.UNAUTHORIZED).json({
-                message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+            res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
+                message: constants_1.ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
             });
             return;
         }
-        if (await isBlacklisted(token.access_token)) {
-            res.status(HTTP_STATUS.FORBIDDEN).json({
-                message: ERROR_MESSAGES.TOKEN_BLACKLISTED,
+        if (yield isBlacklisted(token.access_token)) {
+            res.status(constants_1.HTTP_STATUS.FORBIDDEN).json({
+                message: constants_1.ERROR_MESSAGES.TOKEN_BLACKLISTED,
             });
             return;
         }
-        const user = tokenService.decodeAccessToken(token?.access_token);
+        const user = tokenService.decodeAccessToken(token === null || token === void 0 ? void 0 : token.access_token);
         // console.log(`Decoded`, user);
         req.user = {
-            userId: user?.userId,
-            email: user?.email,
-            role: user?.role,
+            userId: user === null || user === void 0 ? void 0 : user.userId,
+            email: user === null || user === void 0 ? void 0 : user.email,
+            role: user === null || user === void 0 ? void 0 : user.role,
             access_token: token.access_token,
             refresh_token: token.refresh_token,
         };
         next();
     }
     catch (error) { }
-};
+});
+exports.decodeToken = decodeToken;

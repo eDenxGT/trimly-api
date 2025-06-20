@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IMarkSingleNotificationAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-single-notification-as-read-by-user-usecase.interface.js";
-import { INotificationRepository } from "../../entities/repositoryInterfaces/notification/notification-repository.interface.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+import { IMarkSingleNotificationAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-single-notification-as-read-by-user-usecase.interface";
+import { INotificationRepository } from "../../entities/repositoryInterfaces/notification/notification-repository.interface";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 
 @injectable()
 export class MarkSingleNotificationAsReadByUserUseCase

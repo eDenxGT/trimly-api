@@ -1,36 +1,64 @@
-export class BaseRepository {
-    model;
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BaseRepository = void 0;
+class BaseRepository {
     constructor(model) {
         this.model = model;
     }
-    async find(filter = {}) {
-        return this.model.find(filter);
+    find() {
+        return __awaiter(this, arguments, void 0, function* (filter = {}) {
+            return this.model.find(filter);
+        });
     }
-    async findAll(filter = {}, skip = 0, limit = 10) {
-        const [items, total] = await Promise.all([
-            this.model.find(filter).skip(skip).limit(limit).lean(),
-            this.model.countDocuments(filter),
-        ]);
-        return { items, total };
+    findAll() {
+        return __awaiter(this, arguments, void 0, function* (filter = {}, skip = 0, limit = 10) {
+            const [items, total] = yield Promise.all([
+                this.model.find(filter).skip(skip).limit(limit).lean(),
+                this.model.countDocuments(filter),
+            ]);
+            return { items, total };
+        });
     }
-    async findOne(filter) {
-        return this.model.findOne(filter).lean();
+    findOne(filter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.model.findOne(filter).lean();
+        });
     }
-    async save(data) {
-        return this.model.create(data);
+    save(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.model.create(data);
+        });
     }
-    async update(filter, updateData) {
-        return this.model
-            .findOneAndUpdate(filter, updateData, { new: true })
-            .lean();
+    update(filter, updateData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.model
+                .findOneAndUpdate(filter, updateData, { new: true })
+                .lean();
+        });
     }
-    async delete(filter) {
-        return this.model.findOneAndDelete(filter).lean();
+    delete(filter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.model.findOneAndDelete(filter).lean();
+        });
     }
-    async deleteAll(filter) {
-        await this.model.deleteMany(filter);
+    deleteAll(filter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.model.deleteMany(filter);
+        });
     }
-    async countDocuments(filter) {
-        return this.model.countDocuments(filter);
+    countDocuments(filter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.model.countDocuments(filter);
+        });
     }
 }
+exports.BaseRepository = BaseRepository;

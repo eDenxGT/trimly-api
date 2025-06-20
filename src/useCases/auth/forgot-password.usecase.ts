@@ -1,14 +1,14 @@
 import { inject, injectable } from "tsyringe";
-import { IForgotPasswordUseCase } from "../../entities/useCaseInterfaces/auth/forgot-password-usecase.interface.js";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface.js";
-import { ITokenService } from "../../entities/serviceInterfaces/token-service.interface.js";
-import { IRedisTokenRepository } from "../../entities/repositoryInterfaces/redis/redis-token-repository.interface.js";
-import { IEmailService } from "../../entities/serviceInterfaces/email-service.interface.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { config } from "../../shared/config.js";
+import { IForgotPasswordUseCase } from "../../entities/useCaseInterfaces/auth/forgot-password-usecase.interface";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface";
+import { ITokenService } from "../../entities/serviceInterfaces/token-service.interface";
+import { IRedisTokenRepository } from "../../entities/repositoryInterfaces/redis/redis-token-repository.interface";
+import { IEmailService } from "../../entities/serviceInterfaces/email-service.interface";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { config } from "../../shared/config";
 
 @injectable()
 export class ForgotPasswordUseCase implements IForgotPasswordUseCase {

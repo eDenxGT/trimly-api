@@ -1,11 +1,11 @@
 import { injectable } from "tsyringe";
-import { BaseRepository } from "../base.repository.js";
+import { BaseRepository } from "../base.repository";
 import {
   INotificationModel,
   NotificationModel,
-} from "../../../frameworks/database/mongoDb/models/notification.model.js";
-import { INotificationRepository } from "../../../entities/repositoryInterfaces/notification/notification-repository.interface.js";
-import { INotificationEntity } from "../../../entities/models/notification.entity.js";
+} from "../../../frameworks/database/mongoDb/models/notification.model";
+import { INotificationRepository } from "../../../entities/repositoryInterfaces/notification/notification-repository.interface";
+import { INotificationEntity } from "../../../entities/models/notification.entity";
 
 @injectable()
 export class NotificationRepository

@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { IVerifyPaymentUseCase } from "../../entities/useCaseInterfaces/booking/verify-payment-usecase.interface.js";
-import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface.js";
+import { IVerifyPaymentUseCase } from "../../entities/useCaseInterfaces/booking/verify-payment-usecase.interface";
+import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
 import crypto from "crypto";
-import { config } from "../../shared/config.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { ITransactionRepository } from "../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
-import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
-import { formatDate } from "../../shared/utils/date-formatter.js";
+import { config } from "../../shared/config";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { ITransactionRepository } from "../../entities/repositoryInterfaces/finance/transaction-repository.interface";
+import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface";
+import { formatDate } from "../../shared/utils/date-formatter";
 
 @injectable()
 export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {

@@ -1,5 +1,5 @@
-import { IRefreshTokenEntity } from "../../models/refresh-token.entity.js";
-import { IBaseRepository } from "../base-repository.interface.js";
+import { IRefreshTokenEntity } from "../../models/refresh-token.entity";
+import { IBaseRepository } from "../base-repository.interface";
 
 export interface IRefreshTokenRepository
 	extends IBaseRepository<IRefreshTokenEntity> {

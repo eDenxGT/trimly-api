@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
 import { Request, Response } from "express";
-import { IDashboardController } from "../../entities/controllerInterfaces/dashboard/dashboard-controller.interface.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
-import { IGetNearest3ShopsForClientUseCase } from "../../entities/useCaseInterfaces/shop/get-nearest-3-shops-for-client-usecase.interface.js";
-import { IGetLastBookingByUserUseCase } from "../../entities/useCaseInterfaces/booking/get-last-booking-by-user-usecase.interface.js";
-import { IGetBarberDashboardDataUseCase } from "../../entities/useCaseInterfaces/dashboard/get-barber-dashboard-data-usecase..interface.js";
-import { IGetAdminDashboardDataUseCase } from "../../entities/useCaseInterfaces/dashboard/get-admin-dashboard-data-usecase.interface.js";
+import { IDashboardController } from "../../entities/controllerInterfaces/dashboard/dashboard-controller.interface";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { CustomRequest } from "../middlewares/auth.middleware";
+import { IGetNearest3ShopsForClientUseCase } from "../../entities/useCaseInterfaces/shop/get-nearest-3-shops-for-client-usecase.interface";
+import { IGetLastBookingByUserUseCase } from "../../entities/useCaseInterfaces/booking/get-last-booking-by-user-usecase.interface";
+import { IGetBarberDashboardDataUseCase } from "../../entities/useCaseInterfaces/dashboard/get-barber-dashboard-data-usecase..interface";
+import { IGetAdminDashboardDataUseCase } from "../../entities/useCaseInterfaces/dashboard/get-admin-dashboard-data-usecase.interface";
 
 @injectable()
 export class DashboardController implements IDashboardController {

@@ -1,5 +1,5 @@
-import { IWalletEntity } from "../../models/wallet.entity.js";
-import { IBaseRepository } from "../base-repository.interface.js";
+import { IWalletEntity } from "../../models/wallet.entity";
+import { IBaseRepository } from "../base-repository.interface";
 
 export interface IWalletRepository extends IBaseRepository<IWalletEntity> {
 	incrementBalance(

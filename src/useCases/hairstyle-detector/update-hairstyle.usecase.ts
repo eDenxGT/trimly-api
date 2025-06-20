@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IHairstyleRepository } from "../../entities/repositoryInterfaces/hairstyle/hairstyle-repository.interface.js";
-import { IUpdateHairstyleUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/update-hairstyle-usecase.interface.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+import { IHairstyleRepository } from "../../entities/repositoryInterfaces/hairstyle/hairstyle-repository.interface";
+import { IUpdateHairstyleUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/update-hairstyle-usecase.interface";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 
 @injectable()
 export class UpdateHairstyleUseCase implements IUpdateHairstyleUseCase {

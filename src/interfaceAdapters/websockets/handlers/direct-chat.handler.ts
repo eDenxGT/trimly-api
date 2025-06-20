@@ -1,11 +1,11 @@
 import { Socket, Server } from "socket.io";
 import { inject, injectable } from "tsyringe";
-import { DIRECT_CHAT_EVENTS } from "../../../shared/constants.js";
-import socketLogger from "../../../shared/utils/socket.logger.js";
-import { ISendDirectMessageUseCase } from "../../../entities/useCaseInterfaces/chat/direct-chat/send-direct-messsage-usecase.interface.js";
-import { SocketUserStore } from "../socket-user.store.js";
-import { IDirectChatSocketHandler } from "../../../entities/socketHandlerInterfaces/direct-chat-handler.interface.js";
-import { IReadDirectMessageUseCase } from "../../../entities/useCaseInterfaces/chat/direct-chat/read-direct-message-usecase.interface.js";
+import { DIRECT_CHAT_EVENTS } from "../../../shared/constants";
+import socketLogger from "../../../shared/utils/socket.logger";
+import { ISendDirectMessageUseCase } from "../../../entities/useCaseInterfaces/chat/direct-chat/send-direct-messsage-usecase.interface";
+import { SocketUserStore } from "../socket-user.store";
+import { IDirectChatSocketHandler } from "../../../entities/socketHandlerInterfaces/direct-chat-handler.interface";
+import { IReadDirectMessageUseCase } from "../../../entities/useCaseInterfaces/chat/direct-chat/read-direct-message-usecase.interface";
 
 @injectable()
 export class DirectChatSocketHandler implements IDirectChatSocketHandler {

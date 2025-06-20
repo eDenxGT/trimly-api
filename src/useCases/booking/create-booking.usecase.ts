@@ -1,14 +1,14 @@
 import { setHours, setMinutes, parseISO } from "date-fns";
 import { inject, injectable } from "tsyringe";
-import { ICreateBookingUseCase } from "../../entities/useCaseInterfaces/booking/create-booking-usecase.interface.js";
-import { IBookingRepository } from "./../../entities/repositoryInterfaces/booking/booking-repository.interface.js";
-import { config } from "../../shared/config.js";
+import { ICreateBookingUseCase } from "../../entities/useCaseInterfaces/booking/create-booking-usecase.interface";
+import { IBookingRepository } from "./../../entities/repositoryInterfaces/booking/booking-repository.interface";
+import { config } from "../../shared/config";
 import Razorpay from "razorpay";
-import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { ITransactionRepository } from "../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
-import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper.js";
+import { generateUniqueId } from "../../shared/utils/unique-uuid.helper";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { ITransactionRepository } from "../../entities/repositoryInterfaces/finance/transaction-repository.interface";
+import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper";
 
 @injectable()
 export class CreateBookingUseCase implements ICreateBookingUseCase {

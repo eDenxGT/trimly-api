@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { ISendOtpEmailUseCase } from "../../entities/useCaseInterfaces/auth/sent-otp-usecase.interface.js";
-import { IEmailService } from "../../entities/serviceInterfaces/email-service.interface.js";
-import { IOtpService } from "../../entities/serviceInterfaces/otp-service.interface.js";
-import { IUserExistenceService } from "../../entities/serviceInterfaces/user-existence-service.interface.js";
-import { IBcrypt } from "../../frameworks/security/bcrypt.interface.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+import { ISendOtpEmailUseCase } from "../../entities/useCaseInterfaces/auth/sent-otp-usecase.interface";
+import { IEmailService } from "../../entities/serviceInterfaces/email-service.interface";
+import { IOtpService } from "../../entities/serviceInterfaces/otp-service.interface";
+import { IUserExistenceService } from "../../entities/serviceInterfaces/user-existence-service.interface";
+import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 import chalk from "chalk";
 
 @injectable()

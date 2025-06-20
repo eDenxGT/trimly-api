@@ -1,14 +1,14 @@
 import { inject, injectable } from "tsyringe";
-import { clearAuthCookies } from "../../shared/utils/cookie.helper.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { CustomRequest } from "./auth.middleware.js";
+import { clearAuthCookies } from "../../shared/utils/cookie.helper";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { CustomRequest } from "./auth.middleware";
 import { NextFunction, Response } from "express";
-import { IBlackListTokenUseCase } from "../../entities/useCaseInterfaces/auth/blacklist-token-usecase.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IRevokeRefreshTokenUseCase } from "../../entities/useCaseInterfaces/auth/revoke-refresh-token-usecase.interface.js";
-import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
+import { IBlackListTokenUseCase } from "../../entities/useCaseInterfaces/auth/blacklist-token-usecase.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IRevokeRefreshTokenUseCase } from "../../entities/useCaseInterfaces/auth/revoke-refresh-token-usecase.interface";
+import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface";
+import { CustomError } from "../../entities/utils/custom.error";
 
 @injectable()
 export class BlockStatusMiddleware {

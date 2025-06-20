@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,14 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES, } from "../../shared/constants.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ShopController = void 0;
+const tsyringe_1 = require("tsyringe");
+const constants_1 = require("../../shared/constants");
+const error_handler_1 = require("../../shared/utils/error.handler");
 let ShopController = class ShopController {
-    _getAllShopsUseCase;
-    _getShopDetailsByShopIdUseCase;
-    _updateShopStatusUseCase;
-    _getAllNearestShopsUseCase;
     constructor(_getAllShopsUseCase, _getShopDetailsByShopIdUseCase, _updateShopStatusUseCase, _getAllNearestShopsUseCase) {
         this._getAllShopsUseCase = _getAllShopsUseCase;
         this._getShopDetailsByShopIdUseCase = _getShopDetailsByShopIdUseCase;
@@ -27,90 +35,98 @@ let ShopController = class ShopController {
     //* ─────────────────────────────────────────────────────────────
     //*                     🛠️ Get All Shops
     //* ─────────────────────────────────────────────────────────────
-    async getAllShops(req, res) {
-        try {
-            const { page = 1, limit = 10, search = "", forType } = req.query;
-            const pageNumber = Number(page);
-            const pageSize = Number(limit);
-            const forTypeString = typeof forType === "string" ? forType : "non-active";
-            const searchTermString = typeof search === "string" ? search : "";
-            const { shops, total } = await this._getAllShopsUseCase.execute(forTypeString, pageNumber, pageSize, searchTermString);
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                shops,
-                totalPages: total,
-                currentPage: pageNumber,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+    getAllShops(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { page = 1, limit = 10, search = "", forType } = req.query;
+                const pageNumber = Number(page);
+                const pageSize = Number(limit);
+                const forTypeString = typeof forType === "string" ? forType : "non-active";
+                const searchTermString = typeof search === "string" ? search : "";
+                const { shops, total } = yield this._getAllShopsUseCase.execute(forTypeString, pageNumber, pageSize, searchTermString);
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    shops,
+                    totalPages: total,
+                    currentPage: pageNumber,
+                });
+            }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*             🛠️ Get All Nearest Shops For Client
     //* ─────────────────────────────────────────────────────────────
-    async getAllNearestShopsForClient(req, res) {
-        try {
-            const { search, amenities, userLocation, sortBy, sortOrder, page, limit, } = req.query;
-            const shops = await this._getAllNearestShopsUseCase.execute(search, amenities, Array.isArray(userLocation)
-                ? userLocation.map((loc) => Number(loc))
-                : [], sortBy, sortOrder, page ? Number(page) : 1, limit ? Number(limit) : 9);
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                shops,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+    getAllNearestShopsForClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { search, amenities, userLocation, sortBy, sortOrder, page, limit, } = req.query;
+                const shops = yield this._getAllNearestShopsUseCase.execute(search, amenities, Array.isArray(userLocation)
+                    ? userLocation.map((loc) => Number(loc))
+                    : [], sortBy, sortOrder, page ? Number(page) : 1, limit ? Number(limit) : 9);
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    shops,
+                });
+            }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                🛠️ Get Shop Details By Id
     //* ─────────────────────────────────────────────────────────────
-    async getShopDetailsById(req, res) {
-        try {
-            const { shopId, forType } = req.query;
-            const shop = await this._getShopDetailsByShopIdUseCase.execute(String(shopId), String(forType));
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                user: shop,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+    getShopDetailsById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { shopId, forType } = req.query;
+                const shop = yield this._getShopDetailsByShopIdUseCase.execute(String(shopId), String(forType));
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    user: shop,
+                });
+            }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                   🛠️ Update Shop Status
     //* ─────────────────────────────────────────────────────────────
-    async updateShopStatus(req, res) {
-        try {
-            const { shopId } = req.params;
-            const { status, message } = req.body;
-            if (!shopId || !status) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
-                    success: false,
+    updateShopStatus(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { shopId } = req.params;
+                const { status, message } = req.body;
+                if (!shopId || !status) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                        success: false,
+                    });
+                    return;
+                }
+                const barberShop = yield this._updateShopStatusUseCase.execute(shopId, status, message || "");
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    message: constants_1.SUCCESS_MESSAGES.UPDATE_SUCCESS,
                 });
-                return;
             }
-            const barberShop = await this._updateShopStatusUseCase.execute(shopId, status, message || "");
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                message: SUCCESS_MESSAGES.UPDATE_SUCCESS,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
 };
-ShopController = __decorate([
-    injectable(),
-    __param(0, inject("IGetAllShopsUseCase")),
-    __param(1, inject("IGetShopDetailsByShopIdUseCase")),
-    __param(2, inject("IUpdateShopStatusUseCase")),
-    __param(3, inject("IGetAllNearestShopsUseCase")),
+exports.ShopController = ShopController;
+exports.ShopController = ShopController = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IGetAllShopsUseCase")),
+    __param(1, (0, tsyringe_1.inject)("IGetShopDetailsByShopIdUseCase")),
+    __param(2, (0, tsyringe_1.inject)("IUpdateShopStatusUseCase")),
+    __param(3, (0, tsyringe_1.inject)("IGetAllNearestShopsUseCase")),
     __metadata("design:paramtypes", [Object, Object, Object, Object])
 ], ShopController);
-export { ShopController };

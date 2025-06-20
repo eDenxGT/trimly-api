@@ -1,10 +1,10 @@
 import { injectable } from "tsyringe";
-import { IOtpEntity } from "../../../entities/models/opt.entity.js";
+import { IOtpEntity } from "../../../entities/models/opt.entity";
 import {
 	IOtpModel,
 	OtpModel,
-} from "../../../frameworks/database/mongoDb/models/otp.model.js";
-import { BaseRepository } from "../base.repository.js";
+} from "../../../frameworks/database/mongoDb/models/otp.model";
+import { BaseRepository } from "../base.repository";
 
 @injectable()
 export class OtpRepository extends BaseRepository<IOtpModel> {

@@ -1,11 +1,11 @@
 import { injectable } from "tsyringe";
-import { BaseRepository } from "../base.repository.js";
-import { IPostRepository } from "../../../entities/repositoryInterfaces/feed/post-repository.interface.js";
+import { BaseRepository } from "../base.repository";
+import { IPostRepository } from "../../../entities/repositoryInterfaces/feed/post-repository.interface";
 import {
   IPostModel,
   PostModel,
-} from "../../../frameworks/database/mongoDb/models/post.model.js";
-import { IPostEntity } from "../../../entities/models/post.entity.js";
+} from "../../../frameworks/database/mongoDb/models/post.model";
+import { IPostEntity } from "../../../entities/models/post.entity";
 
 @injectable()
 export class PostRepository

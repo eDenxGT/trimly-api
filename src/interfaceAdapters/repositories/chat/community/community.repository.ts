@@ -1,13 +1,13 @@
 import { injectable } from "tsyringe";
-import { BaseRepository } from "../../base.repository.js";
+import { BaseRepository } from "../../base.repository";
 import {
   CommunityModel,
   ICommunityChatRoomModel,
-} from "../../../../frameworks/database/mongoDb/models/chat/community-chat-room.model.js";
-import { ICommunityRepository } from "../../../../entities/repositoryInterfaces/chat/community/community-respository.interface.js";
+} from "../../../../frameworks/database/mongoDb/models/chat/community-chat-room.model";
+import { ICommunityRepository } from "../../../../entities/repositoryInterfaces/chat/community/community-respository.interface";
 import { PipelineStage } from "mongoose";
-import { ICommunityChatRoomEntity } from "../../../../entities/models/chat/community-chat-room.entity.js";
-import { getActiveUsersCount } from "../../../../shared/utils/get-active-users.helper.js";
+import { ICommunityChatRoomEntity } from "../../../../entities/models/chat/community-chat-room.entity";
+import { getActiveUsersCount } from "../../../../shared/utils/get-active-users.helper";
 
 @injectable()
 export class CommunityRepository

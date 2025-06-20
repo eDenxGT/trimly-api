@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,57 +8,78 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import chalk from "chalk";
-import { injectable } from "tsyringe";
-import nodemailer from "nodemailer";
-import { config } from "../../shared/config.js";
-import { PASSWORD_RESET_MAIL_CONTENT, VERIFICATION_MAIL_CONTENT, } from "../../shared/constants.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmailService = void 0;
+const chalk_1 = __importDefault(require("chalk"));
+const tsyringe_1 = require("tsyringe");
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const config_1 = require("../../shared/config");
+const constants_1 = require("../../shared/constants");
 let EmailService = class EmailService {
-    _transporter;
     constructor() {
-        this._transporter = nodemailer.createTransport({
+        this._transporter = nodemailer_1.default.createTransport({
             service: "gmail",
             auth: {
-                user: config.nodemailer.EMAIL_USER,
-                pass: config.nodemailer.EMAIL_PASS,
+                user: config_1.config.nodemailer.EMAIL_USER,
+                pass: config_1.config.nodemailer.EMAIL_PASS,
             },
         });
     }
-    async _sendMail(mailOptions) {
-        const info = await this._transporter.sendMail(mailOptions);
-        console.log(chalk.bgGreenBright.bold(`📧 Email sent:`), info.response);
+    _sendMail(mailOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const info = yield this._transporter.sendMail(mailOptions);
+            console.log(chalk_1.default.bgGreenBright.bold(`📧 Email sent:`), info.response);
+        });
     }
-    async sendOtpEmail(to, subject, otp) {
-        const mailOptions = {
-            from: `"Trimly" <${config.nodemailer.EMAIL_USER}>`,
-            to,
-            subject,
-            html: VERIFICATION_MAIL_CONTENT(otp),
-        };
-        await this._sendMail(mailOptions);
+    sendOtpEmail(to, subject, otp) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const mailOptions = {
+                from: `"Trimly" <${config_1.config.nodemailer.EMAIL_USER}>`,
+                to,
+                subject,
+                html: (0, constants_1.VERIFICATION_MAIL_CONTENT)(otp),
+            };
+            yield this._sendMail(mailOptions);
+        });
     }
-    async sendResetEmail(to, subject, resetLink) {
-        const mailOptions = {
-            from: `"Trimly" <${config.nodemailer.EMAIL_USER}>`,
-            to,
-            subject,
-            html: PASSWORD_RESET_MAIL_CONTENT(resetLink),
-        };
-        await this._sendMail(mailOptions);
-        console.log(chalk.bgYellowBright.bold(`🔁 Reset Password Link:`), chalk.cyanBright.bold(resetLink));
+    sendResetEmail(to, subject, resetLink) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const mailOptions = {
+                from: `"Trimly" <${config_1.config.nodemailer.EMAIL_USER}>`,
+                to,
+                subject,
+                html: (0, constants_1.PASSWORD_RESET_MAIL_CONTENT)(resetLink),
+            };
+            yield this._sendMail(mailOptions);
+            console.log(chalk_1.default.bgYellowBright.bold(`🔁 Reset Password Link:`), chalk_1.default.cyanBright.bold(resetLink));
+        });
     }
-    async sendCustomEmail(to, subject, content) {
-        const mailOptions = {
-            from: `"Trimly" <${config.nodemailer.EMAIL_USER}>`,
-            to,
-            subject,
-            html: content,
-        };
-        await this._sendMail(mailOptions);
+    sendCustomEmail(to, subject, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const mailOptions = {
+                from: `"Trimly" <${config_1.config.nodemailer.EMAIL_USER}>`,
+                to,
+                subject,
+                html: content,
+            };
+            yield this._sendMail(mailOptions);
+        });
     }
 };
-EmailService = __decorate([
-    injectable(),
+exports.EmailService = EmailService;
+exports.EmailService = EmailService = __decorate([
+    (0, tsyringe_1.injectable)(),
     __metadata("design:paramtypes", [])
 ], EmailService);
-export { EmailService };

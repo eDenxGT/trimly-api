@@ -1,4 +1,4 @@
-import { SocketUserStore } from "../../interfaceAdapters/websockets/socket-user.store.js";
+import { SocketUserStore } from "../../interfaceAdapters/websockets/socket-user.store";
 
 export function getActiveUsersCount(members: { userId: string }[]): number {
   const socketUserStore = SocketUserStore.getInstance();

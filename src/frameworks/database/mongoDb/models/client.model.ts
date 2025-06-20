@@ -1,6 +1,6 @@
 import { Document, model, ObjectId } from "mongoose";
-import { clientSchema } from "../schemas/client.schema.js";
-import { IClientEntity } from "../../../../entities/models/client.entity.js";
+import { clientSchema } from "../schemas/client.schema";
+import { IClientEntity } from "../../../../entities/models/client.entity";
 
 export interface IClientModel extends IClientEntity, Document {
    _id: ObjectId;

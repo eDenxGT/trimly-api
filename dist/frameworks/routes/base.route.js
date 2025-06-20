@@ -1,9 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BaseRoute = void 0;
 //* ====== Module Imports ====== *//
-import { Router } from "express";
-export class BaseRoute {
-    router;
+const express_1 = require("express");
+class BaseRoute {
     constructor() {
-        this.router = Router();
+        this.router = (0, express_1.Router)();
         this.initializeRoutes();
     }
 }
+exports.BaseRoute = BaseRoute;

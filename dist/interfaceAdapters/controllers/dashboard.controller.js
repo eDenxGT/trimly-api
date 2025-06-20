@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,14 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DashboardController = void 0;
+const tsyringe_1 = require("tsyringe");
+const error_handler_1 = require("../../shared/utils/error.handler");
+const constants_1 = require("../../shared/constants");
 let DashboardController = class DashboardController {
-    _getNearest3ShopsForClientUseCase;
-    _getLastBookingByUserUseCase;
-    _getBarberDashboardDataUseCase;
-    _getAdminDashboardDataUseCase;
     constructor(_getNearest3ShopsForClientUseCase, _getLastBookingByUserUseCase, _getBarberDashboardDataUseCase, _getAdminDashboardDataUseCase) {
         this._getNearest3ShopsForClientUseCase = _getNearest3ShopsForClientUseCase;
         this._getLastBookingByUserUseCase = _getLastBookingByUserUseCase;
@@ -27,90 +35,96 @@ let DashboardController = class DashboardController {
     //* ─────────────────────────────────────────────────────────────
     //*                 🛠️ Get Client Home Page Data
     //* ─────────────────────────────────────────────────────────────
-    async getClientHomePageData(req, res) {
-        try {
-            const { userId } = req.user;
-            const { latitude, longitude } = req.query;
-            if (!userId) {
-                res.status(HTTP_STATUS.UNAUTHORIZED).json({
-                    success: false,
-                    message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+    getClientHomePageData(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                const { latitude, longitude } = req.query;
+                if (!userId) {
+                    res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+                    });
+                    return;
+                }
+                const shops = yield this._getNearest3ShopsForClientUseCase.execute({
+                    userId,
+                    latitude: Number(latitude),
+                    longitude: Number(longitude),
                 });
-                return;
+                const lastBooking = yield this._getLastBookingByUserUseCase.execute({
+                    userId,
+                });
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    shops,
+                    lastBooking,
+                });
             }
-            const shops = await this._getNearest3ShopsForClientUseCase.execute({
-                userId,
-                latitude: Number(latitude),
-                longitude: Number(longitude),
-            });
-            const lastBooking = await this._getLastBookingByUserUseCase.execute({
-                userId,
-            });
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                shops,
-                lastBooking,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                🛠️ Get Barber Dashboard Data
     //* ─────────────────────────────────────────────────────────────
-    async getBarberDashboardData(req, res) {
-        try {
-            const { userId } = req.user;
-            if (!userId) {
-                res.status(HTTP_STATUS.UNAUTHORIZED).json({
-                    success: false,
-                    message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+    getBarberDashboardData(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                if (!userId) {
+                    res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+                    });
+                    return;
+                }
+                const dashboardData = yield this._getBarberDashboardDataUseCase.execute({
+                    userId,
                 });
-                return;
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    data: dashboardData,
+                });
             }
-            const dashboardData = await this._getBarberDashboardDataUseCase.execute({
-                userId,
-            });
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                data: dashboardData,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                🛠️ Get Admin Dashboard Data
     //* ─────────────────────────────────────────────────────────────
-    async getAdminDashboardData(req, res) {
-        try {
-            const { userId } = req.user;
-            if (!userId) {
-                res.status(HTTP_STATUS.UNAUTHORIZED).json({
-                    success: false,
-                    message: ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+    getAdminDashboardData(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                if (!userId) {
+                    res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.UNAUTHORIZED_ACCESS,
+                    });
+                    return;
+                }
+                const dashboardData = yield this._getAdminDashboardDataUseCase.execute();
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    data: dashboardData,
                 });
-                return;
             }
-            const dashboardData = await this._getAdminDashboardDataUseCase.execute();
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                data: dashboardData,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
 };
-DashboardController = __decorate([
-    injectable(),
-    __param(0, inject("IGetNearest3ShopsForClientUseCase")),
-    __param(1, inject("IGetLastBookingByUserUseCase")),
-    __param(2, inject("IGetBarberDashboardDataUseCase")),
-    __param(3, inject("IGetAdminDashboardDataUseCase")),
+exports.DashboardController = DashboardController;
+exports.DashboardController = DashboardController = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IGetNearest3ShopsForClientUseCase")),
+    __param(1, (0, tsyringe_1.inject)("IGetLastBookingByUserUseCase")),
+    __param(2, (0, tsyringe_1.inject)("IGetBarberDashboardDataUseCase")),
+    __param(3, (0, tsyringe_1.inject)("IGetAdminDashboardDataUseCase")),
     __metadata("design:paramtypes", [Object, Object, Object, Object])
 ], DashboardController);
-export { DashboardController };

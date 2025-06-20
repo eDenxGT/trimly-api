@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
-import { SocketUserStore } from "../socket-user.store.js";
-import { INotificationSocketHandler } from "../../../entities/socketHandlerInterfaces/notification-handler.interface.js";
-import { SocketService } from "../../services/socket.service.js";
+import { SocketUserStore } from "../socket-user.store";
+import { INotificationSocketHandler } from "../../../entities/socketHandlerInterfaces/notification-handler.interface";
+import { SocketService } from "../../services/socket.service";
 
 export class NotificationSocketHandler implements INotificationSocketHandler {
   private _socketUserStore = SocketUserStore.getInstance();

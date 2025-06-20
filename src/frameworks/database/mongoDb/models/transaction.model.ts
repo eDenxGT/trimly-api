@@ -1,6 +1,6 @@
 import { Document, model, ObjectId } from "mongoose";
-import { ITransactionEntity } from "../../../../entities/models/transaction.entity.js";
-import { transactionSchema } from "../schemas/transaction.schema.js";
+import { ITransactionEntity } from "../../../../entities/models/transaction.entity";
+import { transactionSchema } from "../schemas/transaction.schema";
 
 export interface ITransactionModel extends ITransactionEntity, Document {
   _id: ObjectId;

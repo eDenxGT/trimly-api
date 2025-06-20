@@ -1,4 +1,4 @@
-import { IAdminEntity } from "../../models/admin.entity.js";
-import { IBaseRepository } from "../base-repository.interface.js";
+import { IAdminEntity } from "../../models/admin.entity";
+import { IBaseRepository } from "../base-repository.interface";
 
 export interface IAdminRepository extends IBaseRepository<IAdminEntity> {}

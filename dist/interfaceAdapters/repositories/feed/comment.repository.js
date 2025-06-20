@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,22 +8,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { injectable } from "tsyringe";
-import { CommentModel, } from "../../../frameworks/database/mongoDb/models/comment.model.js";
-import { BaseRepository } from "../base.repository.js";
-let CommentRepository = class CommentRepository extends BaseRepository {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CommentRepository = void 0;
+const tsyringe_1 = require("tsyringe");
+const comment_model_1 = require("../../../frameworks/database/mongoDb/models/comment.model");
+const base_repository_1 = require("../base.repository");
+let CommentRepository = class CommentRepository extends base_repository_1.BaseRepository {
     constructor() {
-        super(CommentModel);
+        super(comment_model_1.CommentModel);
     }
-    async addLike({ commentId, userId, }) {
-        return await CommentModel.findOneAndUpdate({ commentId }, { $addToSet: { likes: userId } }, { new: true });
+    addLike(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ commentId, userId, }) {
+            return yield comment_model_1.CommentModel.findOneAndUpdate({ commentId }, { $addToSet: { likes: userId } }, { new: true });
+        });
     }
-    async removeLike({ commentId, userId, }) {
-        return await CommentModel.findOneAndUpdate({ commentId }, { $pull: { likes: userId } }, { new: true });
+    removeLike(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ commentId, userId, }) {
+            return yield comment_model_1.CommentModel.findOneAndUpdate({ commentId }, { $pull: { likes: userId } }, { new: true });
+        });
     }
 };
-CommentRepository = __decorate([
-    injectable(),
+exports.CommentRepository = CommentRepository;
+exports.CommentRepository = CommentRepository = __decorate([
+    (0, tsyringe_1.injectable)(),
     __metadata("design:paramtypes", [])
 ], CommentRepository);
-export { CommentRepository };

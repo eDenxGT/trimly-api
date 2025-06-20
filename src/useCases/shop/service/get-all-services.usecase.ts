@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IServiceRepository } from "../../../entities/repositoryInterfaces/service/service-repository.interface.js";
-import { IServiceEntity } from "../../../entities/models/service.enity.js";
-import { IGetAllServicesUseCase } from "../../../entities/useCaseInterfaces/shop/service/get-all-services-usecase.interface.js";
+import { IServiceRepository } from "../../../entities/repositoryInterfaces/service/service-repository.interface";
+import { IServiceEntity } from "../../../entities/models/service.enity";
+import { IGetAllServicesUseCase } from "../../../entities/useCaseInterfaces/shop/service/get-all-services-usecase.interface";
 
 @injectable()
 export class GetAllServicesUseCase implements IGetAllServicesUseCase {

@@ -1,5 +1,5 @@
-import { IBarberEntity } from "../barber.entity.js";
-import { IClientEntity } from "../client.entity.js";
+import { IBarberEntity } from "../barber.entity";
+import { IClientEntity } from "../client.entity";
 
 export interface IPaginatedUsers {
 	users: IClientEntity[] | IBarberEntity[] | [];

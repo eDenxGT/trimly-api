@@ -1,12 +1,12 @@
 import chalk from "chalk";
 import { injectable } from "tsyringe";
 import nodemailer from "nodemailer";
-import { config } from "../../shared/config.js";
-import { IEmailService } from "../../entities/serviceInterfaces/email-service.interface.js";
+import { config } from "../../shared/config";
+import { IEmailService } from "../../entities/serviceInterfaces/email-service.interface";
 import {
 	PASSWORD_RESET_MAIL_CONTENT,
 	VERIFICATION_MAIL_CONTENT,
-} from "../../shared/constants.js";
+} from "../../shared/constants";
 
 @injectable()
 export class EmailService implements IEmailService {

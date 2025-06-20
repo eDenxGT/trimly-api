@@ -1,11 +1,11 @@
 import { injectable } from "tsyringe";
-import { BaseRepository } from "../../base.repository.js";
-import { ICommunityMessageRepository } from "../../../../entities/repositoryInterfaces/chat/community/community-message-respository.interface.js";
+import { BaseRepository } from "../../base.repository";
+import { ICommunityMessageRepository } from "../../../../entities/repositoryInterfaces/chat/community/community-message-respository.interface";
 import {
   CommunityMessageModel,
   ICommunityMessageModel,
-} from "../../../../frameworks/database/mongoDb/models/chat/community-message.model.js";
-import { ICommunityMessageEntity } from "../../../../entities/models/chat/community-message.entity.js";
+} from "../../../../frameworks/database/mongoDb/models/chat/community-message.model";
+import { ICommunityMessageEntity } from "../../../../entities/models/chat/community-message.entity";
 
 @injectable()
 export class CommunityMessageRepository

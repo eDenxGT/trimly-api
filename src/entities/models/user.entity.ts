@@ -1,4 +1,4 @@
-import { statusTypes, TRole } from "../../shared/constants.js";
+import { statusTypes, TRole } from "../../shared/constants";
 
 export interface IUserEntity {
 	userId?: string;

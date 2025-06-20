@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IGenerateTokenUseCase } from "../../entities/useCaseInterfaces/auth/generate-token-usecase.interface.js";
-import { ITokenService } from "../../entities/serviceInterfaces/token-service.interface.js";
-import { IRefreshTokenRepository } from "../../entities/repositoryInterfaces/auth/refresh-token-repository.interface.js";
-import { TRole } from "../../shared/constants.js";
+import { IGenerateTokenUseCase } from "../../entities/useCaseInterfaces/auth/generate-token-usecase.interface";
+import { ITokenService } from "../../entities/serviceInterfaces/token-service.interface";
+import { IRefreshTokenRepository } from "../../entities/repositoryInterfaces/auth/refresh-token-repository.interface";
+import { TRole } from "../../shared/constants";
 
 @injectable()
 export class GenerateTokenUseCase implements IGenerateTokenUseCase {

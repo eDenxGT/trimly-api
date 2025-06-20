@@ -1,12 +1,12 @@
 import fs from "fs";
 import path from "path";
 import morgan from "morgan";
-import { config } from "../../shared/config.js";
+import { config } from "../../shared/config";
 import { NextFunction, Request, Response } from "express";
 import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 const logDirectory = path.resolve(__dirname, "../../../logs");
 
 if (!fs.existsSync(logDirectory)) {

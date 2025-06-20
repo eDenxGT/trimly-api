@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IBookingEntity } from "../../entities/models/booking.entity.js";
-import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface.js";
-import { IGetAllBookingsByShopIdUseCase } from "../../entities/useCaseInterfaces/booking/get-all-bookings-by-shopid-usecase.interface.js";
+import { IBookingEntity } from "../../entities/models/booking.entity";
+import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
+import { IGetAllBookingsByShopIdUseCase } from "../../entities/useCaseInterfaces/booking/get-all-bookings-by-shopid-usecase.interface";
 
 @injectable()
 export class GetAllBookingsByShopIdUseCase implements IGetAllBookingsByShopIdUseCase {

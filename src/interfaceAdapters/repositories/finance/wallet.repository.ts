@@ -1,11 +1,11 @@
 import { injectable } from "tsyringe";
-import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface.js";
+import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface";
 import {
 	IWalletModel,
 	WalletModel,
-} from "../../../frameworks/database/mongoDb/models/wallet.model.js";
-import { BaseRepository } from "../base.repository.js";
-import { IWalletEntity } from "../../../entities/models/wallet.entity.js";
+} from "../../../frameworks/database/mongoDb/models/wallet.model";
+import { BaseRepository } from "../base.repository";
+import { IWalletEntity } from "../../../entities/models/wallet.entity";
 
 @injectable()
 export class WalletRepository

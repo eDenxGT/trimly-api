@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IChangeUserPasswordUseCase } from "../../entities/useCaseInterfaces/users/change-user-password-usecase.interface.js";
-import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface.js";
-import { IBcrypt } from "../../frameworks/security/bcrypt.interface.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IChangeUserPasswordUseCase } from "../../entities/useCaseInterfaces/users/change-user-password-usecase.interface";
+import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface";
+import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 
 @injectable()
 export class ChangeUserPasswordUseCase implements IChangeUserPasswordUseCase {

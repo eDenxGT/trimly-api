@@ -1,21 +1,21 @@
 //* ====== Node module-alias Imports ( to import using @/ ) ====== *//
-// import "module-alias/register.js";
+// import "module-alias/register";
 
 //* ====== DI Imports ====== *//
 import "reflect-metadata";
-import "./frameworks/di/resolver.js";
+import "./frameworks/di/resolver";
 
 //* ====== Module Imports ====== *//
 import chalk from "chalk";
 
 //* ====== Other Imports ====== *//
-import { config } from "./shared/config.js";
-import { MongoConnect } from "./frameworks/database/mongoDb/mongoConnect.js";
-import { ExpressServer } from "./frameworks/http/server.js";
+import { config } from "./shared/config";
+import { MongoConnect } from "./frameworks/database/mongoDb/mongoConnect";
+import { ExpressServer } from "./frameworks/http/server";
 import { createServer } from "http";
-import { SocketServer } from "./frameworks/websockets/socket.server.js";
-import socketLogger from "./shared/utils/socket.logger.js";
-import { SocketUserStore } from "./interfaceAdapters/websockets/socket-user.store.js";
+import { SocketServer } from "./frameworks/websockets/socket.server";
+import socketLogger from "./shared/utils/socket.logger";
+import { SocketUserStore } from "./interfaceAdapters/websockets/socket-user.store";
 
 //* ====== Instance Creation ====== *//
 const expressServer = new ExpressServer();
@@ -32,7 +32,7 @@ const socketServer = new SocketServer(httpServer);
 
 //* ====== Socket Events Setup ====== *//
 socketServer.onConnection((socket) => {
-  // set user id in socket data 
+  // set user id in socket data
   const userStore = SocketUserStore.getInstance();
 
   socket.on("registerUser", ({ userId }) => {
@@ -47,7 +47,7 @@ socketServer.onConnection((socket) => {
   socket.on("disconnect", () => {
     console.log(chalk.red.bold("❌ Socket disconnected:", socket.id));
     if (socket.data.userId) {
-      userStore.removeUser(socket.data.userId); 
+      userStore.removeUser(socket.data.userId);
     }
     socketLogger.info("Socket disconnected", {
       socketId: socket.id,

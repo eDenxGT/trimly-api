@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateMeetingDetailsUseCase } from "../../../entities/useCaseInterfaces/chat/meeting/update-meeting-details-usecase.interface.js";
-import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
+import { IUpdateMeetingDetailsUseCase } from "../../../entities/useCaseInterfaces/chat/meeting/update-meeting-details-usecase.interface";
+import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { CustomError } from "../../../entities/utils/custom.error";
 
 @injectable()
 export class UpdateMeetingDetailsUseCase

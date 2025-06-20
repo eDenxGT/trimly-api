@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import { ISocketService } from "../../entities/serviceInterfaces/socket-service.interface.js";
+import { ISocketService } from "../../entities/serviceInterfaces/socket-service.interface";
 
 export class SocketService implements ISocketService {
   private static _io: Server;

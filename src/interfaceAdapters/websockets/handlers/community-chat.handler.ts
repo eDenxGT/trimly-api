@@ -1,12 +1,12 @@
 import { Socket, Server } from "socket.io";
 import { inject, injectable } from "tsyringe";
-import { SocketUserStore } from "../socket-user.store.js";
-import socketLogger from "../../../shared/utils/socket.logger.js";
-import { COMMUNITY_CHAT_EVENTS } from "../../../shared/constants.js";
-import { ICommunityChatSocketHandler } from "../../../entities/socketHandlerInterfaces/community-chat-handler.interface.js";
-import { ISendCommunityMessageUseCase } from "../../../entities/useCaseInterfaces/chat/community/send-community-message-usecase.interface.js";
-import { getOnlineSocketIdsForMembers } from "../../../shared/utils/get-active-users.helper.js";
-import { IGetCommunityByCommunityIdUseCase } from "../../../entities/useCaseInterfaces/chat/community/get-community-by-communityid-usecase.interface.js";
+import { SocketUserStore } from "../socket-user.store";
+import socketLogger from "../../../shared/utils/socket.logger";
+import { COMMUNITY_CHAT_EVENTS } from "../../../shared/constants";
+import { ICommunityChatSocketHandler } from "../../../entities/socketHandlerInterfaces/community-chat-handler.interface";
+import { ISendCommunityMessageUseCase } from "../../../entities/useCaseInterfaces/chat/community/send-community-message-usecase.interface";
+import { getOnlineSocketIdsForMembers } from "../../../shared/utils/get-active-users.helper";
+import { IGetCommunityByCommunityIdUseCase } from "../../../entities/useCaseInterfaces/chat/community/get-community-by-communityid-usecase.interface";
 
 @injectable()
 export class CommunityChatSocketHandler implements ICommunityChatSocketHandler {

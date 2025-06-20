@@ -1,10 +1,10 @@
 //* ====== BaseRoute Import ====== *//
-import { BaseRoute } from "../base.route.js";
+import { BaseRoute } from "../base.route";
 
 //* ====== PrivateRoute Imports ====== *//
-import { BarberRoutes } from "../barber.route.js";
-import { ClientRoutes } from "../client.route.js";
-import { AdminRoutes } from "../admin.route.js";
+import { BarberRoutes } from "../barber.route";
+import { ClientRoutes } from "../client.route";
+import { AdminRoutes } from "../admin.route";
 
 export class PrivateRoutes extends BaseRoute {
 	constructor() {

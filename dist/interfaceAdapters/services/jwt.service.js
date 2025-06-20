@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,37 +8,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { injectable } from "tsyringe";
-import jwt from "jsonwebtoken";
-import { config } from "../../shared/config.js";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.JWTService = void 0;
+const tsyringe_1 = require("tsyringe");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const config_1 = require("../../shared/config");
 let JWTService = class JWTService {
-    _accessSecret;
-    _accessExpiresIn;
-    _refreshSecret;
-    _refreshExpiresIn;
-    _resetSecret;
-    _resetExpiresIn;
     constructor() {
-        this._accessSecret = config.jwt.ACCESS_SECRET_KEY;
-        this._accessExpiresIn = config.jwt.ACCESS_EXPIRES_IN;
-        this._refreshSecret = config.jwt.REFRESH_SECRET_KEY;
-        this._refreshExpiresIn = config.jwt.REFRESH_EXPIRES_IN;
-        this._resetSecret = config.jwt.RESET_SECRET_KEY;
-        this._resetExpiresIn = config.jwt.RESET_EXPIRES_IN;
+        this._accessSecret = config_1.config.jwt.ACCESS_SECRET_KEY;
+        this._accessExpiresIn = config_1.config.jwt.ACCESS_EXPIRES_IN;
+        this._refreshSecret = config_1.config.jwt.REFRESH_SECRET_KEY;
+        this._refreshExpiresIn = config_1.config.jwt.REFRESH_EXPIRES_IN;
+        this._resetSecret = config_1.config.jwt.RESET_SECRET_KEY;
+        this._resetExpiresIn = config_1.config.jwt.RESET_EXPIRES_IN;
     }
     generateAccessToken(payload) {
-        return jwt.sign(payload, this._accessSecret, {
+        return jsonwebtoken_1.default.sign(payload, this._accessSecret, {
             expiresIn: this._accessExpiresIn,
         });
     }
     generateRefreshToken(payload) {
-        return jwt.sign(payload, this._refreshSecret, {
+        return jsonwebtoken_1.default.sign(payload, this._refreshSecret, {
             expiresIn: this._refreshExpiresIn,
         });
     }
     verifyAccessToken(token) {
         try {
-            return jwt.verify(token, this._accessSecret);
+            return jsonwebtoken_1.default.verify(token, this._accessSecret);
         }
         catch (error) {
             console.error("Access token verification failed:", error);
@@ -46,7 +46,7 @@ let JWTService = class JWTService {
     }
     verifyRefreshToken(token) {
         try {
-            return jwt.verify(token, this._refreshSecret);
+            return jsonwebtoken_1.default.verify(token, this._refreshSecret);
         }
         catch (error) {
             console.error("Access token verification failed:", error);
@@ -55,7 +55,7 @@ let JWTService = class JWTService {
     }
     decodeAccessToken(token) {
         try {
-            return jwt.decode(token);
+            return jsonwebtoken_1.default.decode(token);
         }
         catch (error) {
             console.error("Access token decoding failed", error);
@@ -63,13 +63,13 @@ let JWTService = class JWTService {
         }
     }
     generateResetToken(email) {
-        return jwt.sign({ email }, this._resetSecret, {
+        return jsonwebtoken_1.default.sign({ email }, this._resetSecret, {
             expiresIn: this._resetExpiresIn,
         });
     }
     verifyResetToken(token) {
         try {
-            return jwt.verify(token, this._resetSecret);
+            return jsonwebtoken_1.default.verify(token, this._resetSecret);
         }
         catch (error) {
             console.error("Reset token verification failed:", error);
@@ -78,7 +78,7 @@ let JWTService = class JWTService {
     }
     decodeResetToken(token) {
         try {
-            return jwt.decode(token);
+            return jsonwebtoken_1.default.decode(token);
         }
         catch (error) {
             console.error("Reset token decoding failed", error);
@@ -86,8 +86,8 @@ let JWTService = class JWTService {
         }
     }
 };
-JWTService = __decorate([
-    injectable(),
+exports.JWTService = JWTService;
+exports.JWTService = JWTService = __decorate([
+    (0, tsyringe_1.injectable)(),
     __metadata("design:paramtypes", [])
 ], JWTService);
-export { JWTService };

@@ -7,16 +7,16 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 
 //* ====== Config Import ====== *//
-import { config } from "../../shared/config.js";
+import { config } from "../../shared/config";
 
 //* ====== Middleware Imports ====== *//
-import { notFound } from "../../interfaceAdapters/middlewares/not-found.middleware.js";
-import { errorHandler } from "../../interfaceAdapters/middlewares/error.middleware.js";
+import { notFound } from "../../interfaceAdapters/middlewares/not-found.middleware";
+import { errorHandler } from "../../interfaceAdapters/middlewares/error.middleware";
 
 //* ====== Route Imports ====== *//
-import { AuthRoutes } from "../routes/auth.route.js";
-import { PrivateRoutes } from "../routes/private/private.route.js";
-import morganLogger from "../../shared/utils/morgan.logger.js";
+import { AuthRoutes } from "../routes/auth.route";
+import { PrivateRoutes } from "../routes/private/private.route";
+import morganLogger from "../../shared/utils/morgan.logger";
 
 //* ====== Express App ====== *//
 export class ExpressServer {

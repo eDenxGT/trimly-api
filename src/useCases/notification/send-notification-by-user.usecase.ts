@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
-import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
-import { INotificationRepository } from "../../entities/repositoryInterfaces/notification/notification-repository.interface.js";
-import { INotificationSocketHandler } from "../../entities/socketHandlerInterfaces/notification-handler.interface.js";
+import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface";
+import { generateUniqueId } from "../../shared/utils/unique-uuid.helper";
+import { INotificationRepository } from "../../entities/repositoryInterfaces/notification/notification-repository.interface";
+import { INotificationSocketHandler } from "../../entities/socketHandlerInterfaces/notification-handler.interface";
 
 @injectable()
 export class SendNotificationByUserUseCase

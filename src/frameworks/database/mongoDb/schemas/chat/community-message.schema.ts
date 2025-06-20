@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { ICommunityMessageModel } from "../../models/chat/community-message.model.js";
+import { ICommunityMessageModel } from "../../models/chat/community-message.model";
 
 export const communityMessageSchema = new Schema<ICommunityMessageModel>(
   {

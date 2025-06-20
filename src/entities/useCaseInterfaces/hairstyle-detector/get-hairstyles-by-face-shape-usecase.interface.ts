@@ -1,4 +1,4 @@
-import { IHairstyleEntity } from "../../models/hairstyle.entity.js";
+import { IHairstyleEntity } from "../../models/hairstyle.entity";
 
 export interface IGetHairstylesByFaceShapeUseCase {
   execute({

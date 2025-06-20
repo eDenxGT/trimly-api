@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IGetBarberDashboardDataUseCase } from "../../entities/useCaseInterfaces/dashboard/get-barber-dashboard-data-usecase..interface.js";
-import { IBarberDashboardResponse } from "../../shared/dtos/dashboard-data.dto.js";
-import { IReviewRepository } from "../../entities/repositoryInterfaces/review/review-repository.interface.js";
-import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface.js";
+import { IGetBarberDashboardDataUseCase } from "../../entities/useCaseInterfaces/dashboard/get-barber-dashboard-data-usecase..interface";
+import { IBarberDashboardResponse } from "../../shared/dtos/dashboard-data.dto";
+import { IReviewRepository } from "../../entities/repositoryInterfaces/review/review-repository.interface";
+import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
 
 @injectable()
 export class GetBarberDashboardDataUseCase

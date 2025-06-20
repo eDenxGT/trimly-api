@@ -1,5 +1,7 @@
-export class SocketService {
-    static _io;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SocketService = void 0;
+class SocketService {
     static setIO(io) {
         this._io = io;
     }
@@ -9,3 +11,4 @@ export class SocketService {
         return this._io;
     }
 }
+exports.SocketService = SocketService;

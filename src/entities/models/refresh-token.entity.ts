@@ -1,4 +1,4 @@
-import { TRole } from "../../shared/constants.js";
+import { TRole } from "../../shared/constants";
 
 export interface IRefreshTokenEntity {
    token: string;

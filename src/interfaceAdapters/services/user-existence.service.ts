@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IUserExistenceService } from "../../entities/serviceInterfaces/user-existence-service.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface.js";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IUserExistenceService } from "../../entities/serviceInterfaces/user-existence-service.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface";
 
 @injectable()
 export class UserExistenceService implements IUserExistenceService {

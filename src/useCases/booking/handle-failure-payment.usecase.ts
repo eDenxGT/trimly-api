@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { IHandleFailurePaymentUseCase } from "../../entities/useCaseInterfaces/booking/handle-failure-payment-usecase.interface.js";
-import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface.js";
-import { ITransactionRepository } from "../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
-import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { formatDate } from "../../shared/utils/date-formatter.js";
+import { IHandleFailurePaymentUseCase } from "../../entities/useCaseInterfaces/booking/handle-failure-payment-usecase.interface";
+import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
+import { ITransactionRepository } from "../../entities/repositoryInterfaces/finance/transaction-repository.interface";
+import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { formatDate } from "../../shared/utils/date-formatter";
 
 @injectable()
 export class HandleFailurePaymentUseCase

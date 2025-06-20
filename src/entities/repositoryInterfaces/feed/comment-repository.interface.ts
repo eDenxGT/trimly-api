@@ -1,5 +1,5 @@
-import { IBaseRepository } from "../base-repository.interface.js";
-import { ICommentEntity } from "../../models/comment.entity.js";
+import { IBaseRepository } from "../base-repository.interface";
+import { ICommentEntity } from "../../models/comment.entity";
 
 export interface ICommentRepository extends IBaseRepository<ICommentEntity> {
   addLike({

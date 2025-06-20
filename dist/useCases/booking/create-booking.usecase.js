@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,110 +11,124 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { config } from "../../shared/config.js";
-import Razorpay from "razorpay";
-import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreateBookingUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const config_1 = require("../../shared/config");
+const razorpay_1 = __importDefault(require("razorpay"));
+const unique_uuid_helper_1 = require("../../shared/utils/unique-uuid.helper");
+const custom_error_1 = require("../../entities/utils/custom.error");
+const constants_1 = require("../../shared/constants");
+const get_booking_date_time_utc_helper_1 = require("../../shared/utils/get-booking-date-time-utc.helper");
 let CreateBookingUseCase = class CreateBookingUseCase {
-    _bookingRepository;
-    _transactionRepository;
     constructor(_bookingRepository, _transactionRepository) {
         this._bookingRepository = _bookingRepository;
         this._transactionRepository = _transactionRepository;
     }
-    async execute({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
-        const bookingDateTime = getBookingDateTimeUTC(date, startTime);
-        if (bookingDateTime.getTime() <= Date.now()) {
-            throw new CustomError(ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, HTTP_STATUS.BAD_REQUEST);
-        }
-        const existingBooking = await this._bookingRepository.findOne({
-            shopId,
-            date,
-            bookedTimeSlots: { $in: bookedTimeSlots },
-            status: "confirmed",
+    execute(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
+            const bookingDateTime = (0, get_booking_date_time_utc_helper_1.getBookingDateTimeUTC)(date, startTime);
+            if (bookingDateTime.getTime() <= Date.now()) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, constants_1.HTTP_STATUS.BAD_REQUEST);
+            }
+            const existingBooking = yield this._bookingRepository.findOne({
+                shopId,
+                date,
+                bookedTimeSlots: { $in: bookedTimeSlots },
+                status: "confirmed",
+            });
+            if (existingBooking) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.BOOKING_EXISTS, constants_1.HTTP_STATUS.CONFLICT);
+            }
+            const twoDaysAgo = new Date();
+            twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+            const cancelledBookings = yield this._bookingRepository.find({
+                clientId,
+                status: "cancelled",
+                createdAt: { $gte: twoDaysAgo },
+            });
+            if (cancelledBookings.length > 5) {
+                // throw new CustomError(
+                //   ERROR_MESSAGES.MORE_THAN_5_CANCELLED_BOOKING,
+                //   HTTP_STATUS.BAD_REQUEST
+                // );
+            }
+            const startOfDay = new Date();
+            startOfDay.setHours(0, 0, 0, 0);
+            const endOfDay = new Date();
+            endOfDay.setHours(23, 59, 59, 999);
+            const bookings = yield this._bookingRepository.find({
+                clientId,
+                shopId,
+                status: "confirmed",
+                createdAt: {
+                    $gte: startOfDay,
+                    $lte: endOfDay,
+                },
+            });
+            if (bookings.length >= 3) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.BOOKING_LIMIT_EXCEEDED_FOR_TODAY, constants_1.HTTP_STATUS.BAD_REQUEST);
+            }
+            const bookingId = (0, unique_uuid_helper_1.generateUniqueId)("booking");
+            const transactionId = (0, unique_uuid_helper_1.generateUniqueId)("transaction");
+            const razorpay = new razorpay_1.default({
+                key_id: config_1.config.payment.RAZORPAY_KEY_ID,
+                key_secret: config_1.config.payment.RAZORPAY_SECRET,
+            });
+            const order = yield razorpay.orders.create({
+                amount: total * 100,
+                currency: "INR",
+                receipt: `receipt_${bookingId === null || bookingId === void 0 ? void 0 : bookingId.slice(0, 20)}`,
+                notes: {
+                    bookingId: bookingId,
+                },
+            });
+            yield this._bookingRepository.save({
+                bookedTimeSlots,
+                bookingId,
+                clientId,
+                orderId: order.id,
+                date: bookingDateTime,
+                duration,
+                services,
+                shopId,
+                startTime,
+                total,
+            });
+            yield this._transactionRepository.save({
+                transactionId,
+                userId: clientId,
+                amount: total,
+                type: "debit",
+                source: "booking",
+                status: "pending",
+                referenceId: bookingId,
+            });
+            return {
+                id: order.id,
+                amount: order.amount,
+                currency: order.currency,
+                bookingId,
+            };
         });
-        if (existingBooking) {
-            throw new CustomError(ERROR_MESSAGES.BOOKING_EXISTS, HTTP_STATUS.CONFLICT);
-        }
-        const twoDaysAgo = new Date();
-        twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-        const cancelledBookings = await this._bookingRepository.find({
-            clientId,
-            status: "cancelled",
-            createdAt: { $gte: twoDaysAgo },
-        });
-        if (cancelledBookings.length > 5) {
-            // throw new CustomError(
-            //   ERROR_MESSAGES.MORE_THAN_5_CANCELLED_BOOKING,
-            //   HTTP_STATUS.BAD_REQUEST
-            // );
-        }
-        const startOfDay = new Date();
-        startOfDay.setHours(0, 0, 0, 0);
-        const endOfDay = new Date();
-        endOfDay.setHours(23, 59, 59, 999);
-        const bookings = await this._bookingRepository.find({
-            clientId,
-            shopId,
-            status: "confirmed",
-            createdAt: {
-                $gte: startOfDay,
-                $lte: endOfDay,
-            },
-        });
-        if (bookings.length >= 3) {
-            throw new CustomError(ERROR_MESSAGES.BOOKING_LIMIT_EXCEEDED_FOR_TODAY, HTTP_STATUS.BAD_REQUEST);
-        }
-        const bookingId = generateUniqueId("booking");
-        const transactionId = generateUniqueId("transaction");
-        const razorpay = new Razorpay({
-            key_id: config.payment.RAZORPAY_KEY_ID,
-            key_secret: config.payment.RAZORPAY_SECRET,
-        });
-        const order = await razorpay.orders.create({
-            amount: total * 100,
-            currency: "INR",
-            receipt: `receipt_${bookingId?.slice(0, 20)}`,
-            notes: {
-                bookingId: bookingId,
-            },
-        });
-        await this._bookingRepository.save({
-            bookedTimeSlots,
-            bookingId,
-            clientId,
-            orderId: order.id,
-            date: bookingDateTime,
-            duration,
-            services,
-            shopId,
-            startTime,
-            total,
-        });
-        await this._transactionRepository.save({
-            transactionId,
-            userId: clientId,
-            amount: total,
-            type: "debit",
-            source: "booking",
-            status: "pending",
-            referenceId: bookingId,
-        });
-        return {
-            id: order.id,
-            amount: order.amount,
-            currency: order.currency,
-            bookingId,
-        };
     }
 };
-CreateBookingUseCase = __decorate([
-    injectable(),
-    __param(0, inject("IBookingRepository")),
-    __param(1, inject("ITransactionRepository")),
+exports.CreateBookingUseCase = CreateBookingUseCase;
+exports.CreateBookingUseCase = CreateBookingUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IBookingRepository")),
+    __param(1, (0, tsyringe_1.inject)("ITransactionRepository")),
     __metadata("design:paramtypes", [Object, Object])
 ], CreateBookingUseCase);
-export { CreateBookingUseCase };

@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,32 +11,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UpdatePostStatusUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const custom_error_1 = require("../../../entities/utils/custom.error");
+const constants_1 = require("../../../shared/constants");
 let UpdatePostStatusUseCase = class UpdatePostStatusUseCase {
-    _postRepository;
     constructor(_postRepository) {
         this._postRepository = _postRepository;
     }
-    async execute(postId, userId) {
-        const post = await this._postRepository.findOne({
-            postId,
-            barberId: userId,
+    execute(postId, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const post = yield this._postRepository.findOne({
+                postId,
+                barberId: userId,
+            });
+            if (!post) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.POST_NOT_FOUND, constants_1.HTTP_STATUS.NOT_FOUND);
+            }
+            const status = post.status === "active" ? "blocked" : "active";
+            yield this._postRepository.update({
+                postId,
+                barberId: userId,
+            }, { status });
         });
-        if (!post) {
-            throw new CustomError(ERROR_MESSAGES.POST_NOT_FOUND, HTTP_STATUS.NOT_FOUND);
-        }
-        const status = post.status === "active" ? "blocked" : "active";
-        await this._postRepository.update({
-            postId,
-            barberId: userId,
-        }, { status });
     }
 };
-UpdatePostStatusUseCase = __decorate([
-    injectable(),
-    __param(0, inject("IPostRepository")),
+exports.UpdatePostStatusUseCase = UpdatePostStatusUseCase;
+exports.UpdatePostStatusUseCase = UpdatePostStatusUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IPostRepository")),
     __metadata("design:paramtypes", [Object])
 ], UpdatePostStatusUseCase);
-export { UpdatePostStatusUseCase };

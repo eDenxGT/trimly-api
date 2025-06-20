@@ -1,6 +1,6 @@
-import { IBarberDashboardResponse } from "../../../shared/dtos/dashboard-data.dto.js";
-import { IReviewEntity } from "../../models/review.entity.js";
-import { IBaseRepository } from "../base-repository.interface.js";
+import { IBarberDashboardResponse } from "../../../shared/dtos/dashboard-data.dto";
+import { IReviewEntity } from "../../models/review.entity";
+import { IBaseRepository } from "../base-repository.interface";
 
 export interface IReviewRepository extends IBaseRepository<IReviewEntity> {
   getReviewStatsByShopId({

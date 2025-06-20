@@ -1,9 +1,9 @@
 import { ZodError } from "zod";
 import { Request, Response } from "express";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../constants.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../constants";
+import { CustomError } from "../../entities/utils/custom.error";
 import chalk from "chalk";
-import logger from "./error.logger.js";
+import logger from "./error.logger";
 
 export const handleErrorResponse = (
 	req: Request,

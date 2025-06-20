@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IPaginatedShops } from "../../entities/models/paginated/paginated-shops.entity.js";
-import { IGetAllShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-shops-usecase.interface.js";
-import { IGetAllServicesUseCase } from "../../entities/useCaseInterfaces/shop/service/get-all-services-usecase.interface.js";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IPaginatedShops } from "../../entities/models/paginated/paginated-shops.entity";
+import { IGetAllShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-shops-usecase.interface";
+import { IGetAllServicesUseCase } from "../../entities/useCaseInterfaces/shop/service/get-all-services-usecase.interface";
 
 @injectable()
 export class GetAllShopsUseCase implements IGetAllShopsUseCase {

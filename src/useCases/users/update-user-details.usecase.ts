@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateUserDetailsUseCase } from "../../entities/useCaseInterfaces/users/update-user-details-usecase.interface.js";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface.js";
-import { IAdminEntity } from "../../entities/models/admin.entity.js";
-import { IClientEntity } from "../../entities/models/client.entity.js";
-import { IBarberEntity } from "../../entities/models/barber.entity.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+import { IUpdateUserDetailsUseCase } from "../../entities/useCaseInterfaces/users/update-user-details-usecase.interface";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface";
+import { IAdminEntity } from "../../entities/models/admin.entity";
+import { IClientEntity } from "../../entities/models/client.entity";
+import { IBarberEntity } from "../../entities/models/barber.entity";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 
 @injectable()
 export class UpdateUserDetailsUseCase implements IUpdateUserDetailsUseCase {

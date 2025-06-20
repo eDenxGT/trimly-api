@@ -2,10 +2,10 @@ import { injectable } from "tsyringe";
 import {
   IReviewModel,
   ReviewModel,
-} from "../../../frameworks/database/mongoDb/models/review.model.js";
-import { BaseRepository } from "../base.repository.js";
-import { IReviewRepository } from "../../../entities/repositoryInterfaces/review/review-repository.interface.js";
-import { IBarberDashboardResponse } from "../../../shared/dtos/dashboard-data.dto.js";
+} from "../../../frameworks/database/mongoDb/models/review.model";
+import { BaseRepository } from "../base.repository";
+import { IReviewRepository } from "../../../entities/repositoryInterfaces/review/review-repository.interface";
+import { IBarberDashboardResponse } from "../../../shared/dtos/dashboard-data.dto";
 
 @injectable()
 export class ReviewRepository

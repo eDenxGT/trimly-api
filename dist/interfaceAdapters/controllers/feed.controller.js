@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,21 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { ERROR_MESSAGES, HTTP_STATUS, SUCCESS_MESSAGES, } from "../../shared/constants.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FeedController = void 0;
+const tsyringe_1 = require("tsyringe");
+const error_handler_1 = require("../../shared/utils/error.handler");
+const constants_1 = require("../../shared/constants");
 let FeedController = class FeedController {
-    _addPostUseCase;
-    _getAllPostsByBarberUseCase;
-    _getSinglePostByPostIdUseCase;
-    _updatePostUseCase;
-    _deletePostUseCase;
-    _updatePostStatusUseCase;
-    _toggleLikePostUseCase;
-    _addCommentUseCase;
-    _toggleCommentLikeUseCase;
-    _getAllPostsForClientUseCase;
-    _getPostLikedUsersUseCase;
     constructor(_addPostUseCase, _getAllPostsByBarberUseCase, _getSinglePostByPostIdUseCase, _updatePostUseCase, _deletePostUseCase, _updatePostStatusUseCase, _toggleLikePostUseCase, _addCommentUseCase, _toggleCommentLikeUseCase, _getAllPostsForClientUseCase, _getPostLikedUsersUseCase) {
         this._addPostUseCase = _addPostUseCase;
         this._getAllPostsByBarberUseCase = _getAllPostsByBarberUseCase;
@@ -44,211 +45,227 @@ let FeedController = class FeedController {
     //* ─────────────────────────────────────────────────────────────
     //*                     🛠️ Add Post
     //* ─────────────────────────────────────────────────────────────
-    async addPost(req, res) {
-        try {
-            const { userId } = req.user;
-            const { caption, description, image } = req.body;
-            if (!userId || !caption || !description || !image) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    addPost(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                const { caption, description, image } = req.body;
+                if (!userId || !caption || !description || !image) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                yield this._addPostUseCase.execute(userId, caption, description, image);
+                res.status(constants_1.HTTP_STATUS.CREATED).json({
+                    success: true,
+                    message: constants_1.SUCCESS_MESSAGES.POST_ADDED,
                 });
-                return;
             }
-            await this._addPostUseCase.execute(userId, caption, description, image);
-            res.status(HTTP_STATUS.CREATED).json({
-                success: true,
-                message: SUCCESS_MESSAGES.POST_ADDED,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                  🛠️ Get All Posts For Barbers
     //* ─────────────────────────────────────────────────────────────
-    async getAllPostsForBarber(req, res) {
-        try {
-            const { userId } = req.user;
-            const { page, limit } = req.query;
-            if (!userId || !page || !limit) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    getAllPostsForBarber(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                const { page, limit } = req.query;
+                if (!userId || !page || !limit) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                const { items, total } = yield this._getAllPostsByBarberUseCase.execute(userId, Number(page), Number(limit));
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    items,
+                    total,
                 });
-                return;
             }
-            const { items, total } = await this._getAllPostsByBarberUseCase.execute(userId, Number(page), Number(limit));
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                items,
-                total,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                  🛠️ Get All Posts For Clients
     //* ─────────────────────────────────────────────────────────────
-    async getAllPostsForClient(req, res) {
-        try {
-            const { userId } = req.user;
-            const { page, limit } = req.query;
-            if (!userId || !page || !limit) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    getAllPostsForClient(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                const { page, limit } = req.query;
+                if (!userId || !page || !limit) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                const { items, total } = yield this._getAllPostsForClientUseCase.execute(userId, Number(page), Number(limit));
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    items,
+                    total,
                 });
-                return;
             }
-            const { items, total } = await this._getAllPostsForClientUseCase.execute(userId, Number(page), Number(limit));
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                items,
-                total,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                 🛠️ Get Post By PostId
     //* ─────────────────────────────────────────────────────────────
-    async getPostByPostId(req, res) {
-        try {
-            const { userId, role } = req.user;
-            const { postId } = req.params;
-            const { forType } = req.query;
-            if (!userId || !postId) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    getPostByPostId(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId, role } = req.user;
+                const { postId } = req.params;
+                const { forType } = req.query;
+                if (!userId || !postId) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                const post = yield this._getSinglePostByPostIdUseCase.execute(userId, role, postId, String(forType));
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    post,
                 });
-                return;
             }
-            const post = await this._getSinglePostByPostIdUseCase.execute(userId, role, postId, String(forType));
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                post,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                      🛠️ Edit Post
     //* ─────────────────────────────────────────────────────────────
-    async editPost(req, res) {
-        try {
-            const { userId } = req.user;
-            const { postId } = req.params;
-            const { caption, description, image } = req.body;
-            if (!postId || !caption || !description || !image || !userId) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    editPost(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                const { postId } = req.params;
+                const { caption, description, image } = req.body;
+                if (!postId || !caption || !description || !image || !userId) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                yield this._updatePostUseCase.execute({
+                    userId,
+                    postId,
+                    caption,
+                    description,
+                    image,
                 });
-                return;
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    message: constants_1.SUCCESS_MESSAGES.UPDATE_SUCCESS,
+                });
             }
-            await this._updatePostUseCase.execute({
-                userId,
-                postId,
-                caption,
-                description,
-                image,
-            });
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                message: SUCCESS_MESSAGES.UPDATE_SUCCESS,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                   🛠️ Update Post Status
     //* ─────────────────────────────────────────────────────────────
-    async updatePostStatus(req, res) {
-        try {
-            const { postId } = req.params;
-            const { userId } = req.user;
-            if (!postId || !userId) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    updatePostStatus(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { postId } = req.params;
+                const { userId } = req.user;
+                if (!postId || !userId) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                yield this._updatePostStatusUseCase.execute(postId, userId);
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    message: constants_1.SUCCESS_MESSAGES.UPDATE_SUCCESS,
                 });
-                return;
             }
-            await this._updatePostStatusUseCase.execute(postId, userId);
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                message: SUCCESS_MESSAGES.UPDATE_SUCCESS,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                       🛠️ Delete Post
     //* ─────────────────────────────────────────────────────────────
-    async deletePost(req, res) {
-        try {
-            const { postId } = req.params;
-            const { userId } = req.user;
-            if (!postId || !userId) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    deletePost(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { postId } = req.params;
+                const { userId } = req.user;
+                if (!postId || !userId) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                yield this._deletePostUseCase.execute({
+                    postId,
+                    userId,
                 });
-                return;
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    message: constants_1.SUCCESS_MESSAGES.DELETE_SUCCESS,
+                });
             }
-            await this._deletePostUseCase.execute({
-                postId,
-                userId,
-            });
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                message: SUCCESS_MESSAGES.DELETE_SUCCESS,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                     🛠️ Toggle Like Post
     //* ─────────────────────────────────────────────────────────────
-    async toggleLikePost(req, res) {
-        try {
-            const { postId } = req.params;
-            const { userId } = req.user;
-            if (!postId || !userId) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    toggleLikePost(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { postId } = req.params;
+                const { userId } = req.user;
+                if (!postId || !userId) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                const liked = yield this._toggleLikePostUseCase.execute({
+                    postId,
+                    userId,
                 });
-                return;
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    liked: liked,
+                    message: constants_1.SUCCESS_MESSAGES.TOGGLE_LIKE_SUCCESS,
+                });
             }
-            const liked = await this._toggleLikePostUseCase.execute({
-                postId,
-                userId,
-            });
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                liked: liked,
-                message: SUCCESS_MESSAGES.TOGGLE_LIKE_SUCCESS,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //? ✨=========================================================✨
     //?                     📝 COMMENT SECTION
@@ -256,98 +273,104 @@ let FeedController = class FeedController {
     //* ─────────────────────────────────────────────────────────────
     //*                       🛠️ Post Comment
     //* ─────────────────────────────────────────────────────────────
-    async addComment(req, res) {
-        try {
-            const { postId } = req.params;
-            const { userId } = req.user;
-            const { comment } = req.body;
-            if (!postId || !userId || !comment) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    addComment(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { postId } = req.params;
+                const { userId } = req.user;
+                const { comment } = req.body;
+                if (!postId || !userId || !comment) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                yield this._addCommentUseCase.execute({
+                    postId,
+                    userId,
+                    comment,
                 });
-                return;
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    message: constants_1.SUCCESS_MESSAGES.COMMENT_ADDED,
+                });
             }
-            await this._addCommentUseCase.execute({
-                postId,
-                userId,
-                comment,
-            });
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                message: SUCCESS_MESSAGES.COMMENT_ADDED,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                       🛠️ Toggle Like Comment
     //* ─────────────────────────────────────────────────────────────
-    async toggleCommentLike(req, res) {
-        try {
-            const { commentId } = req.params;
-            const { userId } = req.user;
-            if (!commentId || !userId) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    toggleCommentLike(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { commentId } = req.params;
+                const { userId } = req.user;
+                if (!commentId || !userId) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                yield this._toggleCommentLikeUseCase.execute({
+                    commentId,
+                    userId,
                 });
-                return;
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    message: constants_1.SUCCESS_MESSAGES.TOGGLE_LIKE_SUCCESS,
+                });
             }
-            await this._toggleCommentLikeUseCase.execute({
-                commentId,
-                userId,
-            });
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                message: SUCCESS_MESSAGES.TOGGLE_LIKE_SUCCESS,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
     //* ─────────────────────────────────────────────────────────────
     //*                   🛠️ Get Post Liked Users
     //* ─────────────────────────────────────────────────────────────
-    async getPostLikedUsers(req, res) {
-        try {
-            const { postId } = req.params;
-            if (!postId) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
-                    success: false,
-                    message: ERROR_MESSAGES.MISSING_PARAMETERS,
+    getPostLikedUsers(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { postId } = req.params;
+                if (!postId) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                const users = yield this._getPostLikedUsersUseCase.execute({
+                    postId,
                 });
-                return;
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    users,
+                });
             }
-            const users = await this._getPostLikedUsersUseCase.execute({
-                postId,
-            });
-            res.status(HTTP_STATUS.OK).json({
-                success: true,
-                users,
-            });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
 };
-FeedController = __decorate([
-    injectable(),
-    __param(0, inject("IAddPostUseCase")),
-    __param(1, inject("IGetAllPostsByBarberUseCase")),
-    __param(2, inject("IGetSinglePostByPostIdUseCase")),
-    __param(3, inject("IUpdatePostUseCase")),
-    __param(4, inject("IDeletePostUseCase")),
-    __param(5, inject("IUpdatePostStatusUseCase")),
-    __param(6, inject("IToggleLikePostUseCase")),
-    __param(7, inject("IAddCommentUseCase")),
-    __param(8, inject("IToggleCommentLikeUseCase")),
-    __param(9, inject("IGetAllPostsForClientUseCase")),
-    __param(10, inject("IGetPostLikedUsersUseCase")),
+exports.FeedController = FeedController;
+exports.FeedController = FeedController = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IAddPostUseCase")),
+    __param(1, (0, tsyringe_1.inject)("IGetAllPostsByBarberUseCase")),
+    __param(2, (0, tsyringe_1.inject)("IGetSinglePostByPostIdUseCase")),
+    __param(3, (0, tsyringe_1.inject)("IUpdatePostUseCase")),
+    __param(4, (0, tsyringe_1.inject)("IDeletePostUseCase")),
+    __param(5, (0, tsyringe_1.inject)("IUpdatePostStatusUseCase")),
+    __param(6, (0, tsyringe_1.inject)("IToggleLikePostUseCase")),
+    __param(7, (0, tsyringe_1.inject)("IAddCommentUseCase")),
+    __param(8, (0, tsyringe_1.inject)("IToggleCommentLikeUseCase")),
+    __param(9, (0, tsyringe_1.inject)("IGetAllPostsForClientUseCase")),
+    __param(10, (0, tsyringe_1.inject)("IGetPostLikedUsersUseCase")),
     __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
 ], FeedController);
-export { FeedController };

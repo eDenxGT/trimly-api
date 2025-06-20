@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IGetAllUsersUseCase } from "../../entities/useCaseInterfaces/users/get-all-users-usecase.interface.js";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IPaginatedUsers } from "../../entities/models/paginated/paginated-users.entity.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
+import { IGetAllUsersUseCase } from "../../entities/useCaseInterfaces/users/get-all-users-usecase.interface";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IPaginatedUsers } from "../../entities/models/paginated/paginated-users.entity";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { CustomError } from "../../entities/utils/custom.error";
 
 @injectable()
 export class GetAllUsersUseCase implements IGetAllUsersUseCase {

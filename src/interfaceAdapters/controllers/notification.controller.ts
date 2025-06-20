@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { INotificationController } from "../../entities/controllerInterfaces/notifications/notification-controller.interface.js";
+import { INotificationController } from "../../entities/controllerInterfaces/notifications/notification-controller.interface";
 import { Request, Response } from "express";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
-import { IGetNotificationsByUserUseCase } from "../../entities/useCaseInterfaces/notifications/get-notifications-by-user-usecase.interface.js";
-import { HTTP_STATUS } from "../../shared/constants.js";
-import { IMarkAllNotificationsAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-all-notifications-as-read-by-user-usecase.interface.js";
-import { IMarkSingleNotificationAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-single-notification-as-read-by-user-usecase.interface.js";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { CustomRequest } from "../middlewares/auth.middleware";
+import { IGetNotificationsByUserUseCase } from "../../entities/useCaseInterfaces/notifications/get-notifications-by-user-usecase.interface";
+import { HTTP_STATUS } from "../../shared/constants";
+import { IMarkAllNotificationsAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-all-notifications-as-read-by-user-usecase.interface";
+import { IMarkSingleNotificationAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-single-notification-as-read-by-user-usecase.interface";
 
 @injectable()
 export class NotificationController implements INotificationController {

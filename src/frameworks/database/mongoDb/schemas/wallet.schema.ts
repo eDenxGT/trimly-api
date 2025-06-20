@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IWalletModel } from "../models/wallet.model.js";
+import { IWalletModel } from "../models/wallet.model";
 
 export const walletSchema = new Schema<IWalletModel>(
   {

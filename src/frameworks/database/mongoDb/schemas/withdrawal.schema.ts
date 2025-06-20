@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IWithdrawalModel } from "../models/withdrawal.model.js";
+import { IWithdrawalModel } from "../models/withdrawal.model";
 
 export const withdrawalSchema = new Schema<IWithdrawalModel>(
   {

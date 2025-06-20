@@ -1,4 +1,4 @@
-import { IWalletEntity } from "../../../models/wallet.entity.js";
+import { IWalletEntity } from "../../../models/wallet.entity";
 
 export interface IDecrementWalletBalanceUseCase {
 	execute({

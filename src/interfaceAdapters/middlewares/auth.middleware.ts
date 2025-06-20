@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload } from "jsonwebtoken";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { JWTService } from "../services/jwt.service.js";
-import { redisClient } from "./../../frameworks/cache/redis.client.js";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { JWTService } from "../services/jwt.service";
+import { redisClient } from "./../../frameworks/cache/redis.client";
 
 const tokenService = new JWTService();
 

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IGetAllMeetingsForListingUseCase } from "../../../entities/useCaseInterfaces/chat/meeting/get-all-meetings-for-listing-usecase.interface.js";
-import { IMeetingRoomEntity } from "../../../entities/models/chat/meeting-room.entity.js";
-import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface.js";
+import { IGetAllMeetingsForListingUseCase } from "../../../entities/useCaseInterfaces/chat/meeting/get-all-meetings-for-listing-usecase.interface";
+import { IMeetingRoomEntity } from "../../../entities/models/chat/meeting-room.entity";
+import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface";
 
 @injectable()
 export class GetAllMeetingsForListingUseCase

@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IClientModel } from "../models/client.model.js";
+import { IClientModel } from "../models/client.model";
 
 export const clientSchema = new Schema<IClientModel>(
 	{

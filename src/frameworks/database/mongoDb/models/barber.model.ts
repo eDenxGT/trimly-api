@@ -1,6 +1,6 @@
 import { Document, model, ObjectId } from "mongoose";
-import { barberSchema } from "../schemas/barber.schema.js";
-import { IBarberEntity } from "../../../../entities/models/barber.entity.js";
+import { barberSchema } from "../schemas/barber.schema";
+import { IBarberEntity } from "../../../../entities/models/barber.entity";
 
 export interface IBarberModel extends IBarberEntity, Document {
    _id: ObjectId;

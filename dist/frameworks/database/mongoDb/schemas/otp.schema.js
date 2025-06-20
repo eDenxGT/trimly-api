@@ -1,5 +1,8 @@
-import { Schema } from "mongoose";
-export const otpSchema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.otpSchema = void 0;
+const mongoose_1 = require("mongoose");
+exports.otpSchema = new mongoose_1.Schema({
     otp: {
         type: String,
         required: true,

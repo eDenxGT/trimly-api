@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { ICommunityChatRoomModel } from "./../../models/chat/community-chat-room.model.js";
+import { ICommunityChatRoomModel } from "./../../models/chat/community-chat-room.model";
 
 export const communityChatRoomSchema = new Schema<ICommunityChatRoomModel>(
   {

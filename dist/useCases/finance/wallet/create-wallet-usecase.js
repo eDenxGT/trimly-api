@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,26 +11,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreateWalletUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const unique_uuid_helper_1 = require("../../../shared/utils/unique-uuid.helper");
 let CreateWalletUseCase = class CreateWalletUseCase {
-    _walletRepository;
     constructor(_walletRepository) {
         this._walletRepository = _walletRepository;
     }
-    async execute({ ownerId, ownerType, }) {
-        return await this._walletRepository.save({
-            walletId: generateUniqueId("wallet"),
-            ownerId,
-            ownerType,
-            balance: 0,
-            currency: "INR",
+    execute(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ ownerId, ownerType, }) {
+            return yield this._walletRepository.save({
+                walletId: (0, unique_uuid_helper_1.generateUniqueId)("wallet"),
+                ownerId,
+                ownerType,
+                balance: 0,
+                currency: "INR",
+            });
         });
     }
 };
-CreateWalletUseCase = __decorate([
-    injectable(),
-    __param(0, inject("IWalletRepository")),
+exports.CreateWalletUseCase = CreateWalletUseCase;
+exports.CreateWalletUseCase = CreateWalletUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IWalletRepository")),
     __metadata("design:paramtypes", [Object])
 ], CreateWalletUseCase);
-export { CreateWalletUseCase };

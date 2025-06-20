@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface.js";
-import { ITopUpWalletUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/topup-wallet-usecase.interface.js";
-import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
-import { IRazorpayService } from "../../../entities/serviceInterfaces/razorpay-service.interface.js";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
-import { IGetWalletByUserUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/get-wallet-by-user-usecase.interface.js";
+import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface";
+import { ITopUpWalletUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/topup-wallet-usecase.interface";
+import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface";
+import { IRazorpayService } from "../../../entities/serviceInterfaces/razorpay-service.interface";
+import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper";
+import { IGetWalletByUserUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/get-wallet-by-user-usecase.interface";
 
 @injectable()
 export class TopUpWalletUseCase implements ITopUpWalletUseCase {

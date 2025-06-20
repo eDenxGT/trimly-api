@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IAddPostUseCase } from "../../../entities/useCaseInterfaces/feed/post/add-post-usecase.interface.js";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
-import { IPostRepository } from "../../../entities/repositoryInterfaces/feed/post-repository.interface.js";
+import { IAddPostUseCase } from "../../../entities/useCaseInterfaces/feed/post/add-post-usecase.interface";
+import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper";
+import { IPostRepository } from "../../../entities/repositoryInterfaces/feed/post-repository.interface";
 
 @injectable()
 export class AddPostUseCase implements IAddPostUseCase {

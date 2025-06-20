@@ -1,4 +1,4 @@
-import { IAdminDashboardResponse } from "../../../shared/dtos/dashboard-data.dto.js";
+import { IAdminDashboardResponse } from "../../../shared/dtos/dashboard-data.dto";
 
 export interface IGetAdminDashboardDataUseCase {
   execute(): Promise<IAdminDashboardResponse>;

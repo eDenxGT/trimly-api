@@ -1,18 +1,22 @@
-import { createLogger, format, transports } from "winston";
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const logDir = path.join(__dirname, "../../../logs");
-if (!fs.existsSync(logDir)) {
-    fs.mkdirSync(logDir, { recursive: true });
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const winston_1 = require("winston");
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+const logDir = path_1.default.join(__dirname, "../../../logs");
+if (!fs_1.default.existsSync(logDir)) {
+    fs_1.default.mkdirSync(logDir, { recursive: true });
 }
-const logger = createLogger({
+const logger = (0, winston_1.createLogger)({
     level: "error",
-    format: format.combine(format.timestamp(), format.json()),
+    format: winston_1.format.combine(winston_1.format.timestamp(), winston_1.format.json()),
     transports: [
-        new transports.File({ filename: path.join(logDir, "error.log") })
+        new winston_1.transports.File({ filename: path_1.default.join(logDir, "error.log") })
     ]
 });
-export default logger;
+exports.default = logger;

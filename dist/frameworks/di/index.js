@@ -1,10 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DependencyInjection = void 0;
 //* ====== Registry Imports ====== *//
-import { RepositoryRegistry } from "./repository.registry.js";
-import { UseCaseRegistry } from "./usecase.registry.js";
+const repository_registry_1 = require("./repository.registry");
+const usecase_registry_1 = require("./usecase.registry");
 // Registering all registries using a single class
-export class DependencyInjection {
+class DependencyInjection {
     static registerAll() {
-        UseCaseRegistry.registerUseCases();
-        RepositoryRegistry.registerRepositories();
+        usecase_registry_1.UseCaseRegistry.registerUseCases();
+        repository_registry_1.RepositoryRegistry.registerRepositories();
     }
 }
+exports.DependencyInjection = DependencyInjection;

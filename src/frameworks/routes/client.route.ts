@@ -4,12 +4,12 @@ import { Request, RequestHandler, Response } from "express";
 //* ====== Middleware Imports ====== *//
 
 //* ====== BaseRoute Import ====== *//
-import { BaseRoute } from "./base.route.js";
+import { BaseRoute } from "./base.route";
 import {
   authorizeRole,
   decodeToken,
   verifyAuth,
-} from "../../interfaceAdapters/middlewares/auth.middleware.js";
+} from "../../interfaceAdapters/middlewares/auth.middleware";
 import {
   authController,
   blockStatusMiddleware,
@@ -23,7 +23,7 @@ import {
   s3Controller,
   shopController,
   userController,
-} from "../di/resolver.js";
+} from "../di/resolver";
 
 export class ClientRoutes extends BaseRoute {
   constructor() {

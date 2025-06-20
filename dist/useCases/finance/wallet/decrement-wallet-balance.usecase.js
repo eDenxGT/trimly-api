@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,35 +11,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DecrementWalletBalanceUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const custom_error_1 = require("../../../entities/utils/custom.error");
+const constants_1 = require("../../../shared/constants");
 let DecrementWalletBalanceUseCase = class DecrementWalletBalanceUseCase {
-    _getWalletByUserUseCase;
-    _walletRepository;
     constructor(_getWalletByUserUseCase, _walletRepository) {
         this._getWalletByUserUseCase = _getWalletByUserUseCase;
         this._walletRepository = _walletRepository;
     }
-    async execute({ ownerId, amount, role, }) {
-        const wallet = await this._getWalletByUserUseCase.execute(ownerId, role);
-        if (!wallet) {
-            throw new CustomError(ERROR_MESSAGES.WALLET_NOT_FOUND, HTTP_STATUS.NOT_FOUND);
-        }
-        if (wallet.balance < amount) {
-            throw new CustomError(ERROR_MESSAGES.INSUFFICIENT_BALANCE, HTTP_STATUS.BAD_REQUEST);
-        }
-        const updatedWallet = await this._walletRepository.decrementBalance(ownerId, amount);
-        if (!updatedWallet) {
-            throw new CustomError(ERROR_MESSAGES.WALLET_UPDATE_FAILED, HTTP_STATUS.INTERNAL_SERVER_ERROR);
-        }
-        return updatedWallet;
+    execute(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ ownerId, amount, role, }) {
+            const wallet = yield this._getWalletByUserUseCase.execute(ownerId, role);
+            if (!wallet) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.WALLET_NOT_FOUND, constants_1.HTTP_STATUS.NOT_FOUND);
+            }
+            if (wallet.balance < amount) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.INSUFFICIENT_BALANCE, constants_1.HTTP_STATUS.BAD_REQUEST);
+            }
+            const updatedWallet = yield this._walletRepository.decrementBalance(ownerId, amount);
+            if (!updatedWallet) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.WALLET_UPDATE_FAILED, constants_1.HTTP_STATUS.INTERNAL_SERVER_ERROR);
+            }
+            return updatedWallet;
+        });
     }
 };
-DecrementWalletBalanceUseCase = __decorate([
-    injectable(),
-    __param(0, inject("IGetWalletByUserUseCase")),
-    __param(1, inject("IWalletRepository")),
+exports.DecrementWalletBalanceUseCase = DecrementWalletBalanceUseCase;
+exports.DecrementWalletBalanceUseCase = DecrementWalletBalanceUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IGetWalletByUserUseCase")),
+    __param(1, (0, tsyringe_1.inject)("IWalletRepository")),
     __metadata("design:paramtypes", [Object, Object])
 ], DecrementWalletBalanceUseCase);
-export { DecrementWalletBalanceUseCase };

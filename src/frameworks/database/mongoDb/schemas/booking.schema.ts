@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IBookingModel } from "../models/booking.model.js";
+import { IBookingModel } from "../models/booking.model";
 
 export const bookingSchema = new Schema<IBookingModel>(
 	{

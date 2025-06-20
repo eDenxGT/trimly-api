@@ -1,5 +1,8 @@
-import { Schema } from "mongoose";
-export const serviceSchema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.serviceSchema = void 0;
+const mongoose_1 = require("mongoose");
+exports.serviceSchema = new mongoose_1.Schema({
     serviceId: { type: String, required: true },
     barberId: { type: String, required: true },
     name: { type: String, required: true },

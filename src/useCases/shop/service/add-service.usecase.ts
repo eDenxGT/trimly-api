@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IServiceRepository } from "../../../entities/repositoryInterfaces/service/service-repository.interface.js";
-import { IServiceEntity } from "../../../entities/models/service.enity.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
-import { IAddServiceUseCase } from "../../../entities/useCaseInterfaces/shop/service/add-service-usecase.interface.js";
+import { IServiceRepository } from "../../../entities/repositoryInterfaces/service/service-repository.interface";
+import { IServiceEntity } from "../../../entities/models/service.enity";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper";
+import { IAddServiceUseCase } from "../../../entities/useCaseInterfaces/shop/service/add-service-usecase.interface";
 
 @injectable()
 export class AddServiceUseCase implements IAddServiceUseCase {

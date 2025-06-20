@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { strongEmailRegex } from "../../../../shared/validations/email.validation.js";
+import { strongEmailRegex } from "../../../../shared/validations/email.validation";
 
 export const otpMailValidationSchema = z.object({
 	email: strongEmailRegex,

@@ -1,20 +1,20 @@
 import { inject, injectable } from "tsyringe";
 import { Request, Response } from "express";
-import { IScheduleMeetingUseCase } from "../../entities/useCaseInterfaces/chat/meeting/schedule-meeting-usecase.interface.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { IMeetingController } from "../../entities/controllerInterfaces/meeting/meeting-controller.interface.js";
+import { IScheduleMeetingUseCase } from "../../entities/useCaseInterfaces/chat/meeting/schedule-meeting-usecase.interface";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { IMeetingController } from "../../entities/controllerInterfaces/meeting/meeting-controller.interface";
 import {
   ERROR_MESSAGES,
   HTTP_STATUS,
   SUCCESS_MESSAGES,
-} from "../../shared/constants.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
-import { IGetMeetingByCommunityIdUseCase } from "../../entities/useCaseInterfaces/chat/meeting/get-meeting-by-communityid-usecase.interface.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { IGetAllMeetingsForListingUseCase } from "../../entities/useCaseInterfaces/chat/meeting/get-all-meetings-for-listing-usecase.interface.js";
-import { IUpdateMeetingDetailsUseCase } from "../../entities/useCaseInterfaces/chat/meeting/update-meeting-details-usecase.interface.js";
-import { ICancelMeetingUseCase } from "../../entities/useCaseInterfaces/chat/meeting/cancel-meeting-usecase.interface.js";
-import { ICompleteMeetingUseCase } from "../../entities/useCaseInterfaces/chat/meeting/complete-meeting-usecase.interface.js";
+} from "../../shared/constants";
+import { CustomRequest } from "../middlewares/auth.middleware";
+import { IGetMeetingByCommunityIdUseCase } from "../../entities/useCaseInterfaces/chat/meeting/get-meeting-by-communityid-usecase.interface";
+import { CustomError } from "../../entities/utils/custom.error";
+import { IGetAllMeetingsForListingUseCase } from "../../entities/useCaseInterfaces/chat/meeting/get-all-meetings-for-listing-usecase.interface";
+import { IUpdateMeetingDetailsUseCase } from "../../entities/useCaseInterfaces/chat/meeting/update-meeting-details-usecase.interface";
+import { ICancelMeetingUseCase } from "../../entities/useCaseInterfaces/chat/meeting/cancel-meeting-usecase.interface";
+import { ICompleteMeetingUseCase } from "../../entities/useCaseInterfaces/chat/meeting/complete-meeting-usecase.interface";
 
 @injectable()
 export class MeetingController implements IMeetingController {

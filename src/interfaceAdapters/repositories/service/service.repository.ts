@@ -2,9 +2,9 @@ import { injectable } from "tsyringe";
 import {
   IServiceModel,
   ServiceModel,
-} from "../../../frameworks/database/mongoDb/models/service.model.js";
-import { BaseRepository } from "../base.repository.js";
-import { IServiceRepository } from "../../../entities/repositoryInterfaces/service/service-repository.interface.js";
+} from "../../../frameworks/database/mongoDb/models/service.model";
+import { BaseRepository } from "../base.repository";
+import { IServiceRepository } from "../../../entities/repositoryInterfaces/service/service-repository.interface";
 
 @injectable()
 export class ServiceRepository

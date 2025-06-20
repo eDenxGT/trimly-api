@@ -1,5 +1,8 @@
-import { Schema } from "mongoose";
-export const notificationSchema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.notificationSchema = void 0;
+const mongoose_1 = require("mongoose");
+exports.notificationSchema = new mongoose_1.Schema({
     userId: {
         type: String,
         required: true,

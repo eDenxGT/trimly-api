@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateWalletBalanceUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/update-wallet-balance-usecase.interface.js";
-import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface.js";
-import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
-import { ICreateWalletUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/create-wallet-usecase.interface.js";
-import { IGetWalletByUserUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/get-wallet-by-user-usecase.interface.js";
+import { IUpdateWalletBalanceUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/update-wallet-balance-usecase.interface";
+import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface";
+import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper";
+import { ICreateWalletUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/create-wallet-usecase.interface";
+import { IGetWalletByUserUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/get-wallet-by-user-usecase.interface";
 
 @injectable()
 export class UpdateWalletBalanceUseCase implements IUpdateWalletBalanceUseCase {

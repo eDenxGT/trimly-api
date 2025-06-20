@@ -1,28 +1,28 @@
 import { Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
-import { IChatController } from "../../entities/controllerInterfaces/chat/chat-controller.interface.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { IGetChatByUserUseCase } from "../../entities/useCaseInterfaces/chat/direct-chat/get-chat-by-user-usecase.interface.js";
+import { IChatController } from "../../entities/controllerInterfaces/chat/chat-controller.interface";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { IGetChatByUserUseCase } from "../../entities/useCaseInterfaces/chat/direct-chat/get-chat-by-user-usecase.interface";
 import {
   ERROR_MESSAGES,
   HTTP_STATUS,
   SUCCESS_MESSAGES,
-} from "../../shared/constants.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
-import { IGetAllChatsByUserUseCase } from "../../entities/useCaseInterfaces/chat/direct-chat/get-all-chats-by-user.usecase.interface.js";
-import { IGetChatByChatIdUseCase } from "../../entities/useCaseInterfaces/chat/direct-chat/get-chat-by-chatid.usecase.js";
-import { ICreateCommunityUseCase } from "../../entities/useCaseInterfaces/chat/community/create-community-usecase.interface.js";
-import { IGetAllCommunitiesForAdminUseCase } from "../../entities/useCaseInterfaces/chat/community/get-all-communities-for-admin-usecase.interface.js";
-import { IGetCommunityForEditUseCase } from "../../entities/useCaseInterfaces/chat/community/get-community-for-edit-usecase.interface.js";
-import { IEditCommunityUseCase } from "../../entities/useCaseInterfaces/chat/community/edit-community-usecase.interface.js";
-import { IUpdateCommunityStatusUseCase } from "../../entities/useCaseInterfaces/chat/community/update-community-status-usecase.interface.js";
-import { IDeleteCommunityUseCase } from "../../entities/useCaseInterfaces/chat/community/delete-community-usecase.interface.js";
-import { IGetAllCommunitiesForBarberUseCase } from "../../entities/useCaseInterfaces/chat/community/get-all-communities-for-barber-usecase.interface.js";
-import { IBarberJoinCommunityUseCase } from "../../entities/useCaseInterfaces/chat/community/barber-join-community-usecase.interface.js";
-import { IGetAllCommunityChatsByUserUseCase } from "../../entities/useCaseInterfaces/chat/community/get-all-community-chats-by-user-usecase.interface.js";
+} from "../../shared/constants";
+import { CustomRequest } from "../middlewares/auth.middleware";
+import { IGetAllChatsByUserUseCase } from "../../entities/useCaseInterfaces/chat/direct-chat/get-all-chats-by-user.usecase.interface";
+import { IGetChatByChatIdUseCase } from "../../entities/useCaseInterfaces/chat/direct-chat/get-chat-by-chatid.usecase";
+import { ICreateCommunityUseCase } from "../../entities/useCaseInterfaces/chat/community/create-community-usecase.interface";
+import { IGetAllCommunitiesForAdminUseCase } from "../../entities/useCaseInterfaces/chat/community/get-all-communities-for-admin-usecase.interface";
+import { IGetCommunityForEditUseCase } from "../../entities/useCaseInterfaces/chat/community/get-community-for-edit-usecase.interface";
+import { IEditCommunityUseCase } from "../../entities/useCaseInterfaces/chat/community/edit-community-usecase.interface";
+import { IUpdateCommunityStatusUseCase } from "../../entities/useCaseInterfaces/chat/community/update-community-status-usecase.interface";
+import { IDeleteCommunityUseCase } from "../../entities/useCaseInterfaces/chat/community/delete-community-usecase.interface";
+import { IGetAllCommunitiesForBarberUseCase } from "../../entities/useCaseInterfaces/chat/community/get-all-communities-for-barber-usecase.interface";
+import { IBarberJoinCommunityUseCase } from "../../entities/useCaseInterfaces/chat/community/barber-join-community-usecase.interface";
+import { IGetAllCommunityChatsByUserUseCase } from "../../entities/useCaseInterfaces/chat/community/get-all-community-chats-by-user-usecase.interface";
 import {
   IGetCommunityChatUseCase,
-} from "../../entities/useCaseInterfaces/chat/community/get-community-chat-usecase.interface.js";
+} from "../../entities/useCaseInterfaces/chat/community/get-community-chat-usecase.interface";
 
 @injectable()
 export class ChatController implements IChatController {

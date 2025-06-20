@@ -1,3 +1,6 @@
-import { model } from "mongoose";
-import { chatRoomSchema } from "../../schemas/chat/chat-room.schema.js";
-export const ChatRoomModel = model("ChatRoom", chatRoomSchema);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ChatRoomModel = void 0;
+const mongoose_1 = require("mongoose");
+const chat_room_schema_1 = require("../../schemas/chat/chat-room.schema");
+exports.ChatRoomModel = (0, mongoose_1.model)("ChatRoom", chat_room_schema_1.chatRoomSchema);

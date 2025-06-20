@@ -2,9 +2,9 @@ import { injectable } from "tsyringe";
 import {
   DirectMessageModel,
   IDirectMessageModel,
-} from "../../../../frameworks/database/mongoDb/models/chat/direct-message.model.js";
-import { BaseRepository } from "../../base.repository.js";
-import { IDirectMessageRepository } from "../../../../entities/repositoryInterfaces/chat/direct-chat/direct-message.repository.js";
+} from "../../../../frameworks/database/mongoDb/models/chat/direct-message.model";
+import { BaseRepository } from "../../base.repository";
+import { IDirectMessageRepository } from "../../../../entities/repositoryInterfaces/chat/direct-chat/direct-message.repository";
 
 @injectable()
 export class DirectMessageRepository

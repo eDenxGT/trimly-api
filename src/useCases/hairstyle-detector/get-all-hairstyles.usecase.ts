@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IHairstyleRepository } from "../../entities/repositoryInterfaces/hairstyle/hairstyle-repository.interface.js";
-import { IHairstyleEntity } from "../../entities/models/hairstyle.entity.js";
-import { IGetAllHairstylesUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/get-all-hairstyles-usecase.interface.js";
+import { IHairstyleRepository } from "../../entities/repositoryInterfaces/hairstyle/hairstyle-repository.interface";
+import { IHairstyleEntity } from "../../entities/models/hairstyle.entity";
+import { IGetAllHairstylesUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/get-all-hairstyles-usecase.interface";
 
 @injectable()
 export class GetAllHairstylesUseCase implements IGetAllHairstylesUseCase {

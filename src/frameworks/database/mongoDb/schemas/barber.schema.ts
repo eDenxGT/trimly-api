@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IBarberModel } from "../models/barber.model.js";
+import { IBarberModel } from "../models/barber.model";
 
 export const barberSchema = new Schema<IBarberModel>(
 	{

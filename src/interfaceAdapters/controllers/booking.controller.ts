@@ -1,17 +1,17 @@
 import { inject, injectable } from "tsyringe";
 import { Request, Response } from "express";
-import { IBookingController } from "../../entities/controllerInterfaces/booking/booking-controller.interface.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
-import { HTTP_STATUS, SUCCESS_MESSAGES } from "../../shared/constants.js";
-import { ICreateBookingUseCase } from "../../entities/useCaseInterfaces/booking/create-booking-usecase.interface.js";
-import { IVerifyPaymentUseCase } from "../../entities/useCaseInterfaces/booking/verify-payment-usecase.interface.js";
-import { IHandleFailurePaymentUseCase } from "../../entities/useCaseInterfaces/booking/handle-failure-payment-usecase.interface.js";
-import { IGetAllBookingsByShopIdUseCase } from "../../entities/useCaseInterfaces/booking/get-all-bookings-by-shopid-usecase.interface.js";
-import { IGetAllBookingsByUserUseCase } from "../../entities/useCaseInterfaces/booking/get-all-bookings-by-user-usecase.interface.js";
-import { ICancelBookingUseCase } from "../../entities/useCaseInterfaces/booking/cancel-booking-usecase.interface.js";
-import { ICompleteBookingUseCase } from "../../entities/useCaseInterfaces/booking/complete-booking-usecase.interface.js";
-import { IBookWithWalletUseCase } from "../../entities/useCaseInterfaces/booking/book-with-wallet-usecase.interface.js";
+import { IBookingController } from "../../entities/controllerInterfaces/booking/booking-controller.interface";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { CustomRequest } from "../middlewares/auth.middleware";
+import { HTTP_STATUS, SUCCESS_MESSAGES } from "../../shared/constants";
+import { ICreateBookingUseCase } from "../../entities/useCaseInterfaces/booking/create-booking-usecase.interface";
+import { IVerifyPaymentUseCase } from "../../entities/useCaseInterfaces/booking/verify-payment-usecase.interface";
+import { IHandleFailurePaymentUseCase } from "../../entities/useCaseInterfaces/booking/handle-failure-payment-usecase.interface";
+import { IGetAllBookingsByShopIdUseCase } from "../../entities/useCaseInterfaces/booking/get-all-bookings-by-shopid-usecase.interface";
+import { IGetAllBookingsByUserUseCase } from "../../entities/useCaseInterfaces/booking/get-all-bookings-by-user-usecase.interface";
+import { ICancelBookingUseCase } from "../../entities/useCaseInterfaces/booking/cancel-booking-usecase.interface";
+import { ICompleteBookingUseCase } from "../../entities/useCaseInterfaces/booking/complete-booking-usecase.interface";
+import { IBookWithWalletUseCase } from "../../entities/useCaseInterfaces/booking/book-with-wallet-usecase.interface";
 
 @injectable()
 export class BookingController implements IBookingController {

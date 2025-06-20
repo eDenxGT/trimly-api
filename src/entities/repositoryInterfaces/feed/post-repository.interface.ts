@@ -1,6 +1,6 @@
-import { IBaseRepository } from "../base-repository.interface.js";
-import { IPostEntity } from "../../models/post.entity.js";
-import { IClientEntity } from "../../models/client.entity.js";
+import { IBaseRepository } from "../base-repository.interface";
+import { IPostEntity } from "../../models/post.entity";
+import { IClientEntity } from "../../models/client.entity";
 
 export interface IPostRepository extends IBaseRepository<IPostEntity> {
   findAllPosts(

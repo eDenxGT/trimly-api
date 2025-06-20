@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IWalletEntity } from "../../../entities/models/wallet.entity.js";
-import { IGetWalletByUserUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/get-wallet-by-user-usecase.interface.js";
-import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { IDecrementWalletBalanceUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/decrement-wallet-balance-usecase.interface.js";
+import { IWalletEntity } from "../../../entities/models/wallet.entity";
+import { IGetWalletByUserUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/get-wallet-by-user-usecase.interface";
+import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { IDecrementWalletBalanceUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/decrement-wallet-balance-usecase.interface";
 
 @injectable()
 export class DecrementWalletBalanceUseCase

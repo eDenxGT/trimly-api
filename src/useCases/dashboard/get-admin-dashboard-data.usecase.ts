@@ -1,10 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { IGetAdminDashboardDataUseCase } from "../../entities/useCaseInterfaces/dashboard/get-admin-dashboard-data-usecase.interface.js";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface.js";
-import { analytics } from "googleapis/build/src/apis/analytics/index.js";
-import { IAdminDashboardResponse } from "../../shared/dtos/dashboard-data.dto.js";
+import { IGetAdminDashboardDataUseCase } from "../../entities/useCaseInterfaces/dashboard/get-admin-dashboard-data-usecase.interface";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
+import { IAdminDashboardResponse } from "../../shared/dtos/dashboard-data.dto";
 
 @injectable()
 export class GetAdminDashboardDataUseCase

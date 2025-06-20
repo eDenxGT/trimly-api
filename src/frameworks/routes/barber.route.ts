@@ -6,10 +6,10 @@ import {
   authorizeRole,
   decodeToken,
   verifyAuth,
-} from "../../interfaceAdapters/middlewares/auth.middleware.js";
+} from "../../interfaceAdapters/middlewares/auth.middleware";
 
 //* ====== BaseRoute Import ====== *//
-import { BaseRoute } from "./base.route.js";
+import { BaseRoute } from "./base.route";
 
 //* ====== Controller Imports ====== *//
 import {
@@ -26,7 +26,7 @@ import {
   dashboardController,
   hairstyleDetectorController,
   notificationController,
-} from "../di/resolver.js";
+} from "../di/resolver";
 
 export class BarberRoutes extends BaseRoute {
   constructor() {

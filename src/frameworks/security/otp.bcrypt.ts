@@ -1,5 +1,5 @@
-import { config } from "../../shared/config.js";
-import { IBcrypt } from "./bcrypt.interface.js";
+import { config } from "../../shared/config";
+import { IBcrypt } from "./bcrypt.interface";
 import bcrypt from "bcryptjs";
 
 export class OtpBcrypt implements IBcrypt {

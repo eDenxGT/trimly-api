@@ -1,4 +1,4 @@
-import { IBarberEntity } from "../barber.entity.js";
+import { IBarberEntity } from "../barber.entity";
 
 export interface IPaginatedShops {
 	shops: IBarberEntity[] | [];

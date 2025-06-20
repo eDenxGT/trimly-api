@@ -1,5 +1,5 @@
-import { IMeetingRoomEntity } from "../../models/chat/meeting-room.entity.js";
-import { IBaseRepository } from "../base-repository.interface.js";
+import { IMeetingRoomEntity } from "../../models/chat/meeting-room.entity";
+import { IBaseRepository } from "../base-repository.interface";
 
 export interface IMeetingRoomRepository
   extends IBaseRepository<IMeetingRoomEntity> {

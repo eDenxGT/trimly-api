@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { IUpdateShopStatusUseCase } from "../../entities/useCaseInterfaces/shop/update-shop-status-usecase.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { ISendEmailUseCase } from "../../entities/useCaseInterfaces/common/send-email-usecase.interface.js";
+import { IUpdateShopStatusUseCase } from "../../entities/useCaseInterfaces/shop/update-shop-status-usecase.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { ISendEmailUseCase } from "../../entities/useCaseInterfaces/common/send-email-usecase.interface";
 import {
 	SHOP_APPROVED_MAIL_CONTENT,
 	SHOP_REJECTION_WITH_MESSAGE_MAIL,
 	statusTypes,
-} from "../../shared/constants.js";
+} from "../../shared/constants";
 
 @injectable()
 export class UpdateShopStatusUseCase implements IUpdateShopStatusUseCase {

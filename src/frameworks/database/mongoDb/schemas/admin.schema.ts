@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IAdminModel } from "../models/admin.model.js";
+import { IAdminModel } from "../models/admin.model";
 
 export const adminSchema = new Schema<IAdminModel>(
 	{

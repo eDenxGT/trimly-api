@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
-import { IReviewController } from "../../entities/controllerInterfaces/review/review-controller.interface.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
-import { IAddShopReviewUseCase } from "../../entities/useCaseInterfaces/review/add-shop-review-usecase.interface.js";
-import { HTTP_STATUS, SUCCESS_MESSAGES } from "../../shared/constants.js";
+import { IReviewController } from "../../entities/controllerInterfaces/review/review-controller.interface";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { CustomRequest } from "../middlewares/auth.middleware";
+import { IAddShopReviewUseCase } from "../../entities/useCaseInterfaces/review/add-shop-review-usecase.interface";
+import { HTTP_STATUS, SUCCESS_MESSAGES } from "../../shared/constants";
 
 @injectable()
 export class ReviewController implements IReviewController {

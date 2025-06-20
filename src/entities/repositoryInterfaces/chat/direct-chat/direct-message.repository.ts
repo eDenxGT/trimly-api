@@ -1,5 +1,5 @@
-import { IDirectMessageEntity } from "../../../models/chat/direct-message.entity.js";
-import { IBaseRepository } from "../../base-repository.interface.js";
+import { IDirectMessageEntity } from "../../../models/chat/direct-message.entity";
+import { IBaseRepository } from "../../base-repository.interface";
 
 export interface IDirectMessageRepository
   extends IBaseRepository<IDirectMessageEntity> {

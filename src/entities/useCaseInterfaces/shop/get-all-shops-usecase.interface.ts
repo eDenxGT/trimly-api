@@ -1,4 +1,4 @@
-import { IPaginatedShops } from "../../models/paginated/paginated-shops.entity.js";
+import { IPaginatedShops } from "../../models/paginated/paginated-shops.entity";
 
 export interface IGetAllShopsUseCase {
 	execute(

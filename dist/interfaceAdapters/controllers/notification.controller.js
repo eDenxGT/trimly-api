@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,62 +11,76 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { HTTP_STATUS } from "../../shared/constants.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NotificationController = void 0;
+const tsyringe_1 = require("tsyringe");
+const error_handler_1 = require("../../shared/utils/error.handler");
+const constants_1 = require("../../shared/constants");
 let NotificationController = class NotificationController {
-    _getNotificationsByUserUseCase;
-    _markAllNotificationsAsReadByUserUseCase;
-    _markSingleNotificationAsReadByUserUseCase;
     constructor(_getNotificationsByUserUseCase, _markAllNotificationsAsReadByUserUseCase, _markSingleNotificationAsReadByUserUseCase) {
         this._getNotificationsByUserUseCase = _getNotificationsByUserUseCase;
         this._markAllNotificationsAsReadByUserUseCase = _markAllNotificationsAsReadByUserUseCase;
         this._markSingleNotificationAsReadByUserUseCase = _markSingleNotificationAsReadByUserUseCase;
     }
-    async getNotificationsByUser(req, res) {
-        try {
-            const { userId } = req.user;
-            const notifications = await this._getNotificationsByUserUseCase.execute({
-                userId,
-            });
-            res.status(HTTP_STATUS.OK).json({ success: true, notifications });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+    getNotificationsByUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                const notifications = yield this._getNotificationsByUserUseCase.execute({
+                    userId,
+                });
+                res.status(constants_1.HTTP_STATUS.OK).json({ success: true, notifications });
+            }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
-    async markAllNotificationsAsReadByUser(req, res) {
-        try {
-            const { userId } = req.user;
-            await this._markAllNotificationsAsReadByUserUseCase.execute({
-                userId,
-            });
-            res.status(HTTP_STATUS.OK).json({ success: true });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+    markAllNotificationsAsReadByUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                yield this._markAllNotificationsAsReadByUserUseCase.execute({
+                    userId,
+                });
+                res.status(constants_1.HTTP_STATUS.OK).json({ success: true });
+            }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
-    async markSingleNotificationAsReadByUser(req, res) {
-        try {
-            const { userId } = req.user;
-            const { notificationId } = req.params;
-            await this._markSingleNotificationAsReadByUserUseCase.execute({
-                userId,
-                notificationId,
-            });
-            res.status(HTTP_STATUS.OK).json({ success: true });
-        }
-        catch (error) {
-            handleErrorResponse(req, res, error);
-        }
+    markSingleNotificationAsReadByUser(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId } = req.user;
+                const { notificationId } = req.params;
+                yield this._markSingleNotificationAsReadByUserUseCase.execute({
+                    userId,
+                    notificationId,
+                });
+                res.status(constants_1.HTTP_STATUS.OK).json({ success: true });
+            }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
     }
 };
-NotificationController = __decorate([
-    injectable(),
-    __param(0, inject("IGetNotificationsByUserUseCase")),
-    __param(1, inject("IMarkAllNotificationsAsReadByUserUseCase")),
-    __param(2, inject("IMarkSingleNotificationAsReadByUserUseCase")),
+exports.NotificationController = NotificationController;
+exports.NotificationController = NotificationController = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IGetNotificationsByUserUseCase")),
+    __param(1, (0, tsyringe_1.inject)("IMarkAllNotificationsAsReadByUserUseCase")),
+    __param(2, (0, tsyringe_1.inject)("IMarkSingleNotificationAsReadByUserUseCase")),
     __metadata("design:paramtypes", [Object, Object, Object])
 ], NotificationController);
-export { NotificationController };

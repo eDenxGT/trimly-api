@@ -2,13 +2,13 @@ import { injectable } from "tsyringe";
 import {
   BookingModel,
   IBookingModel,
-} from "../../../frameworks/database/mongoDb/models/booking.model.js";
-import { BaseRepository } from "../base.repository.js";
-import { IBookingEntity } from "../../../entities/models/booking.entity.js";
+} from "../../../frameworks/database/mongoDb/models/booking.model";
+import { BaseRepository } from "../base.repository";
+import { IBookingEntity } from "../../../entities/models/booking.entity";
 import { PipelineStage } from "mongoose";
-import { IBarberDashboardResponse } from "../../../shared/dtos/dashboard-data.dto.js";
-import { generateCompleteWeeklyData } from "../../../shared/utils/group-data-by-week.helper.js";
-import { IBookingRepository } from "../../../entities/repositoryInterfaces/booking/booking-repository.interface.js";
+import { IBarberDashboardResponse } from "../../../shared/dtos/dashboard-data.dto";
+import { generateCompleteWeeklyData } from "../../../shared/utils/group-data-by-week.helper";
+import { IBookingRepository } from "../../../entities/repositoryInterfaces/booking/booking-repository.interface";
 
 @injectable()
 export class BookingRepository

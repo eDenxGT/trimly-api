@@ -1,5 +1,8 @@
-import { Schema } from "mongoose";
-export const barberSchema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.barberSchema = void 0;
+const mongoose_1 = require("mongoose");
+exports.barberSchema = new mongoose_1.Schema({
     userId: { type: String, unique: true },
     shopName: { type: String },
     email: { type: String, required: true, unique: true },
@@ -73,4 +76,4 @@ export const barberSchema = new Schema({
         zipCode: { type: String },
     },
 }, { timestamps: true });
-barberSchema.index({ location: "2dsphere" });
+exports.barberSchema.index({ location: "2dsphere" });

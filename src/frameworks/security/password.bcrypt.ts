@@ -1,7 +1,7 @@
 import { injectable } from "tsyringe";
-import { IBcrypt } from "./bcrypt.interface.js";
+import { IBcrypt } from "./bcrypt.interface";
 import bcrypt from "bcryptjs";
-import { config } from "../../shared/config.js";
+import { config } from "../../shared/config";
 
 @injectable()
 export class PasswordBcrypt implements IBcrypt {

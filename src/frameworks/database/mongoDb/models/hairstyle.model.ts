@@ -1,6 +1,6 @@
 import { Document, model, ObjectId } from "mongoose";
-import { IHairstyleEntity } from "../../../../entities/models/hairstyle.entity.js";
-import { hairstyleSchema } from "../schemas/hairstyle.schema.js";
+import { IHairstyleEntity } from "../../../../entities/models/hairstyle.entity";
+import { hairstyleSchema } from "../schemas/hairstyle.schema";
 
 export interface IHairstyleModel extends IHairstyleEntity, Document {
   _id: ObjectId;

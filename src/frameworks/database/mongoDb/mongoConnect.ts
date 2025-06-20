@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { config } from "../../../shared/config.js";
+import { config } from "../../../shared/config";
 import chalk from "chalk";
 
 export class MongoConnect {

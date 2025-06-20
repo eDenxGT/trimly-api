@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface.js";
-import { IDeleteCommunityUseCase } from "../../../entities/useCaseInterfaces/chat/community/delete-community-usecase.interface.js";
-import { ICommunityMessageRepository } from "../../../entities/repositoryInterfaces/chat/community/community-message-respository.interface.js";
+import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface";
+import { IDeleteCommunityUseCase } from "../../../entities/useCaseInterfaces/chat/community/delete-community-usecase.interface";
+import { ICommunityMessageRepository } from "../../../entities/repositoryInterfaces/chat/community/community-message-respository.interface";
 
 @injectable()
 export class DeleteCommunityUseCase implements IDeleteCommunityUseCase {

@@ -1,40 +1,43 @@
-import { z } from "zod";
-import { strongEmailRegex } from "../../../../shared/validations/email.validation.js";
-import { passwordSchema } from "../../../../shared/validations/password.validation.js";
-import { nameSchema } from "../../../../shared/validations/name.validation.js";
-import { phoneNumberSchema } from "../../../../shared/validations/phone.validation.js";
-const adminSchema = z.object({
-    email: strongEmailRegex,
-    password: passwordSchema,
-    role: z.literal("admin"),
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userSchemas = void 0;
+const zod_1 = require("zod");
+const email_validation_1 = require("../../../../shared/validations/email.validation");
+const password_validation_1 = require("../../../../shared/validations/password.validation");
+const name_validation_1 = require("../../../../shared/validations/name.validation");
+const phone_validation_1 = require("../../../../shared/validations/phone.validation");
+const adminSchema = zod_1.z.object({
+    email: email_validation_1.strongEmailRegex,
+    password: password_validation_1.passwordSchema,
+    role: zod_1.z.literal("admin"),
 });
-const clientSchema = z.object({
-    fullName: nameSchema,
-    email: strongEmailRegex,
-    phoneNumber: phoneNumberSchema,
-    password: passwordSchema,
-    role: z.literal("client"),
+const clientSchema = zod_1.z.object({
+    fullName: name_validation_1.nameSchema,
+    email: email_validation_1.strongEmailRegex,
+    phoneNumber: phone_validation_1.phoneNumberSchema,
+    password: password_validation_1.passwordSchema,
+    role: zod_1.z.literal("client"),
 });
-const barberSchema = z.object({
-    shopName: nameSchema,
-    email: strongEmailRegex,
-    phoneNumber: phoneNumberSchema,
-    password: passwordSchema,
-    location: z.object({
-        name: z.string(),
-        displayName: z.string(),
-        zipCode: z.string(),
-        coordinates: z
+const barberSchema = zod_1.z.object({
+    shopName: name_validation_1.nameSchema,
+    email: email_validation_1.strongEmailRegex,
+    phoneNumber: phone_validation_1.phoneNumberSchema,
+    password: password_validation_1.passwordSchema,
+    location: zod_1.z.object({
+        name: zod_1.z.string(),
+        displayName: zod_1.z.string(),
+        zipCode: zod_1.z.string(),
+        coordinates: zod_1.z
             .tuple([
-            z.number().min(-180).max(180), // longitude
-            z.number().min(-90).max(90), // latitude
+            zod_1.z.number().min(-180).max(180), // longitude
+            zod_1.z.number().min(-90).max(90), // latitude
         ])
             .refine((coords) => coords.length === 2, "Coordinates must be [longitude, latitude]"),
     }),
-    status: z.enum(["pending", "active", "blocked"]),
-    role: z.literal("barber"),
+    status: zod_1.z.enum(["pending", "active", "blocked"]),
+    role: zod_1.z.literal("barber"),
 });
-export const userSchemas = {
+exports.userSchemas = {
     admin: adminSchema,
     client: clientSchema,
     barber: barberSchema,

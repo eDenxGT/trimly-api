@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IToggleCommentLikeUseCase } from "../../../entities/useCaseInterfaces/feed/comment/toggle-comment-like-usecase.interface.js";
-import { ICommentRepository } from "../../../entities/repositoryInterfaces/feed/comment-repository.interface.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
+import { IToggleCommentLikeUseCase } from "../../../entities/useCaseInterfaces/feed/comment/toggle-comment-like-usecase.interface";
+import { ICommentRepository } from "../../../entities/repositoryInterfaces/feed/comment-repository.interface";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 
 @injectable()
 export class ToggleCommentLikeUseCase implements IToggleCommentLikeUseCase {

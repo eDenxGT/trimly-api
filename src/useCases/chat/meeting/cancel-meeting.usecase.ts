@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { ICancelMeetingUseCase } from "../../../entities/useCaseInterfaces/chat/meeting/cancel-meeting-usecase.interface.js";
+import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { ICancelMeetingUseCase } from "../../../entities/useCaseInterfaces/chat/meeting/cancel-meeting-usecase.interface";
 
 @injectable()
 export class CancelMeetingUseCase implements ICancelMeetingUseCase {

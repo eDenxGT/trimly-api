@@ -2,10 +2,10 @@ import { injectable } from "tsyringe";
 import {
   ClientModel,
   IClientModel,
-} from "../../../frameworks/database/mongoDb/models/client.model.js";
-import { BaseRepository } from "../base.repository.js";
-import { IClientRepository } from "../../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IAdminDashboardResponse } from "../../../shared/dtos/dashboard-data.dto.js";
+} from "../../../frameworks/database/mongoDb/models/client.model";
+import { BaseRepository } from "../base.repository";
+import { IClientRepository } from "../../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IAdminDashboardResponse } from "../../../shared/dtos/dashboard-data.dto";
 
 @injectable()
 export class ClientRepository

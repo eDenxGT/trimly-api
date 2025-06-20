@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IGetAllServicesUseCase } from "../../entities/useCaseInterfaces/shop/service/get-all-services-usecase.interface.js";
-import { IGetAllNearestShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-nearest-shops-usecase.interface.js";
-import { IBarberEntity } from "../../entities/models/barber.entity.js";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IGetAllServicesUseCase } from "../../entities/useCaseInterfaces/shop/service/get-all-services-usecase.interface";
+import { IGetAllNearestShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-nearest-shops-usecase.interface";
+import { IBarberEntity } from "../../entities/models/barber.entity";
 
 @injectable()
 export class GetAllNearestShopsUseCase implements IGetAllNearestShopsUseCase {

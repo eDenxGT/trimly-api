@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { UserDTO } from "../../shared/dtos/user.dto.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { IBcrypt } from "../../frameworks/security/bcrypt.interface.js";
-import { IUserEntity } from "../../entities/models/user.entity.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IRegisterUserUseCase } from "../../entities/useCaseInterfaces/auth/register-usecase.interface.js";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface.js";
-import { IClientEntity } from "../../entities/models/client.entity.js";
-import { IBarberEntity } from "../../entities/models/barber.entity.js";
-import { IUserExistenceService } from "../../entities/serviceInterfaces/user-existence-service.interface.js";
-import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
-import { ICreateWalletUseCase } from "../../entities/useCaseInterfaces/finance/wallet/create-wallet-usecase.interface.js";
+import { UserDTO } from "../../shared/dtos/user.dto";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
+import { IUserEntity } from "../../entities/models/user.entity";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IRegisterUserUseCase } from "../../entities/useCaseInterfaces/auth/register-usecase.interface";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface";
+import { IClientEntity } from "../../entities/models/client.entity";
+import { IBarberEntity } from "../../entities/models/barber.entity";
+import { IUserExistenceService } from "../../entities/serviceInterfaces/user-existence-service.interface";
+import { generateUniqueId } from "../../shared/utils/unique-uuid.helper";
+import { ICreateWalletUseCase } from "../../entities/useCaseInterfaces/finance/wallet/create-wallet-usecase.interface";
 
 @injectable()
 export class RegisterUserUseCase implements IRegisterUserUseCase {

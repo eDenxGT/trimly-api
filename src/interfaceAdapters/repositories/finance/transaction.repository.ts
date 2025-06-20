@@ -2,9 +2,9 @@ import { injectable } from "tsyringe";
 import {
   ITransactionModel,
   TransactionModel,
-} from "../../../frameworks/database/mongoDb/models/transaction.model.js";
-import { BaseRepository } from "../base.repository.js";
-import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
+} from "../../../frameworks/database/mongoDb/models/transaction.model";
+import { BaseRepository } from "../base.repository";
+import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface";
 import { FilterQuery } from "mongoose";
 
 @injectable()

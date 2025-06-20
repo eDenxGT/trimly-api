@@ -1,16 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PrivateRoutes = void 0;
 //* ====== BaseRoute Import ====== *//
-import { BaseRoute } from "../base.route.js";
+const base_route_1 = require("../base.route");
 //* ====== PrivateRoute Imports ====== *//
-import { BarberRoutes } from "../barber.route.js";
-import { ClientRoutes } from "../client.route.js";
-import { AdminRoutes } from "../admin.route.js";
-export class PrivateRoutes extends BaseRoute {
+const barber_route_1 = require("../barber.route");
+const client_route_1 = require("../client.route");
+const admin_route_1 = require("../admin.route");
+class PrivateRoutes extends base_route_1.BaseRoute {
     constructor() {
         super();
     }
     initializeRoutes() {
-        this.router.use("/_cl", new ClientRoutes().router);
-        this.router.use("/_ba", new BarberRoutes().router);
-        this.router.use("/_ad", new AdminRoutes().router);
+        this.router.use("/_cl", new client_route_1.ClientRoutes().router);
+        this.router.use("/_ba", new barber_route_1.BarberRoutes().router);
+        this.router.use("/_ad", new admin_route_1.AdminRoutes().router);
     }
 }
+exports.PrivateRoutes = PrivateRoutes;

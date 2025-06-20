@@ -1,8 +1,8 @@
 import { injectable } from "tsyringe";
 import { google } from "googleapis";
-import { IGoogleCalendarService } from "../../entities/serviceInterfaces/google-calendar-service.interface.js";
+import { IGoogleCalendarService } from "../../entities/serviceInterfaces/google-calendar-service.interface";
 import { JWT } from "google-auth-library";
-import { config } from "../../shared/config.js";
+import { config } from "../../shared/config";
 
 @injectable()
 export class GoogleCalendarService implements IGoogleCalendarService {

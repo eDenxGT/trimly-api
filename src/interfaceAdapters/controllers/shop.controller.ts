@@ -1,16 +1,16 @@
 import { inject, injectable } from "tsyringe";
 import { Request, Response } from "express";
-import { IShopController } from "../../entities/controllerInterfaces/shop/shop-controller.interface.js";
+import { IShopController } from "../../entities/controllerInterfaces/shop/shop-controller.interface";
 import {
 	ERROR_MESSAGES,
 	HTTP_STATUS,
 	SUCCESS_MESSAGES,
-} from "../../shared/constants.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { IGetAllShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-shops-usecase.interface.js";
-import { IUpdateShopStatusUseCase } from "../../entities/useCaseInterfaces/shop/update-shop-status-usecase.interface.js";
-import { IGetAllNearestShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-nearest-shops-usecase.interface.js";
-import { IGetShopDetailsByShopIdUseCase } from "../../entities/useCaseInterfaces/shop/get-shop-details-by-shopid-usecase.interface.js";
+} from "../../shared/constants";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { IGetAllShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-shops-usecase.interface";
+import { IUpdateShopStatusUseCase } from "../../entities/useCaseInterfaces/shop/update-shop-status-usecase.interface";
+import { IGetAllNearestShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-nearest-shops-usecase.interface";
+import { IGetShopDetailsByShopIdUseCase } from "../../entities/useCaseInterfaces/shop/get-shop-details-by-shopid-usecase.interface";
 
 @injectable()
 export class ShopController implements IShopController {

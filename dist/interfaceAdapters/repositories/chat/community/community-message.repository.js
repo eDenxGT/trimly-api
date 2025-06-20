@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,20 +8,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { injectable } from "tsyringe";
-import { BaseRepository } from "../../base.repository.js";
-import { CommunityMessageModel, } from "../../../../frameworks/database/mongoDb/models/chat/community-message.model.js";
-let CommunityMessageRepository = class CommunityMessageRepository extends BaseRepository {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CommunityMessageRepository = void 0;
+const tsyringe_1 = require("tsyringe");
+const base_repository_1 = require("../../base.repository");
+const community_message_model_1 = require("../../../../frameworks/database/mongoDb/models/chat/community-message.model");
+let CommunityMessageRepository = class CommunityMessageRepository extends base_repository_1.BaseRepository {
     constructor() {
-        super(CommunityMessageModel);
+        super(community_message_model_1.CommunityMessageModel);
     }
-    async saveCommunityMessage(data) {
-        const createdMessage = await CommunityMessageModel.create(data);
-        return createdMessage.toObject();
+    saveCommunityMessage(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const createdMessage = yield community_message_model_1.CommunityMessageModel.create(data);
+            return createdMessage.toObject();
+        });
     }
 };
-CommunityMessageRepository = __decorate([
-    injectable(),
+exports.CommunityMessageRepository = CommunityMessageRepository;
+exports.CommunityMessageRepository = CommunityMessageRepository = __decorate([
+    (0, tsyringe_1.injectable)(),
     __metadata("design:paramtypes", [])
 ], CommunityMessageRepository);
-export { CommunityMessageRepository };

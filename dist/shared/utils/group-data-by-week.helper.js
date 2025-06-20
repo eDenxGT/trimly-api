@@ -1,4 +1,7 @@
-export function generateCompleteWeeklyData(data, isEarnings = false) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateCompleteWeeklyData = generateCompleteWeeklyData;
+function generateCompleteWeeklyData(data, isEarnings = false) {
     const weeklyData = [
         { date: "Week 1", [isEarnings ? "total" : "count"]: 0 },
         { date: "Week 2", [isEarnings ? "total" : "count"]: 0 },

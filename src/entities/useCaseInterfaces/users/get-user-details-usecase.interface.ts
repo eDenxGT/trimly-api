@@ -1,8 +1,8 @@
-import { TRole } from "../../../shared/constants.js";
-import { UserDTO } from "../../../shared/dtos/user.dto.js";
-import { IAdminEntity } from "../../models/admin.entity.js";
-import { IBarberEntity } from "../../models/barber.entity.js";
-import { IClientEntity } from "../../models/client.entity.js";
+import { TRole } from "../../../shared/constants";
+import { UserDTO } from "../../../shared/dtos/user.dto";
+import { IAdminEntity } from "../../models/admin.entity";
+import { IBarberEntity } from "../../models/barber.entity";
+import { IClientEntity } from "../../models/client.entity";
 
 export interface IGetUserDetailsUseCase {
 	execute(

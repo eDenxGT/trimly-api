@@ -1,4 +1,8 @@
-import { v4 as uuidv4 } from "uuid";
-export const generateUniqueId = (prefix = "user") => {
-    return `trimly-${prefix}-${uuidv4().slice(10)}`;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateUniqueId = void 0;
+const uuid_1 = require("uuid");
+const generateUniqueId = (prefix = "user") => {
+    return `trimly-${prefix}-${(0, uuid_1.v4)().slice(10)}`;
 };
+exports.generateUniqueId = generateUniqueId;

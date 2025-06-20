@@ -1,5 +1,8 @@
-import { Schema } from "mongoose";
-export const refreshTokenSchema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.refreshTokenSchema = void 0;
+const mongoose_1 = require("mongoose");
+exports.refreshTokenSchema = new mongoose_1.Schema({
     user: {
         type: String,
         required: true,

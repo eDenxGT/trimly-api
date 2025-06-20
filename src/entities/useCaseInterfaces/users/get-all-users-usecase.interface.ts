@@ -1,4 +1,4 @@
-import { IPaginatedUsers } from "../../models/paginated/paginated-users.entity.js";
+import { IPaginatedUsers } from "../../models/paginated/paginated-users.entity";
 
 export interface IGetAllUsersUseCase {
 	execute(

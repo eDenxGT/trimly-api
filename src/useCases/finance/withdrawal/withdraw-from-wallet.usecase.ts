@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { IWithdrawalRepository } from "../../../entities/repositoryInterfaces/finance/withdrawal-repository.interface.js";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
-import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
-import { IGetWalletByUserUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/get-wallet-by-user-usecase.interface.js";
-import { IWithdrawFromWalletUseCase } from "../../../entities/useCaseInterfaces/finance/withdrawal/withdraw-from-wallet-usecase.interface.js";
+import { IWalletRepository } from "../../../entities/repositoryInterfaces/finance/wallet-repository.interface";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { IWithdrawalRepository } from "../../../entities/repositoryInterfaces/finance/withdrawal-repository.interface";
+import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper";
+import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface";
+import { IGetWalletByUserUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/get-wallet-by-user-usecase.interface";
+import { IWithdrawFromWalletUseCase } from "../../../entities/useCaseInterfaces/finance/withdrawal/withdraw-from-wallet-usecase.interface";
 
 @injectable()
 export class WithdrawFromWalletUseCase implements IWithdrawFromWalletUseCase {

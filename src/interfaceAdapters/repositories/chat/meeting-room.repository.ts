@@ -2,10 +2,10 @@ import { injectable } from "tsyringe";
 import {
   IMeetingRoomModel,
   MeetingRoomModel,
-} from "../../../frameworks/database/mongoDb/models/chat/meeting-room.model.js";
-import { BaseRepository } from "../base.repository.js";
-import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface.js";
-import { IMeetingRoomEntity } from "../../../entities/models/chat/meeting-room.entity.js";
+} from "../../../frameworks/database/mongoDb/models/chat/meeting-room.model";
+import { BaseRepository } from "../base.repository";
+import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface";
+import { IMeetingRoomEntity } from "../../../entities/models/chat/meeting-room.entity";
 
 @injectable()
 export class MeetingRoomRepository

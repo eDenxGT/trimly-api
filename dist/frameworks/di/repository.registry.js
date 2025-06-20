@@ -1,91 +1,95 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RepositoryRegistry = void 0;
 //* ====== Module Imports ====== *//
-import { container } from "tsyringe";
-import { ClientRepository } from "../../interfaceAdapters/repositories/users/client.repository.js";
-import { BarberRepository } from "../../interfaceAdapters/repositories/users/barber.repository.js";
-import { AdminRepository } from "../../interfaceAdapters/repositories/users/admin.repository.js";
-import { OtpRepository } from "../../interfaceAdapters/repositories/auth/otp.repository.js";
-import { RefreshTokenRepository } from "../../interfaceAdapters/repositories/auth/refresh-token.repository.js";
-import { RedisTokenRepository } from "../../interfaceAdapters/repositories/redis/redis-token.repository.js";
-import { ServiceRepository } from "../../interfaceAdapters/repositories/service/service.repository.js";
-import { BookingRepository } from "../../interfaceAdapters/repositories/booking/booking.repository.js";
-import { WalletRepository } from "../../interfaceAdapters/repositories/finance/wallet.repository.js";
-import { TransactionRepository } from "../../interfaceAdapters/repositories/finance/transaction.repository.js";
-import { WithdrawalRepository } from "../../interfaceAdapters/repositories/finance/withdrawal.repository.js";
-import { ReviewRepository } from "../../interfaceAdapters/repositories/review/review.repository.js";
-import { PostRepository } from "../../interfaceAdapters/repositories/feed/post.repository.js";
-import { CommentRepository } from "../../interfaceAdapters/repositories/feed/comment.repository.js";
-import { ChatRoomRepository } from "../../interfaceAdapters/repositories/chat/direct-chat/chat-room.repository.js";
-import { DirectMessageRepository } from "../../interfaceAdapters/repositories/chat/direct-chat/direct-message.repository.js";
-import { CommunityRepository } from "../../interfaceAdapters/repositories/chat/community/community.repository.js";
-import { CommunityMessageRepository } from "../../interfaceAdapters/repositories/chat/community/community-message.repository.js";
-import { MeetingRoomRepository } from "../../interfaceAdapters/repositories/chat/meeting-room.repository.js";
-import { HairstyleRepository } from "../../interfaceAdapters/repositories/hairstyle/hairstyle.repository.js";
-import { NotificationRepository } from "../../interfaceAdapters/repositories/notification/notification.repository.js";
-export class RepositoryRegistry {
+const tsyringe_1 = require("tsyringe");
+const client_repository_1 = require("../../interfaceAdapters/repositories/users/client.repository");
+const barber_repository_1 = require("../../interfaceAdapters/repositories/users/barber.repository");
+const admin_repository_1 = require("../../interfaceAdapters/repositories/users/admin.repository");
+const otp_repository_1 = require("../../interfaceAdapters/repositories/auth/otp.repository");
+const refresh_token_repository_1 = require("../../interfaceAdapters/repositories/auth/refresh-token.repository");
+const redis_token_repository_1 = require("../../interfaceAdapters/repositories/redis/redis-token.repository");
+const service_repository_1 = require("../../interfaceAdapters/repositories/service/service.repository");
+const booking_repository_1 = require("../../interfaceAdapters/repositories/booking/booking.repository");
+const wallet_repository_1 = require("../../interfaceAdapters/repositories/finance/wallet.repository");
+const transaction_repository_1 = require("../../interfaceAdapters/repositories/finance/transaction.repository");
+const withdrawal_repository_1 = require("../../interfaceAdapters/repositories/finance/withdrawal.repository");
+const review_repository_1 = require("../../interfaceAdapters/repositories/review/review.repository");
+const post_repository_1 = require("../../interfaceAdapters/repositories/feed/post.repository");
+const comment_repository_1 = require("../../interfaceAdapters/repositories/feed/comment.repository");
+const chat_room_repository_1 = require("../../interfaceAdapters/repositories/chat/direct-chat/chat-room.repository");
+const direct_message_repository_1 = require("../../interfaceAdapters/repositories/chat/direct-chat/direct-message.repository");
+const community_repository_1 = require("../../interfaceAdapters/repositories/chat/community/community.repository");
+const community_message_repository_1 = require("../../interfaceAdapters/repositories/chat/community/community-message.repository");
+const meeting_room_repository_1 = require("../../interfaceAdapters/repositories/chat/meeting-room.repository");
+const hairstyle_repository_1 = require("../../interfaceAdapters/repositories/hairstyle/hairstyle.repository");
+const notification_repository_1 = require("../../interfaceAdapters/repositories/notification/notification.repository");
+class RepositoryRegistry {
     static registerRepositories() {
         //* ====== Register Repositories ====== *//
-        container.register("IClientRepository", {
-            useClass: ClientRepository,
+        tsyringe_1.container.register("IClientRepository", {
+            useClass: client_repository_1.ClientRepository,
         });
-        container.register("IBarberRepository", {
-            useClass: BarberRepository,
+        tsyringe_1.container.register("IBarberRepository", {
+            useClass: barber_repository_1.BarberRepository,
         });
-        container.register("IAdminRepository", {
-            useClass: AdminRepository,
+        tsyringe_1.container.register("IAdminRepository", {
+            useClass: admin_repository_1.AdminRepository,
         });
-        container.register("IOtpRepository", {
-            useClass: OtpRepository,
+        tsyringe_1.container.register("IOtpRepository", {
+            useClass: otp_repository_1.OtpRepository,
         });
-        container.register("IRefreshTokenRepository", {
-            useClass: RefreshTokenRepository,
+        tsyringe_1.container.register("IRefreshTokenRepository", {
+            useClass: refresh_token_repository_1.RefreshTokenRepository,
         });
-        container.register("IRedisTokenRepository", {
-            useClass: RedisTokenRepository,
+        tsyringe_1.container.register("IRedisTokenRepository", {
+            useClass: redis_token_repository_1.RedisTokenRepository,
         });
-        container.register("IServiceRepository", {
-            useClass: ServiceRepository,
+        tsyringe_1.container.register("IServiceRepository", {
+            useClass: service_repository_1.ServiceRepository,
         });
-        container.register("IBookingRepository", {
-            useClass: BookingRepository,
+        tsyringe_1.container.register("IBookingRepository", {
+            useClass: booking_repository_1.BookingRepository,
         });
-        container.register("IWalletRepository", {
-            useClass: WalletRepository,
+        tsyringe_1.container.register("IWalletRepository", {
+            useClass: wallet_repository_1.WalletRepository,
         });
-        container.register("ITransactionRepository", {
-            useClass: TransactionRepository,
+        tsyringe_1.container.register("ITransactionRepository", {
+            useClass: transaction_repository_1.TransactionRepository,
         });
-        container.register("IWithdrawalRepository", {
-            useClass: WithdrawalRepository,
+        tsyringe_1.container.register("IWithdrawalRepository", {
+            useClass: withdrawal_repository_1.WithdrawalRepository,
         });
-        container.register("IReviewRepository", {
-            useClass: ReviewRepository,
+        tsyringe_1.container.register("IReviewRepository", {
+            useClass: review_repository_1.ReviewRepository,
         });
-        container.register("IPostRepository", {
-            useClass: PostRepository,
+        tsyringe_1.container.register("IPostRepository", {
+            useClass: post_repository_1.PostRepository,
         });
-        container.register("ICommentRepository", {
-            useClass: CommentRepository,
+        tsyringe_1.container.register("ICommentRepository", {
+            useClass: comment_repository_1.CommentRepository,
         });
-        container.register("IChatRoomRepository", {
-            useClass: ChatRoomRepository,
+        tsyringe_1.container.register("IChatRoomRepository", {
+            useClass: chat_room_repository_1.ChatRoomRepository,
         });
-        container.register("IDirectMessageRepository", {
-            useClass: DirectMessageRepository,
+        tsyringe_1.container.register("IDirectMessageRepository", {
+            useClass: direct_message_repository_1.DirectMessageRepository,
         });
-        container.register("ICommunityRepository", {
-            useClass: CommunityRepository,
+        tsyringe_1.container.register("ICommunityRepository", {
+            useClass: community_repository_1.CommunityRepository,
         });
-        container.register("ICommunityMessageRepository", {
-            useClass: CommunityMessageRepository,
+        tsyringe_1.container.register("ICommunityMessageRepository", {
+            useClass: community_message_repository_1.CommunityMessageRepository,
         });
-        container.register("IMeetingRoomRepository", {
-            useClass: MeetingRoomRepository,
+        tsyringe_1.container.register("IMeetingRoomRepository", {
+            useClass: meeting_room_repository_1.MeetingRoomRepository,
         });
-        container.register("IHairstyleRepository", {
-            useClass: HairstyleRepository,
+        tsyringe_1.container.register("IHairstyleRepository", {
+            useClass: hairstyle_repository_1.HairstyleRepository,
         });
-        container.register("INotificationRepository", {
-            useClass: NotificationRepository,
+        tsyringe_1.container.register("INotificationRepository", {
+            useClass: notification_repository_1.NotificationRepository,
         });
     }
 }
+exports.RepositoryRegistry = RepositoryRegistry;

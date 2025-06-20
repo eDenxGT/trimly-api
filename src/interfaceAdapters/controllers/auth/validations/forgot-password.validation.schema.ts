@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { strongEmailRegex } from "../../../../shared/validations/email.validation.js";
-import { ERROR_MESSAGES } from "../../../../shared/constants.js";
+import { strongEmailRegex } from "../../../../shared/validations/email.validation";
+import { ERROR_MESSAGES } from "../../../../shared/constants";
 
 export const forgotPasswordValidationSchema = z.object({
 	email: strongEmailRegex,

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 import { Request, Response } from "express";
-import { IS3Controller } from "../../entities/controllerInterfaces/s3/s3-controller.interface.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { IGeneratePresignedUrlUseCase } from "../../entities/useCaseInterfaces/s3/generate-presigned-url-usecase.interface.js";
+import { IS3Controller } from "../../entities/controllerInterfaces/s3/s3-controller.interface";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { IGeneratePresignedUrlUseCase } from "../../entities/useCaseInterfaces/s3/generate-presigned-url-usecase.interface";
 
 @injectable()
 export class S3Controller implements IS3Controller {

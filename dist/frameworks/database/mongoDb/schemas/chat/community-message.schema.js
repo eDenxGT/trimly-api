@@ -1,5 +1,8 @@
-import { Schema } from "mongoose";
-export const communityMessageSchema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.communityMessageSchema = void 0;
+const mongoose_1 = require("mongoose");
+exports.communityMessageSchema = new mongoose_1.Schema({
     messageId: { type: String, required: true },
     communityId: {
         type: String,

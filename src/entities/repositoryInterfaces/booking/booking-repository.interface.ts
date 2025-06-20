@@ -1,6 +1,6 @@
-import { IBarberDashboardResponse } from "../../../shared/dtos/dashboard-data.dto.js";
-import { IBookingEntity } from "../../models/booking.entity.js";
-import { IBaseRepository } from "../base-repository.interface.js";
+import { IBarberDashboardResponse } from "../../../shared/dtos/dashboard-data.dto";
+import { IBookingEntity } from "../../models/booking.entity";
+import { IBaseRepository } from "../base-repository.interface";
 
 export interface IBookingRepository extends IBaseRepository<IBookingEntity> {
   findBookingsWithDetailsForClient(userId: string): Promise<IBookingEntity[]>;

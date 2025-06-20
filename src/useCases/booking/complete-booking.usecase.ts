@@ -1,15 +1,15 @@
 import { inject, injectable } from "tsyringe";
 import { parse, format, addMinutes } from "date-fns";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
-import { ITransactionRepository } from "../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
-import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
-import { ICompleteBookingUseCase } from "../../entities/useCaseInterfaces/booking/complete-booking-usecase.interface.js";
-import { IIncrementWalletBalanceUseCase } from "../../entities/useCaseInterfaces/finance/wallet/increment-wallet-balance-usecase.interface.js";
-import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface.js";
-import { formatDate } from "../../shared/utils/date-formatter.js";
-import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper.js";
+import { CustomError } from "../../entities/utils/custom.error";
+import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
+import { ITransactionRepository } from "../../entities/repositoryInterfaces/finance/transaction-repository.interface";
+import { generateUniqueId } from "../../shared/utils/unique-uuid.helper";
+import { ICompleteBookingUseCase } from "../../entities/useCaseInterfaces/booking/complete-booking-usecase.interface";
+import { IIncrementWalletBalanceUseCase } from "../../entities/useCaseInterfaces/finance/wallet/increment-wallet-balance-usecase.interface";
+import { ISendNotificationByUserUseCase } from "../../entities/useCaseInterfaces/notifications/send-notification-by-user-usecase.interface";
+import { formatDate } from "../../shared/utils/date-formatter";
+import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper";
 
 @injectable()
 export class CompleteBookingUseCase implements ICompleteBookingUseCase {

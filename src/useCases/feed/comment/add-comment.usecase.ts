@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IAddCommentUseCase } from "../../../entities/useCaseInterfaces/feed/comment/add-comment-usecase.interface.js";
-import { ICommentRepository } from "../../../entities/repositoryInterfaces/feed/comment-repository.interface.js";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
+import { IAddCommentUseCase } from "../../../entities/useCaseInterfaces/feed/comment/add-comment-usecase.interface";
+import { ICommentRepository } from "../../../entities/repositoryInterfaces/feed/comment-repository.interface";
+import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper";
 
 @injectable()
 export class AddCommentUseCase implements IAddCommentUseCase {

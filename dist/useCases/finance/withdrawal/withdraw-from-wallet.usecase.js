@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,60 +11,60 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.WithdrawFromWalletUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const custom_error_1 = require("../../../entities/utils/custom.error");
+const constants_1 = require("../../../shared/constants");
+const unique_uuid_helper_1 = require("../../../shared/utils/unique-uuid.helper");
 let WithdrawFromWalletUseCase = class WithdrawFromWalletUseCase {
-    _walletRepository;
-    _withdrawalRepository;
-    _transactionRepository;
-    _getWalletByUserUseCase;
     constructor(_walletRepository, _withdrawalRepository, _transactionRepository, _getWalletByUserUseCase) {
         this._walletRepository = _walletRepository;
         this._withdrawalRepository = _withdrawalRepository;
         this._transactionRepository = _transactionRepository;
         this._getWalletByUserUseCase = _getWalletByUserUseCase;
     }
-    async execute(userId, role, amount, method, accountDetails) {
-        const wallet = await this._getWalletByUserUseCase.execute(userId, role);
-        if (!wallet) {
-            throw new CustomError(ERROR_MESSAGES.WALLET_NOT_FOUND, HTTP_STATUS.BAD_REQUEST);
-        }
-        if (amount > wallet.balance) {
-            throw new CustomError(ERROR_MESSAGES.INSUFFICIENT_BALANCE, HTTP_STATUS.BAD_REQUEST);
-        }
-        const withdrawalId = generateUniqueId("withdrawal");
-        await this._withdrawalRepository.save({
-            withdrawalId,
-            walletId: wallet.walletId,
-            userId,
-            userType: role,
-            amount,
-            method,
-            status: "pending",
-            ...accountDetails,
-            requestedAt: new Date(),
-        });
-        await this._walletRepository.decrementBalance(userId, amount);
-        await this._transactionRepository.save({
-            transactionId: generateUniqueId("transaction"),
-            userId,
-            walletId: wallet.walletId,
-            type: "debit",
-            source: "withdrawal",
-            amount,
-            status: "pending",
-            referenceId: withdrawalId,
+    execute(userId, role, amount, method, accountDetails) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const wallet = yield this._getWalletByUserUseCase.execute(userId, role);
+            if (!wallet) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.WALLET_NOT_FOUND, constants_1.HTTP_STATUS.BAD_REQUEST);
+            }
+            if (amount > wallet.balance) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.INSUFFICIENT_BALANCE, constants_1.HTTP_STATUS.BAD_REQUEST);
+            }
+            const withdrawalId = (0, unique_uuid_helper_1.generateUniqueId)("withdrawal");
+            yield this._withdrawalRepository.save(Object.assign(Object.assign({ withdrawalId, walletId: wallet.walletId, userId, userType: role, amount,
+                method, status: "pending" }, accountDetails), { requestedAt: new Date() }));
+            yield this._walletRepository.decrementBalance(userId, amount);
+            yield this._transactionRepository.save({
+                transactionId: (0, unique_uuid_helper_1.generateUniqueId)("transaction"),
+                userId,
+                walletId: wallet.walletId,
+                type: "debit",
+                source: "withdrawal",
+                amount,
+                status: "pending",
+                referenceId: withdrawalId,
+            });
         });
     }
 };
-WithdrawFromWalletUseCase = __decorate([
-    injectable(),
-    __param(0, inject("IWalletRepository")),
-    __param(1, inject("IWithdrawalRepository")),
-    __param(2, inject("ITransactionRepository")),
-    __param(3, inject("IGetWalletByUserUseCase")),
+exports.WithdrawFromWalletUseCase = WithdrawFromWalletUseCase;
+exports.WithdrawFromWalletUseCase = WithdrawFromWalletUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IWalletRepository")),
+    __param(1, (0, tsyringe_1.inject)("IWithdrawalRepository")),
+    __param(2, (0, tsyringe_1.inject)("ITransactionRepository")),
+    __param(3, (0, tsyringe_1.inject)("IGetWalletByUserUseCase")),
     __metadata("design:paramtypes", [Object, Object, Object, Object])
 ], WithdrawFromWalletUseCase);
-export { WithdrawFromWalletUseCase };

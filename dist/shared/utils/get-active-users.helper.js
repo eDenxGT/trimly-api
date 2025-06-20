@@ -1,12 +1,16 @@
-import { SocketUserStore } from "../../interfaceAdapters/websockets/socket-user.store.js";
-export function getActiveUsersCount(members) {
-    const socketUserStore = SocketUserStore.getInstance();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getActiveUsersCount = getActiveUsersCount;
+exports.getOnlineSocketIdsForMembers = getOnlineSocketIdsForMembers;
+const socket_user_store_1 = require("../../interfaceAdapters/websockets/socket-user.store");
+function getActiveUsersCount(members) {
+    const socketUserStore = socket_user_store_1.SocketUserStore.getInstance();
     const activeUsers = socketUserStore.getAllUsers().map(([userId]) => userId);
     const activeCount = members.filter((member) => activeUsers.includes(member.userId)).length;
     return activeCount;
 }
-export function getOnlineSocketIdsForMembers(memberUserIds) {
-    const socketUserStore = SocketUserStore.getInstance();
+function getOnlineSocketIdsForMembers(memberUserIds) {
+    const socketUserStore = socket_user_store_1.SocketUserStore.getInstance();
     const allConnectedUsers = socketUserStore.getAllUsers();
     const onlineSocketIds = [];
     for (const [userId, socketId] of allConnectedUsers) {

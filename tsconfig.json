@@ -1,33 +1,50 @@
+// {
+// 	"compilerOptions": {
+// 		/* Visit https://aka.ms/tsconfig to read more about this file */
+// 		/* Language and Environment */
+// 		"target": "ESNext",
+// 		"experimentalDecorators": true,
+// 		"emitDecoratorMetadata": true,
+
+// 		/* Modules */
+// 		"module": "NodeNext",
+// 		"rootDir": "./src",
+// 		"moduleResolution": "nodenext",
+// 		// "baseUrl": "./",
+// 		// "paths": {
+// 		// 	"@/*": ["src/*"]
+// 		// },
+// 		/* Emit */
+// 		"outDir": "./dist",
+// 		// "removeComments": true,
+
+// 		/* Interop Constraints */
+// 		"esModuleInterop": true,
+// 		"forceConsistentCasingInFileNames": true,
+
+// 		/* Type Checking */
+// 		"strict": true,
+
+// 		/* Completeness */
+// 		"skipLibCheck": true
+// 	},
+// 	"include": ["src/**/*.ts", "src/types.d.ts"],
+// 	"exclude": ["node_modules", "dist"]
+// }
 {
-	"compilerOptions": {
-		/* Visit https://aka.ms/tsconfig to read more about this file */
-		/* Language and Environment */
-		"target": "ESNext",
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-
-		/* Modules */
-		"module": "NodeNext",
-		"rootDir": "./src",
-		"moduleResolution": "nodenext",
-		// "baseUrl": "./",
-		// "paths": {
-		// 	"@/*": ["src/*"]
-		// },
-		/* Emit */
-		"outDir": "./dist",
-		// "removeComments": true,
-
-		/* Interop Constraints */
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-
-		/* Type Checking */
-		"strict": true,
-
-		/* Completeness */
-		"skipLibCheck": true
-	},
-	"include": ["src/**/*.ts", "src/types.d.ts"],
-	"exclude": ["node_modules", "dist"]
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts", "src/types.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }

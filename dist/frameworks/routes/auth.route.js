@@ -1,8 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AuthRoutes = void 0;
 //* ====== BaseRoute Import ====== *//
-import { BaseRoute } from "./base.route.js";
+const base_route_1 = require("./base.route");
 //* ====== Controller Imports ====== *//
-import { authController } from "../di/resolver.js";
-export class AuthRoutes extends BaseRoute {
+const resolver_1 = require("../di/resolver");
+class AuthRoutes extends base_route_1.BaseRoute {
     constructor() {
         super();
     }
@@ -11,31 +14,32 @@ export class AuthRoutes extends BaseRoute {
         //*                🛠️ Authentication Endpoints
         //* ─────────────────────────────────────────────────────────────
         this.router.post("/signup", (req, res) => {
-            authController.register(req, res);
+            resolver_1.authController.register(req, res);
         });
         this.router.post("/signin", (req, res) => {
-            authController.login(req, res);
+            resolver_1.authController.login(req, res);
         });
         this.router.post("/google-auth", (req, res) => {
-            authController.authenticateWithGoogle(req, res);
+            resolver_1.authController.authenticateWithGoogle(req, res);
         });
         //* ─────────────────────────────────────────────────────────────
         //*                      🛠️ OTP Endpoints
         //* ─────────────────────────────────────────────────────────────
         this.router.post("/send-otp", (req, res) => {
-            authController.sendOtpEmail(req, res);
+            resolver_1.authController.sendOtpEmail(req, res);
         });
         this.router.post("/verify-otp", (req, res) => {
-            authController.verifyOtp(req, res);
+            resolver_1.authController.verifyOtp(req, res);
         });
         //* ─────────────────────────────────────────────────────────────
         //*                   🛠️ Password Endpoints
         //* ─────────────────────────────────────────────────────────────
         this.router.post("/forgot-password", (req, res) => {
-            authController.forgotPassword(req, res);
+            resolver_1.authController.forgotPassword(req, res);
         });
         this.router.post("/reset-password", (req, res) => {
-            authController.resetPassword(req, res);
+            resolver_1.authController.resetPassword(req, res);
         });
     }
 }
+exports.AuthRoutes = AuthRoutes;

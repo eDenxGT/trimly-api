@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,31 +11,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { SHOP_APPROVED_MAIL_CONTENT, SHOP_REJECTION_WITH_MESSAGE_MAIL, } from "../../shared/constants.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UpdateShopStatusUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const constants_1 = require("../../shared/constants");
 let UpdateShopStatusUseCase = class UpdateShopStatusUseCase {
-    _barberRepository;
-    _sendEmailUseCase;
     constructor(_barberRepository, _sendEmailUseCase) {
         this._barberRepository = _barberRepository;
         this._sendEmailUseCase = _sendEmailUseCase;
     }
-    async execute(id, status, message) {
-        const barberShop = await this._barberRepository.findOne({ userId: id });
-        if (status === "blocked") {
-            await this._barberRepository.update({ userId: id }, { rejectionReason: message });
-            this._sendEmailUseCase.execute(barberShop?.email, "Trimly - Application rejected", SHOP_REJECTION_WITH_MESSAGE_MAIL(barberShop?.shopName, message));
-        }
-        else {
-            await this._barberRepository.update({ userId: id }, { status, rejectionReason: "" });
-            this._sendEmailUseCase.execute(barberShop?.email, "Trimly - Application approved", SHOP_APPROVED_MAIL_CONTENT(barberShop?.shopName));
-        }
+    execute(id, status, message) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const barberShop = yield this._barberRepository.findOne({ userId: id });
+            if (status === "blocked") {
+                yield this._barberRepository.update({ userId: id }, { rejectionReason: message });
+                this._sendEmailUseCase.execute(barberShop === null || barberShop === void 0 ? void 0 : barberShop.email, "Trimly - Application rejected", (0, constants_1.SHOP_REJECTION_WITH_MESSAGE_MAIL)(barberShop === null || barberShop === void 0 ? void 0 : barberShop.shopName, message));
+            }
+            else {
+                yield this._barberRepository.update({ userId: id }, { status, rejectionReason: "" });
+                this._sendEmailUseCase.execute(barberShop === null || barberShop === void 0 ? void 0 : barberShop.email, "Trimly - Application approved", (0, constants_1.SHOP_APPROVED_MAIL_CONTENT)(barberShop === null || barberShop === void 0 ? void 0 : barberShop.shopName));
+            }
+        });
     }
 };
-UpdateShopStatusUseCase = __decorate([
-    injectable(),
-    __param(0, inject("IBarberRepository")),
-    __param(1, inject("ISendEmailUseCase")),
+exports.UpdateShopStatusUseCase = UpdateShopStatusUseCase;
+exports.UpdateShopStatusUseCase = UpdateShopStatusUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IBarberRepository")),
+    __param(1, (0, tsyringe_1.inject)("ISendEmailUseCase")),
     __metadata("design:paramtypes", [Object, Object])
 ], UpdateShopStatusUseCase);
-export { UpdateShopStatusUseCase };

@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,30 +11,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserExistenceService = void 0;
+const tsyringe_1 = require("tsyringe");
 let UserExistenceService = class UserExistenceService {
-    _barberRepository;
-    _clientRepository;
-    _adminRepository;
     constructor(_barberRepository, _clientRepository, _adminRepository) {
         this._barberRepository = _barberRepository;
         this._clientRepository = _clientRepository;
         this._adminRepository = _adminRepository;
     }
-    async emailExists(email) {
-        const [barber, client, admin] = await Promise.all([
-            this._barberRepository.findOne({ email }),
-            this._clientRepository.findOne({ email }),
-            this._adminRepository.findOne({ email }),
-        ]);
-        return Boolean(barber || client || admin);
+    emailExists(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const [barber, client, admin] = yield Promise.all([
+                this._barberRepository.findOne({ email }),
+                this._clientRepository.findOne({ email }),
+                this._adminRepository.findOne({ email }),
+            ]);
+            return Boolean(barber || client || admin);
+        });
     }
 };
-UserExistenceService = __decorate([
-    injectable(),
-    __param(0, inject("IBarberRepository")),
-    __param(1, inject("IClientRepository")),
-    __param(2, inject("IAdminRepository")),
+exports.UserExistenceService = UserExistenceService;
+exports.UserExistenceService = UserExistenceService = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IBarberRepository")),
+    __param(1, (0, tsyringe_1.inject)("IClientRepository")),
+    __param(2, (0, tsyringe_1.inject)("IAdminRepository")),
     __metadata("design:paramtypes", [Object, Object, Object])
 ], UserExistenceService);
-export { UserExistenceService };

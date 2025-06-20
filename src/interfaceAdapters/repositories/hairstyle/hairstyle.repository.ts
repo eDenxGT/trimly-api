@@ -1,11 +1,11 @@
 import { injectable } from "tsyringe";
-import { BaseRepository } from "../base.repository.js";
+import { BaseRepository } from "../base.repository";
 import {
   HairstyleModel,
   IHairstyleModel,
-} from "../../../frameworks/database/mongoDb/models/hairstyle.model.js";
-import { IHairstyleRepository } from "../../../entities/repositoryInterfaces/hairstyle/hairstyle-repository.interface.js";
-import { IHairstyleEntity } from "../../../entities/models/hairstyle.entity.js";
+} from "../../../frameworks/database/mongoDb/models/hairstyle.model";
+import { IHairstyleRepository } from "../../../entities/repositoryInterfaces/hairstyle/hairstyle-repository.interface";
+import { IHairstyleEntity } from "../../../entities/models/hairstyle.entity";
 
 @injectable()
 export class HairstyleRepository

@@ -1,4 +1,4 @@
-import { IWalletOverviewDTO } from "../../../../shared/dtos/user.dto.js";
+import { IWalletOverviewDTO } from "../../../../shared/dtos/user.dto";
 
 
 export interface IGetWalletOverviewUseCase {

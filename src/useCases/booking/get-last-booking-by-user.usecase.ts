@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface.js";
-import { IBookingEntity } from "../../entities/models/booking.entity.js";
-import { IGetLastBookingByUserUseCase } from "../../entities/useCaseInterfaces/booking/get-last-booking-by-user-usecase.interface.js";
+import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
+import { IBookingEntity } from "../../entities/models/booking.entity";
+import { IGetLastBookingByUserUseCase } from "../../entities/useCaseInterfaces/booking/get-last-booking-by-user-usecase.interface";
 
 @injectable()
 export class GetLastBookingByUserUseCase

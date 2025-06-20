@@ -1,6 +1,6 @@
-import { IAdminEntity } from "../../models/admin.entity.js";
-import { IBarberEntity } from "../../models/barber.entity.js";
-import { IClientEntity } from "../../models/client.entity.js";
+import { IAdminEntity } from "../../models/admin.entity";
+import { IBarberEntity } from "../../models/barber.entity";
+import { IClientEntity } from "../../models/client.entity";
 
 export interface IUpdateUserDetailsUseCase {
 	execute(

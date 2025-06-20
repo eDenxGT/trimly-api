@@ -1,5 +1,5 @@
-import { IBaseRepository } from "../base-repository.interface.js";
-import { INotificationEntity } from "../../models/notification.entity.js";
+import { IBaseRepository } from "../base-repository.interface";
+import { INotificationEntity } from "../../models/notification.entity";
 
 export interface INotificationRepository
   extends IBaseRepository<INotificationEntity> {

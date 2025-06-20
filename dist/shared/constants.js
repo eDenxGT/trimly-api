@@ -1,10 +1,13 @@
-import { config } from "./config.js";
-export const ROLES = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.GOOGLE_REGISTRATION_MAIL_CONTENT = exports.SHOP_REJECTION_WITH_MESSAGE_MAIL = exports.SHOP_APPROVED_MAIL_CONTENT = exports.PASSWORD_RESET_MAIL_CONTENT = exports.VERIFICATION_MAIL_CONTENT = exports.COMMUNITY_CHAT_EVENTS = exports.DIRECT_CHAT_EVENTS = exports.ERROR_MESSAGES = exports.SUCCESS_MESSAGES = exports.HTTP_STATUS = exports.ROLES = void 0;
+const config_1 = require("./config");
+exports.ROLES = {
     ADMIN: "admin",
     CLIENT: "client",
     BARBER_SHOP: "barber",
 };
-export const HTTP_STATUS = {
+exports.HTTP_STATUS = {
     // ✅ Success responses
     OK: 200, // Request was successful (e.g., fetching data, updating without response body)
     CREATED: 201, // Resource successfully created (e.g., user registration, new booking)
@@ -27,7 +30,7 @@ export const HTTP_STATUS = {
     SERVICE_UNAVAILABLE: 503, // Server is down or overloaded (e.g., maintenance mode)
     GATEWAY_TIMEOUT: 504, // Upstream server timed out (e.g., long API response time)
 };
-export const SUCCESS_MESSAGES = {
+exports.SUCCESS_MESSAGES = {
     BOOKING_SUCCESS: "Booking completed",
     CANCELLATION_SUCCESS: "Cancellation successful",
     CREATED: "Successfully created",
@@ -74,7 +77,7 @@ export const SUCCESS_MESSAGES = {
     TOGGLE_LIKE_SUCCESS: "Like/unlike successful",
     POST_ADDED: "Post added successfully",
 };
-export const ERROR_MESSAGES = {
+exports.ERROR_MESSAGES = {
     WRONG_ID: "Invalid ID",
     TOKEN_EXPIRED: "Session expired login again",
     TOKEN_BLACKLISTED: "Session is no longer valid",
@@ -144,17 +147,17 @@ export const ERROR_MESSAGES = {
     BOOKING_LIMIT_EXCEEDED_FOR_TODAY: "Your Booking limit exceeded",
     NOTIFICATION_NOT_FOUND: "Notification not found",
 };
-export const DIRECT_CHAT_EVENTS = {
+exports.DIRECT_CHAT_EVENTS = {
     SEND_MESSAGE: "direct-chat:send-message",
     RECEIVE_MESSAGE: "direct-chat:receive-message",
     READ_MESSAGE: "direct-chat:read-message",
     MARK_AS_READ: "direct-chat:mark-as-read",
 };
-export const COMMUNITY_CHAT_EVENTS = {
+exports.COMMUNITY_CHAT_EVENTS = {
     SEND_MESSAGE: "community-chat:send-message",
     RECEIVE_MESSAGE: "community-chat:receive-message",
 };
-export const VERIFICATION_MAIL_CONTENT = (otp) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+const VERIFICATION_MAIL_CONTENT = (otp) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
    <!-- Logo Text Section -->
    <div style="text-align: center; margin-bottom: 30px;">
       <h1 style="font-size: 48px; font-weight: bold; margin: 0;">
@@ -196,7 +199,8 @@ export const VERIFICATION_MAIL_CONTENT = (otp) => `<div style="font-family: 'Seg
    </div>
 </div>
 `;
-export const PASSWORD_RESET_MAIL_CONTENT = (resetLink) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; background: #fff;">
+exports.VERIFICATION_MAIL_CONTENT = VERIFICATION_MAIL_CONTENT;
+const PASSWORD_RESET_MAIL_CONTENT = (resetLink) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; background: #fff;">
    <!-- Logo Text Section -->
    <div style="text-align: center; margin-bottom: 30px;">
       <h1 style="font-size: 48px; font-weight: bold; margin: 0;">
@@ -274,7 +278,8 @@ export const PASSWORD_RESET_MAIL_CONTENT = (resetLink) => `<div style="font-fami
       <span style="color: #FEBA43;">✦</span> Your Style, Our Priority <span style="color: #FEBA43;">✦</span>
    </div>
 </div>`;
-export const SHOP_APPROVED_MAIL_CONTENT = (shopName) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+exports.PASSWORD_RESET_MAIL_CONTENT = PASSWORD_RESET_MAIL_CONTENT;
+const SHOP_APPROVED_MAIL_CONTENT = (shopName) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
    <!-- Logo Text Section -->
    <div style="text-align: center; margin-bottom: 30px;">
       <h1 style="font-size: 48px; font-weight: bold; margin: 0;">
@@ -288,7 +293,7 @@ export const SHOP_APPROVED_MAIL_CONTENT = (shopName) => `<div style="font-family
    </p>
    
    <div style="text-align: center; margin: 30px 0;">
-      <a href="${config.cors.ALLOWED_ORIGIN}/barber/dashboard" 
+      <a href="${config_1.config.cors.ALLOWED_ORIGIN}/barber/dashboard" 
          style="background-color: #FEBA43; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; display: inline-block;">
          Go to Dashboard
       </a>
@@ -309,6 +314,7 @@ export const SHOP_APPROVED_MAIL_CONTENT = (shopName) => `<div style="font-family
       © ${new Date().getFullYear()} Trimly. All rights reserved.
    </div>
 </div>`;
+exports.SHOP_APPROVED_MAIL_CONTENT = SHOP_APPROVED_MAIL_CONTENT;
 // export const SHOP_REJECTION_WITH_MESSAGE_MAIL = (
 // 	shopName: string,
 // 	adminMessage: string
@@ -351,7 +357,7 @@ export const SHOP_APPROVED_MAIL_CONTENT = (shopName) => `<div style="font-family
 //        © ${new Date().getFullYear()} Trimly. All rights reserved.
 //     </div>
 //  </div>`;
-export const SHOP_REJECTION_WITH_MESSAGE_MAIL = (shopName, adminMessage) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+const SHOP_REJECTION_WITH_MESSAGE_MAIL = (shopName, adminMessage) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
     <!-- Logo Text Section -->
     <div style="text-align: center; margin-bottom: 30px;">
        <h1 style="font-size: 48px; font-weight: bold; margin: 0;">
@@ -384,7 +390,7 @@ export const SHOP_REJECTION_WITH_MESSAGE_MAIL = (shopName, adminMessage) => `<di
     </p>
 
     <div style="text-align: center; margin-bottom: 30px;">
-       <a href="${config.cors.ALLOWED_ORIGIN}/barber" 
+       <a href="${config_1.config.cors.ALLOWED_ORIGIN}/barber" 
           style="background-color: #FEBA43; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; display: inline-block;">
           Request New Shop
        </a>
@@ -401,7 +407,8 @@ export const SHOP_REJECTION_WITH_MESSAGE_MAIL = (shopName, adminMessage) => `<di
        © ${new Date().getFullYear()} Trimly. All rights reserved.
     </div>
  </div>`;
-export const GOOGLE_REGISTRATION_MAIL_CONTENT = (fullName, tempPassword) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; background: #fff;">
+exports.SHOP_REJECTION_WITH_MESSAGE_MAIL = SHOP_REJECTION_WITH_MESSAGE_MAIL;
+const GOOGLE_REGISTRATION_MAIL_CONTENT = (fullName, tempPassword) => `<div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; background: #fff;">
    <!-- Logo Section -->
    <div style="text-align: center; margin-bottom: 30px;">
       <h1 style="font-size: 48px; font-weight: bold; margin: 0;">
@@ -437,7 +444,7 @@ export const GOOGLE_REGISTRATION_MAIL_CONTENT = (fullName, tempPassword) => `<di
 
    <!-- Change Password Reminder -->
    <div style="text-align: center; margin-bottom: 30px;">
-      <a href="${config.cors.ALLOWED_ORIGIN}" 
+      <a href="${config_1.config.cors.ALLOWED_ORIGIN}" 
          style="background-color: #FEBA43; color: white; padding: 16px 40px; 
                 text-decoration: none; border-radius: 8px; font-weight: 500; 
                 display: inline-block; margin: 10px 0; font-size: 16px; 
@@ -485,3 +492,4 @@ export const GOOGLE_REGISTRATION_MAIL_CONTENT = (fullName, tempPassword) => `<di
       <span style="color: #FEBA43;">✦</span> Your Style, Our Priority <span style="color: #FEBA43;">✦</span>
    </div>
 </div>`;
+exports.GOOGLE_REGISTRATION_MAIL_CONTENT = GOOGLE_REGISTRATION_MAIL_CONTENT;

@@ -1,5 +1,8 @@
-import { Schema } from "mongoose";
-export const directMessageSchema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.directMessageSchema = void 0;
+const mongoose_1 = require("mongoose");
+exports.directMessageSchema = new mongoose_1.Schema({
     messageId: { type: String, required: true },
     chatRoomId: {
         type: String,

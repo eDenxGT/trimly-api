@@ -2,8 +2,8 @@ import { injectable } from "tsyringe";
 import {
 	AdminModel,
 	IAdminModel,
-} from "../../../frameworks/database/mongoDb/models/admin.model.js";
-import { BaseRepository } from "../base.repository.js";
+} from "../../../frameworks/database/mongoDb/models/admin.model";
+import { BaseRepository } from "../base.repository";
 
 @injectable()
 export class AdminRepository extends BaseRepository<IAdminModel> {

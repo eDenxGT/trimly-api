@@ -1,5 +1,8 @@
-import { Schema } from "mongoose";
-export const reviewSchema = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.reviewSchema = void 0;
+const mongoose_1 = require("mongoose");
+exports.reviewSchema = new mongoose_1.Schema({
     reviewId: {
         type: String,
         required: true,

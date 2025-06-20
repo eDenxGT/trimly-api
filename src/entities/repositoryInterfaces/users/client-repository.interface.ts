@@ -1,6 +1,6 @@
-import { IAdminDashboardResponse } from "../../../shared/dtos/dashboard-data.dto.js";
-import { IClientEntity } from "../../models/client.entity.js";
-import { IBaseRepository } from "../base-repository.interface.js";
+import { IAdminDashboardResponse } from "../../../shared/dtos/dashboard-data.dto";
+import { IClientEntity } from "../../models/client.entity";
+import { IBaseRepository } from "../base-repository.interface";
 
 export interface IClientRepository extends IBaseRepository<IClientEntity> {
 	updateWallet(userId: string, amount: number): Promise<void>;

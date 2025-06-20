@@ -1,6 +1,6 @@
-import { ICommunityChatRoomEntity } from "../../../entities/models/chat/community-chat-room.entity.js";
-import { IEditCommunityUseCase } from "../../../entities/useCaseInterfaces/chat/community/edit-community-usecase.interface.js";
-import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface.js";
+import { ICommunityChatRoomEntity } from "../../../entities/models/chat/community-chat-room.entity";
+import { IEditCommunityUseCase } from "../../../entities/useCaseInterfaces/chat/community/edit-community-usecase.interface";
+import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface";
 import { inject, injectable } from "tsyringe";
 
 @injectable()

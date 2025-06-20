@@ -1,5 +1,5 @@
-import { IHairstyleEntity } from "../../models/hairstyle.entity.js";
-import { IBaseRepository } from "../base-repository.interface.js";
+import { IHairstyleEntity } from "../../models/hairstyle.entity";
+import { IBaseRepository } from "../base-repository.interface";
 
 export interface IHairstyleRepository
   extends IBaseRepository<IHairstyleEntity> {

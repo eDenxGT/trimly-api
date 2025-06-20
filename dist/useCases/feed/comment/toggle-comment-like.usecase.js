@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,32 +11,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ToggleCommentLikeUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const custom_error_1 = require("../../../entities/utils/custom.error");
+const constants_1 = require("../../../shared/constants");
 let ToggleCommentLikeUseCase = class ToggleCommentLikeUseCase {
-    _commentRepository;
     constructor(_commentRepository) {
         this._commentRepository = _commentRepository;
     }
-    async execute({ commentId, userId, }) {
-        let comment = await this._commentRepository.findOne({ commentId });
-        if (!comment) {
-            throw new CustomError(ERROR_MESSAGES.COMMENT_NOT_FOUND, HTTP_STATUS.NOT_FOUND);
-        }
-        let liked = comment?.likes.includes(userId) || false;
-        if (liked) {
-            comment = await this._commentRepository.removeLike({ commentId, userId });
-        }
-        else {
-            comment = await this._commentRepository.addLike({ commentId, userId });
-        }
-        return !liked;
+    execute(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ commentId, userId, }) {
+            let comment = yield this._commentRepository.findOne({ commentId });
+            if (!comment) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.COMMENT_NOT_FOUND, constants_1.HTTP_STATUS.NOT_FOUND);
+            }
+            let liked = (comment === null || comment === void 0 ? void 0 : comment.likes.includes(userId)) || false;
+            if (liked) {
+                comment = yield this._commentRepository.removeLike({ commentId, userId });
+            }
+            else {
+                comment = yield this._commentRepository.addLike({ commentId, userId });
+            }
+            return !liked;
+        });
     }
 };
-ToggleCommentLikeUseCase = __decorate([
-    injectable(),
-    __param(0, inject("ICommentRepository")),
+exports.ToggleCommentLikeUseCase = ToggleCommentLikeUseCase;
+exports.ToggleCommentLikeUseCase = ToggleCommentLikeUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("ICommentRepository")),
     __metadata("design:paramtypes", [Object])
 ], ToggleCommentLikeUseCase);
-export { ToggleCommentLikeUseCase };

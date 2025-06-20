@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,25 +8,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { injectable } from "tsyringe";
-import { DirectMessageModel, } from "../../../../frameworks/database/mongoDb/models/chat/direct-message.model.js";
-import { BaseRepository } from "../../base.repository.js";
-let DirectMessageRepository = class DirectMessageRepository extends BaseRepository {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DirectMessageRepository = void 0;
+const tsyringe_1 = require("tsyringe");
+const direct_message_model_1 = require("../../../../frameworks/database/mongoDb/models/chat/direct-message.model");
+const base_repository_1 = require("../../base.repository");
+let DirectMessageRepository = class DirectMessageRepository extends base_repository_1.BaseRepository {
     constructor() {
-        super(DirectMessageModel);
+        super(direct_message_model_1.DirectMessageModel);
     }
-    async markMessagesAsRead({ chatRoomId, userId, }) {
-        await this.model.updateMany({
-            chatRoomId,
-            receiverId: userId,
-            status: "sent",
-        }, {
-            $set: { status: "read" },
+    markMessagesAsRead(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ chatRoomId, userId, }) {
+            yield this.model.updateMany({
+                chatRoomId,
+                receiverId: userId,
+                status: "sent",
+            }, {
+                $set: { status: "read" },
+            });
         });
     }
 };
-DirectMessageRepository = __decorate([
-    injectable(),
+exports.DirectMessageRepository = DirectMessageRepository;
+exports.DirectMessageRepository = DirectMessageRepository = __decorate([
+    (0, tsyringe_1.injectable)(),
     __metadata("design:paramtypes", [])
 ], DirectMessageRepository);
-export { DirectMessageRepository };

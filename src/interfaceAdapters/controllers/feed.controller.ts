@@ -1,24 +1,24 @@
 import { Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
-import { IFeedController } from "../../entities/controllerInterfaces/feed/feed-controller.interface.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { IAddPostUseCase } from "../../entities/useCaseInterfaces/feed/post/add-post-usecase.interface.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
+import { IFeedController } from "../../entities/controllerInterfaces/feed/feed-controller.interface";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { IAddPostUseCase } from "../../entities/useCaseInterfaces/feed/post/add-post-usecase.interface";
+import { CustomRequest } from "../middlewares/auth.middleware";
 import {
   ERROR_MESSAGES,
   HTTP_STATUS,
   SUCCESS_MESSAGES,
-} from "../../shared/constants.js";
-import { IGetAllPostsByBarberUseCase } from "../../entities/useCaseInterfaces/feed/post/get-all-posts-by-barber-usecase.interface.js";
-import { IGetSinglePostByPostIdUseCase } from "../../entities/useCaseInterfaces/feed/post/get-single-post-by-postid-usecase.interface.js";
-import { IUpdatePostUseCase } from "../../entities/useCaseInterfaces/feed/post/update-post-usecase.interface.js";
-import { IDeletePostUseCase } from "../../entities/useCaseInterfaces/feed/post/delete-post-usecase.interface.js";
-import { IUpdatePostStatusUseCase } from "../../entities/useCaseInterfaces/feed/post/update-post-status-usecase.interface.js";
-import { IToggleLikePostUseCase } from "../../entities/useCaseInterfaces/feed/post/toggle-like-post-usecase.interface.js";
-import { IAddCommentUseCase } from "../../entities/useCaseInterfaces/feed/comment/add-comment-usecase.interface.js";
-import { IToggleCommentLikeUseCase } from "../../entities/useCaseInterfaces/feed/comment/toggle-comment-like-usecase.interface.js";
-import { IGetAllPostsForClientUseCase } from "../../entities/useCaseInterfaces/feed/post/get-all-posts-for-client-usecase.interface.js";
-import { IGetPostLikedUsersUseCase } from "../../entities/useCaseInterfaces/feed/post/get-post-liked-users-usecase.interface.js";
+} from "../../shared/constants";
+import { IGetAllPostsByBarberUseCase } from "../../entities/useCaseInterfaces/feed/post/get-all-posts-by-barber-usecase.interface";
+import { IGetSinglePostByPostIdUseCase } from "../../entities/useCaseInterfaces/feed/post/get-single-post-by-postid-usecase.interface";
+import { IUpdatePostUseCase } from "../../entities/useCaseInterfaces/feed/post/update-post-usecase.interface";
+import { IDeletePostUseCase } from "../../entities/useCaseInterfaces/feed/post/delete-post-usecase.interface";
+import { IUpdatePostStatusUseCase } from "../../entities/useCaseInterfaces/feed/post/update-post-status-usecase.interface";
+import { IToggleLikePostUseCase } from "../../entities/useCaseInterfaces/feed/post/toggle-like-post-usecase.interface";
+import { IAddCommentUseCase } from "../../entities/useCaseInterfaces/feed/comment/add-comment-usecase.interface";
+import { IToggleCommentLikeUseCase } from "../../entities/useCaseInterfaces/feed/comment/toggle-comment-like-usecase.interface";
+import { IGetAllPostsForClientUseCase } from "../../entities/useCaseInterfaces/feed/post/get-all-posts-for-client-usecase.interface";
+import { IGetPostLikedUsersUseCase } from "../../entities/useCaseInterfaces/feed/post/get-post-liked-users-usecase.interface";
 
 @injectable()
 export class FeedController implements IFeedController {

@@ -1,37 +1,37 @@
 import { inject, injectable } from "tsyringe";
 import { Request, Response } from "express";
-import { userSchemas } from "./validations/user-signup.validation.schema.js";
-import { IAuthController } from "../../../entities/controllerInterfaces/users/auth-controller.interface.js";
-import { IRegisterUserUseCase } from "../../../entities/useCaseInterfaces/auth/register-usecase.interface.js";
+import { userSchemas } from "./validations/user-signup.validation.schema";
+import { IAuthController } from "../../../entities/controllerInterfaces/users/auth-controller.interface";
+import { IRegisterUserUseCase } from "../../../entities/useCaseInterfaces/auth/register-usecase.interface";
 import {
 	ERROR_MESSAGES,
 	HTTP_STATUS,
 	SUCCESS_MESSAGES,
 	TRole,
-} from "../../../shared/constants.js";
-import { handleErrorResponse } from "../../../shared/utils/error.handler.js";
-import { IVerifyOtpUseCase } from "../../../entities/useCaseInterfaces/auth/verify-otp-usecase.interface.js";
-import { ISendOtpEmailUseCase } from "../../../entities/useCaseInterfaces/auth/sent-otp-usecase.interface.js";
-import { otpMailValidationSchema } from "./validations/otp-mail.validation.schema.js";
+} from "../../../shared/constants";
+import { handleErrorResponse } from "../../../shared/utils/error.handler";
+import { IVerifyOtpUseCase } from "../../../entities/useCaseInterfaces/auth/verify-otp-usecase.interface";
+import { ISendOtpEmailUseCase } from "../../../entities/useCaseInterfaces/auth/sent-otp-usecase.interface";
+import { otpMailValidationSchema } from "./validations/otp-mail.validation.schema";
 import {
 	clearAuthCookies,
 	setAuthCookies,
 	updateCookieWithAccessToken,
-} from "../../../shared/utils/cookie.helper.js";
-import { loginSchema } from "./validations/user-login.validation.schema.js";
-import { LoginUserDTO } from "../../../shared/dtos/user.dto.js";
-import { ILoginUserUseCase } from "../../../entities/useCaseInterfaces/auth/login-usecase.interface.js";
-import { CustomRequest } from "../../middlewares/auth.middleware.js";
-import { IRefreshTokenUseCase } from "../../../entities/useCaseInterfaces/auth/refresh-token-usecase.interface.js";
-import { IBlackListTokenUseCase } from "../../../entities/useCaseInterfaces/auth/blacklist-token-usecase.interface.js";
-import { IRevokeRefreshTokenUseCase } from "../../../entities/useCaseInterfaces/auth/revoke-refresh-token-usecase.interface.js";
-import { IGenerateTokenUseCase } from "../../../entities/useCaseInterfaces/auth/generate-token-usecase.interface.js";
-import { IResetPasswordUseCase } from "../../../entities/useCaseInterfaces/auth/reset-password-usecase.interface.js";
-import { IForgotPasswordUseCase } from "../../../entities/useCaseInterfaces/auth/forgot-password-usecase.interface.js";
-import { forgotPasswordValidationSchema } from "./validations/forgot-password.validation.schema.js";
-import { resetPasswordValidationSchema } from "./validations/reset-password.validation.schema.js";
-import { IGoogleUseCase } from "../../../entities/useCaseInterfaces/auth/google-usecase.js";
-import { IGetUserDetailsUseCase } from "../../../entities/useCaseInterfaces/users/get-user-details-usecase.interface.js";
+} from "../../../shared/utils/cookie.helper";
+import { loginSchema } from "./validations/user-login.validation.schema";
+import { LoginUserDTO } from "../../../shared/dtos/user.dto";
+import { ILoginUserUseCase } from "../../../entities/useCaseInterfaces/auth/login-usecase.interface";
+import { CustomRequest } from "../../middlewares/auth.middleware";
+import { IRefreshTokenUseCase } from "../../../entities/useCaseInterfaces/auth/refresh-token-usecase.interface";
+import { IBlackListTokenUseCase } from "../../../entities/useCaseInterfaces/auth/blacklist-token-usecase.interface";
+import { IRevokeRefreshTokenUseCase } from "../../../entities/useCaseInterfaces/auth/revoke-refresh-token-usecase.interface";
+import { IGenerateTokenUseCase } from "../../../entities/useCaseInterfaces/auth/generate-token-usecase.interface";
+import { IResetPasswordUseCase } from "../../../entities/useCaseInterfaces/auth/reset-password-usecase.interface";
+import { IForgotPasswordUseCase } from "../../../entities/useCaseInterfaces/auth/forgot-password-usecase.interface";
+import { forgotPasswordValidationSchema } from "./validations/forgot-password.validation.schema";
+import { resetPasswordValidationSchema } from "./validations/reset-password.validation.schema";
+import { IGoogleUseCase } from "../../../entities/useCaseInterfaces/auth/google-usecase";
+import { IGetUserDetailsUseCase } from "../../../entities/useCaseInterfaces/users/get-user-details-usecase.interface";
 
 @injectable()
 export class AuthController implements IAuthController {

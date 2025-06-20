@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { ICommunityChatRoomEntity } from "../../../entities/models/chat/community-chat-room.entity.js";
-import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { IGetCommunityChatUseCase } from "../../../entities/useCaseInterfaces/chat/community/get-community-chat-usecase.interface.js";
+import { ICommunityChatRoomEntity } from "../../../entities/models/chat/community-chat-room.entity";
+import { ICommunityRepository } from "../../../entities/repositoryInterfaces/chat/community/community-respository.interface";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { IGetCommunityChatUseCase } from "../../../entities/useCaseInterfaces/chat/community/get-community-chat-usecase.interface";
 
 @injectable()
 export class GetCommunityChatUseCase implements IGetCommunityChatUseCase {

@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,16 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { injectable } from "tsyringe";
-import { AdminModel, } from "../../../frameworks/database/mongoDb/models/admin.model.js";
-import { BaseRepository } from "../base.repository.js";
-let AdminRepository = class AdminRepository extends BaseRepository {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminRepository = void 0;
+const tsyringe_1 = require("tsyringe");
+const admin_model_1 = require("../../../frameworks/database/mongoDb/models/admin.model");
+const base_repository_1 = require("../base.repository");
+let AdminRepository = class AdminRepository extends base_repository_1.BaseRepository {
     constructor() {
-        super(AdminModel);
+        super(admin_model_1.AdminModel);
     }
 };
-AdminRepository = __decorate([
-    injectable(),
+exports.AdminRepository = AdminRepository;
+exports.AdminRepository = AdminRepository = __decorate([
+    (0, tsyringe_1.injectable)(),
     __metadata("design:paramtypes", [])
 ], AdminRepository);
-export { AdminRepository };

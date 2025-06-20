@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IHandleTopUpPaymentFailureUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/handle-topup-failure-payment-usecase.interface.js";
-import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface.js";
+import { IHandleTopUpPaymentFailureUseCase } from "../../../entities/useCaseInterfaces/finance/wallet/handle-topup-failure-payment-usecase.interface";
+import { ITransactionRepository } from "../../../entities/repositoryInterfaces/finance/transaction-repository.interface";
 
 @injectable()
 export class HandleTopUpPaymentFailureUseCase

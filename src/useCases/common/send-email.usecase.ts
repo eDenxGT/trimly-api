@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { ISendEmailUseCase } from "../../entities/useCaseInterfaces/common/send-email-usecase.interface.js";
-import { IEmailService } from "../../entities/serviceInterfaces/email-service.interface.js";
+import { ISendEmailUseCase } from "../../entities/useCaseInterfaces/common/send-email-usecase.interface";
+import { IEmailService } from "../../entities/serviceInterfaces/email-service.interface";
 
 @injectable()
 export class SendEmailUseCase implements ISendEmailUseCase {

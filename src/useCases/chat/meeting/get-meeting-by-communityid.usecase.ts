@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface.js";
-import { IMeetingRoomEntity } from "../../../entities/models/chat/meeting-room.entity.js";
-import { IGetMeetingByCommunityIdUseCase } from "../../../entities/useCaseInterfaces/chat/meeting/get-meeting-by-communityid-usecase.interface.js";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
+import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface";
+import { IMeetingRoomEntity } from "../../../entities/models/chat/meeting-room.entity";
+import { IGetMeetingByCommunityIdUseCase } from "../../../entities/useCaseInterfaces/chat/meeting/get-meeting-by-communityid-usecase.interface";
 
 @injectable()
 export class GetMeetingByCommunityIdUseCase

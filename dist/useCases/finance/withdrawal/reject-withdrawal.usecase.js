@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,32 +11,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RejectWithdrawalUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
 let RejectWithdrawalUseCase = class RejectWithdrawalUseCase {
-    _withdrawalRepository;
-    _transactionRepository;
-    _walletRepository;
     constructor(_withdrawalRepository, _transactionRepository, _walletRepository) {
         this._withdrawalRepository = _withdrawalRepository;
         this._transactionRepository = _transactionRepository;
         this._walletRepository = _walletRepository;
     }
-    async execute({ withdrawalId, remarks, }) {
-        const withdrawal = await this._withdrawalRepository.update({ withdrawalId }, { status: "rejected", remarks, processedAt: new Date() });
-        await this._walletRepository.incrementBalance(withdrawal?.userId, withdrawal?.amount);
-        await this._transactionRepository.update({
-            source: "withdrawal",
-            referenceId: withdrawalId,
-        }, {
-            status: "failed",
+    execute(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ withdrawalId, remarks, }) {
+            const withdrawal = yield this._withdrawalRepository.update({ withdrawalId }, { status: "rejected", remarks, processedAt: new Date() });
+            yield this._walletRepository.incrementBalance(withdrawal === null || withdrawal === void 0 ? void 0 : withdrawal.userId, withdrawal === null || withdrawal === void 0 ? void 0 : withdrawal.amount);
+            yield this._transactionRepository.update({
+                source: "withdrawal",
+                referenceId: withdrawalId,
+            }, {
+                status: "failed",
+            });
         });
     }
 };
-RejectWithdrawalUseCase = __decorate([
-    injectable(),
-    __param(0, inject("IWithdrawalRepository")),
-    __param(1, inject("ITransactionRepository")),
-    __param(2, inject("IWalletRepository")),
+exports.RejectWithdrawalUseCase = RejectWithdrawalUseCase;
+exports.RejectWithdrawalUseCase = RejectWithdrawalUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IWithdrawalRepository")),
+    __param(1, (0, tsyringe_1.inject)("ITransactionRepository")),
+    __param(2, (0, tsyringe_1.inject)("IWalletRepository")),
     __metadata("design:paramtypes", [Object, Object, Object])
 ], RejectWithdrawalUseCase);
-export { RejectWithdrawalUseCase };

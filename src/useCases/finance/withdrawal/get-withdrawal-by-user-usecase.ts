@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IWithdrawalEntity } from "../../../entities/models/withdrawal.entity.js";
-import { IGetWithdrawalByUserUseCase } from "../../../entities/useCaseInterfaces/finance/withdrawal/get-withdrawal-by-user-usecase.interface.js";
-import { IWithdrawalRepository } from "../../../entities/repositoryInterfaces/finance/withdrawal-repository.interface.js";
+import { IWithdrawalEntity } from "../../../entities/models/withdrawal.entity";
+import { IGetWithdrawalByUserUseCase } from "../../../entities/useCaseInterfaces/finance/withdrawal/get-withdrawal-by-user-usecase.interface";
+import { IWithdrawalRepository } from "../../../entities/repositoryInterfaces/finance/withdrawal-repository.interface";
 
 @injectable()
 export class GetWithdrawalByUserUseCase implements IGetWithdrawalByUserUseCase {

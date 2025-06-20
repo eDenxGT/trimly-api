@@ -1,4 +1,4 @@
-import { IServiceEntity } from "../../../models/service.enity.js";
+import { IServiceEntity } from "../../../models/service.enity";
 
 
 export interface IGetAllServicesUseCase {

@@ -1,10 +1,10 @@
 import { injectable } from "tsyringe";
-import { BaseRepository } from "../base.repository.js";
-import { IWithdrawalRepository } from "../../../entities/repositoryInterfaces/finance/withdrawal-repository.interface.js";
+import { BaseRepository } from "../base.repository";
+import { IWithdrawalRepository } from "../../../entities/repositoryInterfaces/finance/withdrawal-repository.interface";
 import {
 	IWithdrawalModel,
 	WithdrawalModel,
-} from "../../../frameworks/database/mongoDb/models/withdrawal.model.js";
+} from "../../../frameworks/database/mongoDb/models/withdrawal.model";
 
 @injectable()
 export class WithdrawalRepository

@@ -1,7 +1,7 @@
-import { TRole } from "../../../shared/constants.js";
-import { IBarberEntity } from "../../models/barber.entity.js";
-import { IClientEntity } from "../../models/client.entity.js";
-import { IUserEntity } from "../../models/user.entity.js";
+import { TRole } from "../../../shared/constants";
+import { IBarberEntity } from "../../models/barber.entity";
+import { IClientEntity } from "../../models/client.entity";
+import { IUserEntity } from "../../models/user.entity";
 
 export interface IGoogleUseCase {
 	execute(

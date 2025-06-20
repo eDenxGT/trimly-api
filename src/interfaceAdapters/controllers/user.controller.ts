@@ -1,21 +1,21 @@
 import { inject, injectable } from "tsyringe";
 import { Request, Response } from "express";
-import { IUserController } from "../../entities/controllerInterfaces/users/user-controller.interface.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
+import { IUserController } from "../../entities/controllerInterfaces/users/user-controller.interface";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
 import {
 	ERROR_MESSAGES,
 	HTTP_STATUS,
 	SUCCESS_MESSAGES,
 	TRole,
-} from "../../shared/constants.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
-import { IUpdateUserDetailsUseCase } from "../../entities/useCaseInterfaces/users/update-user-details-usecase.interface.js";
-import { IChangeUserPasswordUseCase } from "../../entities/useCaseInterfaces/users/change-user-password-usecase.interface.js";
-import { IGetAllUsersUseCase } from "../../entities/useCaseInterfaces/users/get-all-users-usecase.interface.js";
-import { IUpdateUserStatusUseCase } from "../../entities/useCaseInterfaces/users/update-user-status-usecase.interface.js";
-import { IGetUserDetailsUseCase } from "../../entities/useCaseInterfaces/users/get-user-details-usecase.interface.js";
-import { IGetAllShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-shops-usecase.interface.js";
+} from "../../shared/constants";
+import { CustomError } from "../../entities/utils/custom.error";
+import { CustomRequest } from "../middlewares/auth.middleware";
+import { IUpdateUserDetailsUseCase } from "../../entities/useCaseInterfaces/users/update-user-details-usecase.interface";
+import { IChangeUserPasswordUseCase } from "../../entities/useCaseInterfaces/users/change-user-password-usecase.interface";
+import { IGetAllUsersUseCase } from "../../entities/useCaseInterfaces/users/get-all-users-usecase.interface";
+import { IUpdateUserStatusUseCase } from "../../entities/useCaseInterfaces/users/update-user-status-usecase.interface";
+import { IGetUserDetailsUseCase } from "../../entities/useCaseInterfaces/users/get-user-details-usecase.interface";
+import { IGetAllShopsUseCase } from "../../entities/useCaseInterfaces/shop/get-all-shops-usecase.interface";
 
 @injectable()
 export class UserController implements IUserController {

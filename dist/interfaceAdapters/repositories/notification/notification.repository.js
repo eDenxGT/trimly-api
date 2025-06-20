@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7,22 +8,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { injectable } from "tsyringe";
-import { BaseRepository } from "../base.repository.js";
-import { NotificationModel, } from "../../../frameworks/database/mongoDb/models/notification.model.js";
-let NotificationRepository = class NotificationRepository extends BaseRepository {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NotificationRepository = void 0;
+const tsyringe_1 = require("tsyringe");
+const base_repository_1 = require("../base.repository");
+const notification_model_1 = require("../../../frameworks/database/mongoDb/models/notification.model");
+let NotificationRepository = class NotificationRepository extends base_repository_1.BaseRepository {
     constructor() {
-        super(NotificationModel);
+        super(notification_model_1.NotificationModel);
     }
-    async getNotificationsByUser({ userId, }) {
-        return await NotificationModel.find({ userId }).sort({ createdAt: -1 });
+    getNotificationsByUser(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ userId, }) {
+            return yield notification_model_1.NotificationModel.find({ userId }).sort({ createdAt: -1 });
+        });
     }
-    async markAllNotificationsAsReadByUser({ userId, }) {
-        await NotificationModel.updateMany({ userId }, { isRead: true }, { new: true });
+    markAllNotificationsAsReadByUser(_a) {
+        return __awaiter(this, arguments, void 0, function* ({ userId, }) {
+            yield notification_model_1.NotificationModel.updateMany({ userId }, { isRead: true }, { new: true });
+        });
     }
 };
-NotificationRepository = __decorate([
-    injectable(),
+exports.NotificationRepository = NotificationRepository;
+exports.NotificationRepository = NotificationRepository = __decorate([
+    (0, tsyringe_1.injectable)(),
     __metadata("design:paramtypes", [])
 ], NotificationRepository);
-export { NotificationRepository };

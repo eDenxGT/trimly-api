@@ -1,6 +1,6 @@
-import { IBarberEntity } from "./barber.entity.js";
-import { IClientEntity } from "./client.entity.js";
-import { IServiceEntity } from "./service.enity.js";
+import { IBarberEntity } from "./barber.entity";
+import { IClientEntity } from "./client.entity";
+import { IServiceEntity } from "./service.enity";
 
 export interface IBookingEntity {
 	bookingId?: string;

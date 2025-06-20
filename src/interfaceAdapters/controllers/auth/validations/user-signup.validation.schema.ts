@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { strongEmailRegex } from "../../../../shared/validations/email.validation.js";
-import { passwordSchema } from "../../../../shared/validations/password.validation.js";
-import { nameSchema } from "../../../../shared/validations/name.validation.js";
-import { phoneNumberSchema } from "../../../../shared/validations/phone.validation.js";
+import { strongEmailRegex } from "../../../../shared/validations/email.validation";
+import { passwordSchema } from "../../../../shared/validations/password.validation";
+import { nameSchema } from "../../../../shared/validations/name.validation";
+import { phoneNumberSchema } from "../../../../shared/validations/phone.validation";
 
 const adminSchema = z.object({
 	email: strongEmailRegex,

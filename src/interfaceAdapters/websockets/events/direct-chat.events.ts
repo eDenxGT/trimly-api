@@ -1,8 +1,8 @@
 import { Server, Socket } from "socket.io";
 import { container } from "tsyringe";
-import { DIRECT_CHAT_EVENTS } from "../../../shared/constants.js";
-import { directChatSocketHandler } from "../../../frameworks/di/resolver.js";
-import { IDirectChatSocketHandler } from "../../../entities/socketHandlerInterfaces/direct-chat-handler.interface.js";
+import { DIRECT_CHAT_EVENTS } from "../../../shared/constants";
+import { directChatSocketHandler } from "../../../frameworks/di/resolver";
+import { IDirectChatSocketHandler } from "../../../entities/socketHandlerInterfaces/direct-chat-handler.interface";
 
 export class DirectChatEvents {
   private _handler: IDirectChatSocketHandler;

@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { ISendCommunityMessageUseCase } from "../../../entities/useCaseInterfaces/chat/community/send-community-message-usecase.interface.js";
-import { ICommunityMessageEntity } from "../../../entities/models/chat/community-message.entity.js";
-import { ICommunityMessageRepository } from "../../../entities/repositoryInterfaces/chat/community/community-message-respository.interface.js";
-import { IBarberRepository } from "../../../entities/repositoryInterfaces/users/barber-repository.interface.js";
+import { ISendCommunityMessageUseCase } from "../../../entities/useCaseInterfaces/chat/community/send-community-message-usecase.interface";
+import { ICommunityMessageEntity } from "../../../entities/models/chat/community-message.entity";
+import { ICommunityMessageRepository } from "../../../entities/repositoryInterfaces/chat/community/community-message-respository.interface";
+import { IBarberRepository } from "../../../entities/repositoryInterfaces/users/barber-repository.interface";
 
 @injectable()
 export class SendCommunityMessageUseCase

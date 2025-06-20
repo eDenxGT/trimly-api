@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,44 +11,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { inject, injectable } from "tsyringe";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UpdateWalletBalanceUseCase = void 0;
+const tsyringe_1 = require("tsyringe");
+const constants_1 = require("../../../shared/constants");
+const custom_error_1 = require("../../../entities/utils/custom.error");
 let UpdateWalletBalanceUseCase = class UpdateWalletBalanceUseCase {
-    _walletRepository;
-    _transactionRepository;
-    _createWalletUseCase;
-    _getWalletByUserUseCase;
     constructor(_walletRepository, _transactionRepository, _createWalletUseCase, _getWalletByUserUseCase) {
         this._walletRepository = _walletRepository;
         this._transactionRepository = _transactionRepository;
         this._createWalletUseCase = _createWalletUseCase;
         this._getWalletByUserUseCase = _getWalletByUserUseCase;
     }
-    async execute(userId, role, transactionId) {
-        const transaction = await this._transactionRepository.findOne({
-            transactionId,
+    execute(userId, role, transactionId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const transaction = yield this._transactionRepository.findOne({
+                transactionId,
+            });
+            if (!transaction) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.WRONG_ID, constants_1.HTTP_STATUS.BAD_REQUEST);
+            }
+            if (transaction.userId !== userId) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.UNAUTHORIZED_ACCESS, constants_1.HTTP_STATUS.UNAUTHORIZED);
+            }
+            if (transaction.status !== "success") {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.INVALID_TRANSACTION, constants_1.HTTP_STATUS.BAD_REQUEST);
+            }
+            let wallet = yield this._getWalletByUserUseCase.execute(userId, role);
+            wallet.balance += transaction.amount;
+            yield this._walletRepository.update({ ownerId: userId }, { balance: wallet.balance });
         });
-        if (!transaction) {
-            throw new CustomError(ERROR_MESSAGES.WRONG_ID, HTTP_STATUS.BAD_REQUEST);
-        }
-        if (transaction.userId !== userId) {
-            throw new CustomError(ERROR_MESSAGES.UNAUTHORIZED_ACCESS, HTTP_STATUS.UNAUTHORIZED);
-        }
-        if (transaction.status !== "success") {
-            throw new CustomError(ERROR_MESSAGES.INVALID_TRANSACTION, HTTP_STATUS.BAD_REQUEST);
-        }
-        let wallet = await this._getWalletByUserUseCase.execute(userId, role);
-        wallet.balance += transaction.amount;
-        await this._walletRepository.update({ ownerId: userId }, { balance: wallet.balance });
     }
 };
-UpdateWalletBalanceUseCase = __decorate([
-    injectable(),
-    __param(0, inject("IWalletRepository")),
-    __param(1, inject("ITransactionRepository")),
-    __param(2, inject("ICreateWalletUseCase")),
-    __param(3, inject("IGetWalletByUserUseCase")),
+exports.UpdateWalletBalanceUseCase = UpdateWalletBalanceUseCase;
+exports.UpdateWalletBalanceUseCase = UpdateWalletBalanceUseCase = __decorate([
+    (0, tsyringe_1.injectable)(),
+    __param(0, (0, tsyringe_1.inject)("IWalletRepository")),
+    __param(1, (0, tsyringe_1.inject)("ITransactionRepository")),
+    __param(2, (0, tsyringe_1.inject)("ICreateWalletUseCase")),
+    __param(3, (0, tsyringe_1.inject)("IGetWalletByUserUseCase")),
     __metadata("design:paramtypes", [Object, Object, Object, Object])
 ], UpdateWalletBalanceUseCase);
-export { UpdateWalletBalanceUseCase };

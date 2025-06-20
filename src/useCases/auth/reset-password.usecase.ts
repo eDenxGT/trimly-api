@@ -1,14 +1,14 @@
 import { inject, injectable } from "tsyringe";
-import { IResetPasswordUseCase } from "../../entities/useCaseInterfaces/auth/reset-password-usecase.interface.js";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface.js";
-import { ITokenService } from "../../entities/serviceInterfaces/token-service.interface.js";
-import { IRedisTokenRepository } from "../../entities/repositoryInterfaces/redis/redis-token-repository.interface.js";
-import { IBcrypt } from "../../frameworks/security/bcrypt.interface.js";
-import { ResetTokenPayload } from "../../interfaceAdapters/services/jwt.service.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+import { IResetPasswordUseCase } from "../../entities/useCaseInterfaces/auth/reset-password-usecase.interface";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IAdminRepository } from "../../entities/repositoryInterfaces/users/admin-repository.interface";
+import { ITokenService } from "../../entities/serviceInterfaces/token-service.interface";
+import { IRedisTokenRepository } from "../../entities/repositoryInterfaces/redis/redis-token-repository.interface";
+import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
+import { ResetTokenPayload } from "../../interfaceAdapters/services/jwt.service";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 
 @injectable()
 export class ResetPasswordUseCase implements IResetPasswordUseCase {

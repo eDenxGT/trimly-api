@@ -1,6 +1,6 @@
-import { IReviewEntity } from "./review.entity.js";
-import { IServiceEntity } from "./service.enity.js";
-import { IUserEntity } from "./user.entity.js";
+import { IReviewEntity } from "./review.entity";
+import { IServiceEntity } from "./service.enity";
+import { IUserEntity } from "./user.entity";
 
 export interface IBarberEntity extends Omit<IUserEntity, "fullName"> {
 	shopName?: string;

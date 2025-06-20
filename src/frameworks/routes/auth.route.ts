@@ -2,10 +2,10 @@
 import { Request, Response } from "express";
 
 //* ====== BaseRoute Import ====== *//
-import { BaseRoute } from "./base.route.js";
+import { BaseRoute } from "./base.route";
 
 //* ====== Controller Imports ====== *//
-import { authController } from "../di/resolver.js";
+import { authController } from "../di/resolver";
 
 export class AuthRoutes extends BaseRoute {
   constructor() {

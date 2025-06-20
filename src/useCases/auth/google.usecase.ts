@@ -1,22 +1,22 @@
 import { OAuth2Client } from "google-auth-library";
 import { inject, injectable } from "tsyringe";
-import { IGoogleUseCase } from "../../entities/useCaseInterfaces/auth/google-usecase.js";
-import { IRegisterUserUseCase } from "../../entities/useCaseInterfaces/auth/register-usecase.interface.js";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface.js";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IBarberEntity } from "../../entities/models/barber.entity.js";
-import { IClientEntity } from "../../entities/models/client.entity.js";
+import { IGoogleUseCase } from "../../entities/useCaseInterfaces/auth/google-usecase";
+import { IRegisterUserUseCase } from "../../entities/useCaseInterfaces/auth/register-usecase.interface";
+import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
+import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IBarberEntity } from "../../entities/models/barber.entity";
+import { IClientEntity } from "../../entities/models/client.entity";
 import {
 	ERROR_MESSAGES,
 	GOOGLE_REGISTRATION_MAIL_CONTENT,
 	HTTP_STATUS,
 	TRole,
-} from "../../shared/constants.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ClientDTO } from "../../shared/dtos/user.dto.js";
-import { IBcrypt } from "../../frameworks/security/bcrypt.interface.js";
-import { generateRandomPassword } from "../../shared/utils/random-password.helper.js";
-import { ISendEmailUseCase } from "../../entities/useCaseInterfaces/common/send-email-usecase.interface.js";
+} from "../../shared/constants";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ClientDTO } from "../../shared/dtos/user.dto";
+import { IBcrypt } from "../../frameworks/security/bcrypt.interface";
+import { generateRandomPassword } from "../../shared/utils/random-password.helper";
+import { ISendEmailUseCase } from "../../entities/useCaseInterfaces/common/send-email-usecase.interface";
 
 @injectable()
 export class GoogleUseCase implements IGoogleUseCase {

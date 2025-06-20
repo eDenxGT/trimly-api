@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { IHairstyleDetectorController } from "../../entities/controllerInterfaces/hairstyle-detector/hairstyle-detector-controller.interface.js";
+import { IHairstyleDetectorController } from "../../entities/controllerInterfaces/hairstyle-detector/hairstyle-detector-controller.interface";
 import { Request, Response } from "express";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
+import { CustomError } from "../../entities/utils/custom.error";
 import {
   ERROR_MESSAGES,
   HTTP_STATUS,
   SUCCESS_MESSAGES,
-} from "../../shared/constants.js";
-import { IGetHairstylesByFaceShapeUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/get-hairstyles-by-face-shape-usecase.interface.js";
-import { IAddHairstyleUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/add-hairstyle-usecase.interface.js";
-import { IGetAllHairstylesUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/get-all-hairstyles-usecase.interface.js";
-import { IUpdateHairstyleUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/update-hairstyle-usecase.interface.js";
-import { IDeleteHairstyleUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/delete-hairstyle-usecase.interface.js";
+} from "../../shared/constants";
+import { IGetHairstylesByFaceShapeUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/get-hairstyles-by-face-shape-usecase.interface";
+import { IAddHairstyleUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/add-hairstyle-usecase.interface";
+import { IGetAllHairstylesUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/get-all-hairstyles-usecase.interface";
+import { IUpdateHairstyleUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/update-hairstyle-usecase.interface";
+import { IDeleteHairstyleUseCase } from "../../entities/useCaseInterfaces/hairstyle-detector/delete-hairstyle-usecase.interface";
 
 @injectable()
 export class HairstyleDetectorController

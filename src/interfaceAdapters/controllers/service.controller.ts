@@ -1,18 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import { IServiceController } from "../../entities/controllerInterfaces/service/service-controller.interface.js";
-import { handleErrorResponse } from "../../shared/utils/error.handler.js";
+import { IServiceController } from "../../entities/controllerInterfaces/service/service-controller.interface";
+import { handleErrorResponse } from "../../shared/utils/error.handler";
 import { Request, Response } from "express";
 import {
 	ERROR_MESSAGES,
 	HTTP_STATUS,
 	SUCCESS_MESSAGES,
-} from "../../shared/constants.js";
-import { CustomRequest } from "../middlewares/auth.middleware.js";
-import { IAddServiceUseCase } from "../../entities/useCaseInterfaces/shop/service/add-service-usecase.interface.js";
-import { IGetAllServicesUseCase } from "../../entities/useCaseInterfaces/shop/service/get-all-services-usecase.interface.js";
-import { IUpdateServiceUseCase } from "../../entities/useCaseInterfaces/shop/service/update-service-usecase.interface.js";
-import { IDeleteServiceUseCase } from "../../entities/useCaseInterfaces/shop/service/delete-service-usecase.interface.js";
-import { IServiceEntity } from "../../entities/models/service.enity.js";
+} from "../../shared/constants";
+import { CustomRequest } from "../middlewares/auth.middleware";
+import { IAddServiceUseCase } from "../../entities/useCaseInterfaces/shop/service/add-service-usecase.interface";
+import { IGetAllServicesUseCase } from "../../entities/useCaseInterfaces/shop/service/get-all-services-usecase.interface";
+import { IUpdateServiceUseCase } from "../../entities/useCaseInterfaces/shop/service/update-service-usecase.interface";
+import { IDeleteServiceUseCase } from "../../entities/useCaseInterfaces/shop/service/delete-service-usecase.interface";
+import { IServiceEntity } from "../../entities/models/service.enity";
 
 @injectable()
 export class ServiceController implements IServiceController {

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { IPostRepository } from "../../../entities/repositoryInterfaces/feed/post-repository.interface.js";
-import { IGetAllPostsForClientUseCase } from "../../../entities/useCaseInterfaces/feed/post/get-all-posts-for-client-usecase.interface.js";
-import { IPostEntity } from "../../../entities/models/post.entity.js";
+import { IPostRepository } from "../../../entities/repositoryInterfaces/feed/post-repository.interface";
+import { IGetAllPostsForClientUseCase } from "../../../entities/useCaseInterfaces/feed/post/get-all-posts-for-client-usecase.interface";
+import { IPostEntity } from "../../../entities/models/post.entity";
 
 @injectable()
 export class GetAllPostsForClientUseCase

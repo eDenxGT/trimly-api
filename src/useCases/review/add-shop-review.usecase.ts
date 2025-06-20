@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import { IAddShopReviewUseCase } from "../../entities/useCaseInterfaces/review/add-shop-review-usecase.interface.js";
-import { IReviewRepository } from "../../entities/repositoryInterfaces/review/review-repository.interface.js";
-import { generateUniqueId } from "../../shared/utils/unique-uuid.helper.js";
-import { CustomError } from "../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants.js";
+import { IAddShopReviewUseCase } from "../../entities/useCaseInterfaces/review/add-shop-review-usecase.interface";
+import { IReviewRepository } from "../../entities/repositoryInterfaces/review/review-repository.interface";
+import { generateUniqueId } from "../../shared/utils/unique-uuid.helper";
+import { CustomError } from "../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 
 @injectable()
 export class AddShopReviewUseCase implements IAddShopReviewUseCase {

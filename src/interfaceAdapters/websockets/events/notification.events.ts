@@ -1,6 +1,6 @@
 import { Socket, Server } from "socket.io";
-import { INotificationSocketHandler } from "../../../entities/socketHandlerInterfaces/notification-handler.interface.js";
-import { NotificationSocketHandler } from "../handlers/notification.handler.js";
+import { INotificationSocketHandler } from "../../../entities/socketHandlerInterfaces/notification-handler.interface";
+import { NotificationSocketHandler } from "../handlers/notification.handler";
 
 export class NotificationEvents {
   private handler: INotificationSocketHandler;

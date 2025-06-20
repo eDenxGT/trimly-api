@@ -1,6 +1,6 @@
-import { ITransactionEntity } from "../../entities/models/transaction.entity.js";
-import { IWithdrawalEntity } from "../../entities/models/withdrawal.entity.js";
-import { TRole } from "../constants.js";
+import { ITransactionEntity } from "../../entities/models/transaction.entity";
+import { IWithdrawalEntity } from "../../entities/models/withdrawal.entity";
+import { TRole } from "../constants";
 
 export interface AdminDTO {
   userId?: string;

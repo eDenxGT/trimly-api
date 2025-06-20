@@ -2,14 +2,14 @@ import { injectable } from "tsyringe";
 import {
   BarberModel,
   IBarberModel,
-} from "../../../frameworks/database/mongoDb/models/barber.model.js";
-import { BaseRepository } from "../base.repository.js";
-import { IBarberEntity } from "../../../entities/models/barber.entity.js";
-import { IBarberRepository } from "../../../entities/repositoryInterfaces/users/barber-repository.interface.js";
-import { IBookingEntity } from "../../../entities/models/booking.entity.js";
-import { IServiceEntity } from "../../../entities/models/service.enity.js";
+} from "../../../frameworks/database/mongoDb/models/barber.model";
+import { BaseRepository } from "../base.repository";
+import { IBarberEntity } from "../../../entities/models/barber.entity";
+import { IBarberRepository } from "../../../entities/repositoryInterfaces/users/barber-repository.interface";
+import { IBookingEntity } from "../../../entities/models/booking.entity";
+import { IServiceEntity } from "../../../entities/models/service.enity";
 import { FilterQuery, PipelineStage } from "mongoose";
-import { IAdminDashboardResponse } from "../../../shared/dtos/dashboard-data.dto.js";
+import { IAdminDashboardResponse } from "../../../shared/dtos/dashboard-data.dto";
 
 @injectable()
 export class BarberRepository

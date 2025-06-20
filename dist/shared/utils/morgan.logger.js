@@ -1,18 +1,22 @@
-import fs from "fs";
-import path from "path";
-import morgan from "morgan";
-import { config } from "../../shared/config.js";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const logDirectory = path.resolve(__dirname, "../../../logs");
-if (!fs.existsSync(logDirectory)) {
-    fs.mkdirSync(logDirectory, { recursive: true });
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
+const morgan_1 = __importDefault(require("morgan"));
+const config_1 = require("../../shared/config");
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+const logDirectory = path_1.default.resolve(__dirname, "../../../logs");
+if (!fs_1.default.existsSync(logDirectory)) {
+    fs_1.default.mkdirSync(logDirectory, { recursive: true });
 }
-const accessLogStream = fs.createWriteStream(path.join(logDirectory, "requests.log"), { flags: "a" });
-morgan.token("date", () => new Date().toISOString());
-morgan.token("custom-status", (req, res) => `\x1b${res.statusCode}\x1b[0m`);
-morgan.token("customDate", () => {
+const accessLogStream = fs_1.default.createWriteStream(path_1.default.join(logDirectory, "requests.log"), { flags: "a" });
+morgan_1.default.token("date", () => new Date().toISOString());
+morgan_1.default.token("custom-status", (req, res) => `\x1b${res.statusCode}\x1b[0m`);
+morgan_1.default.token("customDate", () => {
     return new Date().toLocaleString("en-US", {
         year: "numeric",
         month: "long",
@@ -24,14 +28,14 @@ morgan.token("customDate", () => {
     });
 });
 const customFormat = `:remote-addr - :method :url :status :response-time ms - :res[content-length] bytes [:customDate]`;
-const logFormat = config.loggerStatus || "combined";
+const logFormat = config_1.config.loggerStatus || "combined";
 const morganLogger = (req, res, next) => {
     if (logFormat) {
-        morgan(customFormat, { stream: accessLogStream })(req, res, () => { });
-        morgan(logFormat)(req, res, next);
+        (0, morgan_1.default)(customFormat, { stream: accessLogStream })(req, res, () => { });
+        (0, morgan_1.default)(logFormat)(req, res, next);
     }
     else {
         next();
     }
 };
-export default morganLogger;
+exports.default = morganLogger;

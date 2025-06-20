@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IPostRepository } from "../../../entities/repositoryInterfaces/feed/post-repository.interface.js";
-import { IGetPostLikedUsersUseCase } from "../../../entities/useCaseInterfaces/feed/post/get-post-liked-users-usecase.interface.js";
+import { IPostRepository } from "../../../entities/repositoryInterfaces/feed/post-repository.interface";
+import { IGetPostLikedUsersUseCase } from "../../../entities/useCaseInterfaces/feed/post/get-post-liked-users-usecase.interface";
 
 @injectable()
 export class GetPostLikedUsersUseCase

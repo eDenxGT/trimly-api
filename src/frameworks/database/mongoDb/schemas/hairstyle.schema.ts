@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IHairstyleModel } from "../models/hairstyle.model.js";
+import { IHairstyleModel } from "../models/hairstyle.model";
 
 export const hairstyleSchema = new Schema<IHairstyleModel>(
   {

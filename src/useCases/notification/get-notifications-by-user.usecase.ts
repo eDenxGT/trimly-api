@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import { INotificationEntity } from "../../entities/models/notification.entity.js";
-import { INotificationRepository } from "../../entities/repositoryInterfaces/notification/notification-repository.interface.js";
-import { IGetNotificationsByUserUseCase } from "../../entities/useCaseInterfaces/notifications/get-notifications-by-user-usecase.interface.js";
+import { INotificationEntity } from "../../entities/models/notification.entity";
+import { INotificationRepository } from "../../entities/repositoryInterfaces/notification/notification-repository.interface";
+import { IGetNotificationsByUserUseCase } from "../../entities/useCaseInterfaces/notifications/get-notifications-by-user-usecase.interface";
 
 @injectable()
 export class GetNotificationsByUserUseCase

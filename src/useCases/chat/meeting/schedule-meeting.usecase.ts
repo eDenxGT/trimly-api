@@ -1,9 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IGoogleCalendarService } from "../../../entities/serviceInterfaces/google-calendar-service.interface.js";
-import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface.js";
-import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper.js";
-import { CustomError } from "../../../entities/utils/custom.error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants.js";
+import { IMeetingRoomRepository } from "../../../entities/repositoryInterfaces/chat/meeting-room-repository.interface";
+import { generateUniqueId } from "../../../shared/utils/unique-uuid.helper";
+import { CustomError } from "../../../entities/utils/custom.error";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constants";
 
 @injectable()
 export class ScheduleMeetingUseCase {

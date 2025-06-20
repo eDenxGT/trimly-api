@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IDirectMessageRepository } from "../../../entities/repositoryInterfaces/chat/direct-chat/direct-message.repository.js";
-import { IReadDirectMessageUseCase } from "../../../entities/useCaseInterfaces/chat/direct-chat/read-direct-message-usecase.interface.js";
+import { IDirectMessageRepository } from "../../../entities/repositoryInterfaces/chat/direct-chat/direct-message.repository";
+import { IReadDirectMessageUseCase } from "../../../entities/useCaseInterfaces/chat/direct-chat/read-direct-message-usecase.interface";
 
 @injectable()
 export class ReadDirectMessageUseCase implements IReadDirectMessageUseCase {
