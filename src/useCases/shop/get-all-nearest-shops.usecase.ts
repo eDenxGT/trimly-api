@@ -26,13 +26,13 @@ export class GetAllNearestShopsUseCase implements IGetAllNearestShopsUseCase {
 		const filters: {
 			search?: string;
 			amenities: string[];
-			location?: Object;
+			geoLocation?: Object;
 		} = {
 			search,
 			amenities: amenitiesArray,
 		};
 		if (userLocation && userLocation.length === 2) {
-			filters.location = {
+			filters.geoLocation = {
 				$geoNear: {
 					near: {
 						type: "Point",

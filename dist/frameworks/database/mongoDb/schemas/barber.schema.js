@@ -61,7 +61,7 @@ exports.barberSchema = new mongoose_1.Schema({
         type: Number,
         default: 0,
     },
-    location: {
+    geoLocation: {
         type: {
             type: String,
             enum: ["Point"],
@@ -71,9 +71,11 @@ exports.barberSchema = new mongoose_1.Schema({
             type: [Number], // [longitude, latitude]
             required: true,
         },
+    },
+    location: {
         name: { type: String },
         displayName: { type: String },
         zipCode: { type: String },
     },
 }, { timestamps: true });
-exports.barberSchema.index({ location: "2dsphere" });
+exports.barberSchema.index({ geoLocation: "2dsphere" });

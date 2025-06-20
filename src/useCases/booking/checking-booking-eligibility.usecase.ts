@@ -3,7 +3,10 @@ import { ICheckBookingEligibilityUseCase } from "../../entities/useCaseInterface
 import { CustomError } from "../../entities/utils/custom.error";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constants";
 import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
-import { getBookingDateTimeUTC } from "../../shared/utils/get-booking-date-time-utc.helper";
+import {
+  getBookingDateTimeUTC,
+  getExactUTC,
+} from "../../shared/utils/get-booking-date-time-utc.helper";
 
 @injectable()
 export class CheckBookingEligibilityUseCase
@@ -33,29 +36,9 @@ export class CheckBookingEligibilityUseCase
     startTime: string;
     total: number;
   }): Promise<{ bookingDateTime: Date }> {
-    const bookingDateTime = new Date(new Date(date).setHours(0, 0, 0, 0));
+    const bookingDateTime = new Date(new Date(date).setUTCHours(0, 0, 0, 0));
+    // const bookingDateTime = getExactUTC(date);
     // const bookingDateTime = getBookingDateTimeUTC(date, startTime);
-
-    // console.log(
-    //   "bookingDateTime -> ",
-    //   bookingDateTime,
-    //   "bookedTimeSlots -> ",
-    //   bookedTimeSlots,
-    //   "clientId -> ",
-    //   clientId,
-    //   "date -> ",
-    //   date,
-    //   "duration -> ",
-    //   duration,
-    //   "services -> ",
-    //   services,
-    //   "shopId -> ",
-    //   shopId,
-    //   "startTime -> ",
-    //   startTime,
-    //   "total -> ",
-    //   total
-    // );
 
     if (bookingDateTime.getTime() <= Date.now()) {
       throw new CustomError(
@@ -64,37 +47,19 @@ export class CheckBookingEligibilityUseCase
       );
     }
 
-    console.log("date -> ", date);
-    console.log("UTC Date ->", new Date(date).toISOString());
-    console.log(
-      "IST Date ->",
-      new Date(date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
-    );
-
     const startOfDayOfBookingDate = new Date(date);
     startOfDayOfBookingDate.setUTCHours(0, 0, 0, 0);
 
     const endOfDayOfBookingDate = new Date(date);
     endOfDayOfBookingDate.setUTCHours(23, 59, 59, 999);
 
-    console.log("startOfDayOfBookingDate -> ", startOfDayOfBookingDate);
-    console.log("endOfDayOfBookingDate -> ", endOfDayOfBookingDate);
-    console.log("bookedTimeSlots -> ", bookedTimeSlots);
     const existingBooking = await this._bookingRepository.findOne({
       shopId,
       date: { $gte: startOfDayOfBookingDate, $lte: endOfDayOfBookingDate },
       bookedTimeSlots: { $in: bookedTimeSlots },
       status: { $in: ["confirmed", "pending"] },
     });
-    console.log("existingBooking -> ", existingBooking);
-    // console.log(
-    //   "startOfDayOfBookingDate",
-    //   startOfDayOfBookingDate,
-    //   "endOfDayOfBookingDate",
-    //   endOfDayOfBookingDate,
-    //   "bookedTimeSlots",
-    //   bookedTimeSlots
-    // );
+ 
     if (existingBooking) {
       throw new CustomError(
         ERROR_MESSAGES.BOOKING_EXISTS,

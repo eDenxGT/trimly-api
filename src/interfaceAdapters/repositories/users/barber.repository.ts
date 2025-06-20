@@ -33,7 +33,7 @@ export class BarberRepository
     filters: {
       search?: string;
       amenities: string[];
-      location?: any;
+      geoLocation?: any;
     },
     sorting: {
       sortBy: "averageRating";
@@ -49,8 +49,8 @@ export class BarberRepository
     const skip = (page - 1) * limit;
     const pipeline: any[] = [];
 
-    if (filters.location) {
-      pipeline.push(filters.location);
+    if (filters.geoLocation) {
+      pipeline.push(filters.geoLocation);
     }
 
     pipeline.push({

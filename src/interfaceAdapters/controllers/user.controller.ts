@@ -162,6 +162,7 @@ export class UserController implements IUserController {
 				role,
 				data
 			);
+			
 			if (!updatedUser) {
 				throw new CustomError(
 					ERROR_MESSAGES.USER_NOT_FOUND,

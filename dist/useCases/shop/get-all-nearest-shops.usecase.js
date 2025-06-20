@@ -36,7 +36,7 @@ let GetAllNearestShopsUseCase = class GetAllNearestShopsUseCase {
                 amenities: amenitiesArray,
             };
             if (userLocation && userLocation.length === 2) {
-                filters.location = {
+                filters.geoLocation = {
                     $geoNear: {
                         near: {
                             type: "Point",

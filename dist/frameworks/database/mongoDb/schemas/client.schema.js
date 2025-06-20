@@ -17,7 +17,7 @@ exports.clientSchema = new mongoose_1.Schema({
         default: "active",
     },
     googleId: { type: String },
-    location: {
+    geoLocation: {
         type: {
             type: String,
             enum: ["Point"],
@@ -26,9 +26,11 @@ exports.clientSchema = new mongoose_1.Schema({
         coordinates: {
             type: [Number], // [longitude, latitude]
         },
+    },
+    location: {
         name: { type: String },
         displayName: { type: String },
         zipCode: { type: String },
     },
 }, { timestamps: true });
-exports.clientSchema.index({ location: "2dsphere" });
+exports.clientSchema.index({ geoLocation: "2dsphere" });

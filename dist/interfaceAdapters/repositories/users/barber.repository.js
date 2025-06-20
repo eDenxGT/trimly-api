@@ -39,8 +39,8 @@ let BarberRepository = class BarberRepository extends base_repository_1.BaseRepo
             const { sortBy, sortOrder } = sorting;
             const skip = (page - 1) * limit;
             const pipeline = [];
-            if (filters.location) {
-                pipeline.push(filters.location);
+            if (filters.geoLocation) {
+                pipeline.push(filters.geoLocation);
             }
             pipeline.push({
                 $match: {

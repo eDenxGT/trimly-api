@@ -31,56 +31,22 @@ let CheckBookingEligibilityUseCase = class CheckBookingEligibilityUseCase {
     }
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
-            const bookingDateTime = new Date(new Date(date).setHours(0, 0, 0, 0));
+            const bookingDateTime = new Date(new Date(date).setUTCHours(0, 0, 0, 0));
+            // const bookingDateTime = getExactUTC(date);
             // const bookingDateTime = getBookingDateTimeUTC(date, startTime);
-            // console.log(
-            //   "bookingDateTime -> ",
-            //   bookingDateTime,
-            //   "bookedTimeSlots -> ",
-            //   bookedTimeSlots,
-            //   "clientId -> ",
-            //   clientId,
-            //   "date -> ",
-            //   date,
-            //   "duration -> ",
-            //   duration,
-            //   "services -> ",
-            //   services,
-            //   "shopId -> ",
-            //   shopId,
-            //   "startTime -> ",
-            //   startTime,
-            //   "total -> ",
-            //   total
-            // );
             if (bookingDateTime.getTime() <= Date.now()) {
                 throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, constants_1.HTTP_STATUS.BAD_REQUEST);
             }
-            console.log("date -> ", date);
-            console.log("UTC Date ->", new Date(date).toISOString());
-            console.log("IST Date ->", new Date(date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }));
             const startOfDayOfBookingDate = new Date(date);
             startOfDayOfBookingDate.setUTCHours(0, 0, 0, 0);
             const endOfDayOfBookingDate = new Date(date);
             endOfDayOfBookingDate.setUTCHours(23, 59, 59, 999);
-            console.log("startOfDayOfBookingDate -> ", startOfDayOfBookingDate);
-            console.log("endOfDayOfBookingDate -> ", endOfDayOfBookingDate);
-            console.log("bookedTimeSlots -> ", bookedTimeSlots);
             const existingBooking = yield this._bookingRepository.findOne({
                 shopId,
                 date: { $gte: startOfDayOfBookingDate, $lte: endOfDayOfBookingDate },
                 bookedTimeSlots: { $in: bookedTimeSlots },
                 status: { $in: ["confirmed", "pending"] },
             });
-            console.log("existingBooking -> ", existingBooking);
-            // console.log(
-            //   "startOfDayOfBookingDate",
-            //   startOfDayOfBookingDate,
-            //   "endOfDayOfBookingDate",
-            //   endOfDayOfBookingDate,
-            //   "bookedTimeSlots",
-            //   bookedTimeSlots
-            // );
             if (existingBooking) {
                 throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.BOOKING_EXISTS, constants_1.HTTP_STATUS.CONFLICT);
             }
