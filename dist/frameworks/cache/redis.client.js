@@ -17,6 +17,7 @@ const redis_1 = require("redis");
 const config_1 = require("../../shared/config");
 const chalk_1 = __importDefault(require("chalk"));
 exports.redisClient = (0, redis_1.createClient)({
+    // url: config.redis.REDIS_URL,
     username: config_1.config.redis.REDIS_USERNAME,
     password: config_1.config.redis.REDIS_PASS,
     socket: {

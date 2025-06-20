@@ -57,8 +57,7 @@ bookingSchema.index(
   { shopId: 1, date: 1, startTime: 1 },
   {
     unique: true,
-    partialFilterExpression: {
-      status: { $in: ["pending", "confirmed"] },
-    },
+    partialFilterExpression: { status: { $in: ["pending", "confirmed"] } },
+    name: "unique_booking_slot_index",
   }
 );

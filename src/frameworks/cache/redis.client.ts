@@ -3,6 +3,7 @@ import { config } from "../../shared/config";
 import chalk from "chalk";
 
 export const redisClient = createClient({
+	// url: config.redis.REDIS_URL,
 	username: config.redis.REDIS_USERNAME,
 	password: config.redis.REDIS_PASS,
 	socket: {

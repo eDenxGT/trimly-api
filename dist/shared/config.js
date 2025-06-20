@@ -34,6 +34,7 @@ exports.config = {
         REDIS_PASS: process.env.REDIS_PASS,
         REDIS_HOST: process.env.REDIS_HOST,
         REDIS_PORT: process.env.REDIS_PORT || "16807",
+        REDIS_URL: process.env.REDIS_URL || "",
     },
     awsCfg: {
         AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,

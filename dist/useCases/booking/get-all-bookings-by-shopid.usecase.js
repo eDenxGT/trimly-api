@@ -31,7 +31,7 @@ let GetAllBookingsByShopIdUseCase = class GetAllBookingsByShopIdUseCase {
         return __awaiter(this, void 0, void 0, function* () {
             let filter;
             if (role === "client") {
-                filter = { shopId, status: "confirmed" };
+                filter = { shopId, status: { $in: ["confirmed", "pending"] } };
             }
             else {
                 filter = { shopId };

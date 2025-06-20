@@ -201,7 +201,7 @@ let BarberRepository = class BarberRepository extends base_repository_1.BaseRepo
                                     $expr: {
                                         $and: [
                                             { $eq: ["$shopId", "$$shopUserId"] },
-                                            { $eq: ["$status", "confirmed"] },
+                                            { $in: ["$status", ["confirmed", "pending"]] },
                                         ],
                                     },
                                 },

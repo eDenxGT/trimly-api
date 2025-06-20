@@ -11,6 +11,7 @@ const email_service_1 = require("../../interfaceAdapters/services/email.service"
 const jwt_service_1 = require("../../interfaceAdapters/services/jwt.service");
 const s3_service_1 = require("../../interfaceAdapters/services/s3.service");
 const google_calendar_service_1 = require("../../interfaceAdapters/services/google-calendar.service");
+const socket_service_1 = require("../../interfaceAdapters/services/socket.service");
 //* ====== Socket Handler Imports ====== *//
 const notification_handler_1 = require("../../interfaceAdapters/websockets/handlers/notification.handler");
 const register_user_usecase_1 = require("../../useCases/auth/register-user.usecase");
@@ -110,9 +111,9 @@ const delete_hairstyle_usecase_1 = require("../../useCases/hairstyle-detector/de
 const get_post_liked_users_usecase_1 = require("../../useCases/feed/post/get-post-liked-users.usecase");
 const get_notifications_by_user_usecase_1 = require("../../useCases/notification/get-notifications-by-user.usecase");
 const send_notification_by_user_usecase_1 = require("../../useCases/notification/send-notification-by-user.usecase");
-const socket_service_1 = require("../../interfaceAdapters/services/socket.service");
 const mark_single_notification_as_read_by_user_usecase_1 = require("../../useCases/notification/mark-single-notification-as-read-by-user.usecase");
 const mark_all_notifications_as_read_by_user_usecase_1 = require("../../useCases/notification/mark-all-notifications-as-read-by-user.usecase");
+const checking_booking_eligibility_usecase_1 = require("../../useCases/booking/checking-booking-eligibility.usecase");
 class UseCaseRegistry {
     static registerUseCases() {
         //* ====== Register UseCases ====== *//
@@ -407,6 +408,9 @@ class UseCaseRegistry {
         });
         tsyringe_1.container.register("IMarkSingleNotificationAsReadByUserUseCase", {
             useClass: mark_single_notification_as_read_by_user_usecase_1.MarkSingleNotificationAsReadByUserUseCase,
+        });
+        tsyringe_1.container.register("ICheckBookingEligibilityUseCase", {
+            useClass: checking_booking_eligibility_usecase_1.CheckBookingEligibilityUseCase,
         });
         //* ====== Register Bcrypts ====== *//
         tsyringe_1.container.register("IPasswordBcrypt", {

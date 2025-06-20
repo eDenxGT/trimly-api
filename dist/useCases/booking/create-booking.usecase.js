@@ -29,58 +29,24 @@ const tsyringe_1 = require("tsyringe");
 const config_1 = require("../../shared/config");
 const razorpay_1 = __importDefault(require("razorpay"));
 const unique_uuid_helper_1 = require("../../shared/utils/unique-uuid.helper");
-const custom_error_1 = require("../../entities/utils/custom.error");
-const constants_1 = require("../../shared/constants");
-const get_booking_date_time_utc_helper_1 = require("../../shared/utils/get-booking-date-time-utc.helper");
 let CreateBookingUseCase = class CreateBookingUseCase {
-    constructor(_bookingRepository, _transactionRepository) {
+    constructor(_bookingRepository, _transactionRepository, _checkBookingEligibilityUseCase) {
         this._bookingRepository = _bookingRepository;
         this._transactionRepository = _transactionRepository;
+        this._checkBookingEligibilityUseCase = _checkBookingEligibilityUseCase;
     }
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
-            const bookingDateTime = (0, get_booking_date_time_utc_helper_1.getBookingDateTimeUTC)(date, startTime);
-            if (bookingDateTime.getTime() <= Date.now()) {
-                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, constants_1.HTTP_STATUS.BAD_REQUEST);
-            }
-            const existingBooking = yield this._bookingRepository.findOne({
-                shopId,
+            const { bookingDateTime } = yield this._checkBookingEligibilityUseCase.execute({
+                bookedTimeSlots,
+                clientId,
                 date,
-                bookedTimeSlots: { $in: bookedTimeSlots },
-                status: "confirmed",
-            });
-            if (existingBooking) {
-                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.BOOKING_EXISTS, constants_1.HTTP_STATUS.CONFLICT);
-            }
-            const twoDaysAgo = new Date();
-            twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-            const cancelledBookings = yield this._bookingRepository.find({
-                clientId,
-                status: "cancelled",
-                createdAt: { $gte: twoDaysAgo },
-            });
-            if (cancelledBookings.length > 5) {
-                // throw new CustomError(
-                //   ERROR_MESSAGES.MORE_THAN_5_CANCELLED_BOOKING,
-                //   HTTP_STATUS.BAD_REQUEST
-                // );
-            }
-            const startOfDay = new Date();
-            startOfDay.setHours(0, 0, 0, 0);
-            const endOfDay = new Date();
-            endOfDay.setHours(23, 59, 59, 999);
-            const bookings = yield this._bookingRepository.find({
-                clientId,
+                duration,
+                services,
                 shopId,
-                status: "confirmed",
-                createdAt: {
-                    $gte: startOfDay,
-                    $lte: endOfDay,
-                },
+                startTime,
+                total,
             });
-            if (bookings.length >= 3) {
-                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.BOOKING_LIMIT_EXCEEDED_FOR_TODAY, constants_1.HTTP_STATUS.BAD_REQUEST);
-            }
             const bookingId = (0, unique_uuid_helper_1.generateUniqueId)("booking");
             const transactionId = (0, unique_uuid_helper_1.generateUniqueId)("transaction");
             const razorpay = new razorpay_1.default({
@@ -130,5 +96,6 @@ exports.CreateBookingUseCase = CreateBookingUseCase = __decorate([
     (0, tsyringe_1.injectable)(),
     __param(0, (0, tsyringe_1.inject)("IBookingRepository")),
     __param(1, (0, tsyringe_1.inject)("ITransactionRepository")),
-    __metadata("design:paramtypes", [Object, Object])
+    __param(2, (0, tsyringe_1.inject)("ICheckBookingEligibilityUseCase")),
+    __metadata("design:paramtypes", [Object, Object, Object])
 ], CreateBookingUseCase);
