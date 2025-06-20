@@ -47,6 +47,8 @@ let CheckBookingEligibilityUseCase = class CheckBookingEligibilityUseCase {
                 bookedTimeSlots: { $in: bookedTimeSlots },
                 status: { $in: ["confirmed", "pending"] },
             });
+            console.log("existingBooking -> ", existingBooking);
+            console.log("startOfDayOfBookingDate", startOfDayOfBookingDate, "endOfDayOfBookingDate", endOfDayOfBookingDate, "bookedTimeSlots", bookedTimeSlots);
             if (existingBooking) {
                 throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.BOOKING_EXISTS, constants_1.HTTP_STATUS.CONFLICT);
             }

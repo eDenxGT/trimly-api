@@ -34,7 +34,7 @@ export class CheckBookingEligibilityUseCase
     total: number;
   }): Promise<{ bookingDateTime: Date }> {
     const bookingDateTime = getBookingDateTimeUTC(date, startTime);
-    
+
     console.log(
       "bookingDateTime -> ",
       bookingDateTime,
@@ -75,7 +75,15 @@ export class CheckBookingEligibilityUseCase
       bookedTimeSlots: { $in: bookedTimeSlots },
       status: { $in: ["confirmed", "pending"] },
     });
-
+    console.log("existingBooking -> ", existingBooking);
+    console.log(
+      "startOfDayOfBookingDate",
+      startOfDayOfBookingDate,
+      "endOfDayOfBookingDate",
+      endOfDayOfBookingDate,
+      "bookedTimeSlots",
+      bookedTimeSlots
+    );
     if (existingBooking) {
       throw new CustomError(
         ERROR_MESSAGES.BOOKING_EXISTS,
