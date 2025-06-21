@@ -201,6 +201,15 @@ export class AdminRoutes extends BaseRoute {
       );
 
     this.router.get(
+      "/admin/community/:communityId/members",
+      verifyAuth,
+      authorizeRole(["admin"]),
+      (req: Request, res: Response) => {
+        chatController.getCommunityMembers(req, res);
+      }
+    );
+
+    this.router.get(
       "/admin/communities",
       verifyAuth,
       authorizeRole(["admin"]),

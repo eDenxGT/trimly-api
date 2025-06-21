@@ -227,6 +227,8 @@ import { MarkAllNotificationsAsReadByUserUseCase } from "../../useCases/notifica
 import { IMarkAllNotificationsAsReadByUserUseCase } from "../../entities/useCaseInterfaces/notifications/mark-all-notifications-as-read-by-user-usecase.interface";
 import { ICheckBookingEligibilityUseCase } from "../../entities/useCaseInterfaces/booking/checking-booking-eligibility-usecase.interface";
 import { CheckBookingEligibilityUseCase } from "../../useCases/booking/checking-booking-eligibility.usecase";
+import { IGetCommunityMembersUseCase } from "../../entities/useCaseInterfaces/chat/community/get-community-members-usecase.interface";
+import { GetCommunityMembersUseCase } from "../../useCases/chat/community/get-community-members.usecase";
 
 export class UseCaseRegistry {
   static registerUseCases(): void {
@@ -745,6 +747,13 @@ export class UseCaseRegistry {
       "ICheckBookingEligibilityUseCase",
       {
         useClass: CheckBookingEligibilityUseCase,
+      }
+    );
+
+    container.register<IGetCommunityMembersUseCase>(
+      "IGetCommunityMembersUseCase",
+      {
+        useClass: GetCommunityMembersUseCase,
       }
     );
 

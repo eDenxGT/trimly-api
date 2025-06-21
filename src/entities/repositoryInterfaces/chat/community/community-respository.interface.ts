@@ -3,6 +3,9 @@ import { ICommunityChatRoomEntity } from "../../../models/chat/community-chat-ro
 
 export interface ICommunityRepository
   extends IBaseRepository<ICommunityChatRoomEntity> {
+  findCommunityMembersByCommunityId(
+    communityId: string
+  ): Promise<{ userId: string; name: string; avatar: string }[]>;
   findAllCommunitiesForListing({
     filter,
     search,

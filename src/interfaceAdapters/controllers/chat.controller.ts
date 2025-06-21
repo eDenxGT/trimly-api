@@ -20,9 +20,8 @@ import { IDeleteCommunityUseCase } from "../../entities/useCaseInterfaces/chat/c
 import { IGetAllCommunitiesForBarberUseCase } from "../../entities/useCaseInterfaces/chat/community/get-all-communities-for-barber-usecase.interface";
 import { IBarberJoinCommunityUseCase } from "../../entities/useCaseInterfaces/chat/community/barber-join-community-usecase.interface";
 import { IGetAllCommunityChatsByUserUseCase } from "../../entities/useCaseInterfaces/chat/community/get-all-community-chats-by-user-usecase.interface";
-import {
-  IGetCommunityChatUseCase,
-} from "../../entities/useCaseInterfaces/chat/community/get-community-chat-usecase.interface";
+import { IGetCommunityChatUseCase } from "../../entities/useCaseInterfaces/chat/community/get-community-chat-usecase.interface";
+import { IGetCommunityMembersUseCase } from "../../entities/useCaseInterfaces/chat/community/get-community-members-usecase.interface";
 
 @injectable()
 export class ChatController implements IChatController {
@@ -52,7 +51,9 @@ export class ChatController implements IChatController {
     @inject("IGetAllCommunityChatsByUserUseCase")
     private _getAllCommunityChatsByUserUseCase: IGetAllCommunityChatsByUserUseCase,
     @inject("IGetCommunityChatUseCase")
-    private _getCommunityChatUseCase: IGetCommunityChatUseCase
+    private _getCommunityChatUseCase: IGetCommunityChatUseCase,
+    @inject("IGetCommunityMembersUseCase")
+    private _getCommunityMembersUseCase: IGetCommunityMembersUseCase
   ) {}
 
   //* ─────────────────────────────────────────────────────────────
@@ -402,6 +403,34 @@ export class ChatController implements IChatController {
       res.status(HTTP_STATUS.OK).json({
         success: true,
         chats: communityChats,
+      });
+    } catch (error) {
+      handleErrorResponse(req, res, error);
+    }
+  }
+
+  //* ─────────────────────────────────────────────────────────────
+  //*            🛠️  Get Community Members By Community Id
+  //* ─────────────────────────────────────────────────────────────
+  async getCommunityMembers(req: Request, res: Response) {
+    try {
+      const { communityId } = req.params;
+
+      if (!communityId) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json({
+          success: false,
+          message: ERROR_MESSAGES.MISSING_PARAMETERS,
+        });
+        return;
+      }
+
+      const communityMembers = await this._getCommunityMembersUseCase.execute(
+        communityId
+      );
+
+      res.status(HTTP_STATUS.OK).json({
+        success: true,
+        members: communityMembers,
       });
     } catch (error) {
       handleErrorResponse(req, res, error);

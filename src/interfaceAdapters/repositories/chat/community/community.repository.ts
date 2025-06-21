@@ -18,6 +18,40 @@ export class CommunityRepository
     super(CommunityModel);
   }
 
+  async findCommunityMembersByCommunityId(
+    communityId: string
+  ): Promise<{ userId: string; name: string; avatar: string }[]> {
+    return CommunityModel.aggregate([
+      {
+        $match: {
+          communityId,
+        },
+      },
+      {
+        $lookup: {
+          from: "barbers",
+          localField: "members",
+          foreignField: "userId",
+          as: "membersData",
+        },
+      },
+      {
+        $unwind: {
+          path: "$membersData",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          userId: "$membersData.userId",
+          shopName: "$membersData.shopName",
+          avatar: "$membersData.avatar",
+        },
+      },
+    ]);
+  }
+
   async findAllCommunitiesForListing({
     filter,
     userId,
