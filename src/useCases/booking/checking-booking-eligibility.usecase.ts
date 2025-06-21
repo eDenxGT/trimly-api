@@ -1,3 +1,4 @@
+import { parse, isValid, format } from "date-fns";
 import { inject, injectable } from "tsyringe";
 import { ICheckBookingEligibilityUseCase } from "../../entities/useCaseInterfaces/booking/checking-booking-eligibility-usecase.interface";
 import { CustomError } from "../../entities/utils/custom.error";
@@ -36,11 +37,10 @@ export class CheckBookingEligibilityUseCase
     startTime: string;
     total: number;
   }): Promise<{ bookingDateTime: Date }> {
-    const bookingDateTime = new Date(new Date(date).setUTCHours(0, 0, 0, 0));
     // const bookingDateTime = getExactUTC(date);
     // const bookingDateTime = getBookingDateTimeUTC(date, startTime);
-
-    if (bookingDateTime.getTime() <= Date.now()) {
+    const bookingDateTime = new Date(new Date(date).setUTCHours(0, 0, 0, 0));
+    if (parse(startTime, "hh:mm a", new Date()).getTime() <= new Date().getTime()) {
       throw new CustomError(
         ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE,
         HTTP_STATUS.BAD_REQUEST
@@ -59,7 +59,7 @@ export class CheckBookingEligibilityUseCase
       bookedTimeSlots: { $in: bookedTimeSlots },
       status: { $in: ["confirmed", "pending"] },
     });
- 
+
     if (existingBooking) {
       throw new CustomError(
         ERROR_MESSAGES.BOOKING_EXISTS,
@@ -81,10 +81,10 @@ export class CheckBookingEligibilityUseCase
     }
 
     const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
+    startOfDay.setUTCHours(0, 0, 0, 0);
 
     const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
+    endOfDay.setUTCHours(23, 59, 59, 999);
 
     const bookings = await this._bookingRepository.find({
       clientId,
