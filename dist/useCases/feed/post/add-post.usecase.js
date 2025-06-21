@@ -24,12 +24,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddPostUseCase = void 0;
 const tsyringe_1 = require("tsyringe");
 const unique_uuid_helper_1 = require("../../../shared/utils/unique-uuid.helper");
+const custom_error_1 = require("../../../entities/utils/custom.error");
+const constants_1 = require("../../../shared/constants");
 let AddPostUseCase = class AddPostUseCase {
-    constructor(_postRepository) {
+    constructor(_postRepository, _barberRepository) {
         this._postRepository = _postRepository;
+        this._barberRepository = _barberRepository;
     }
     execute(userId, caption, description, image) {
         return __awaiter(this, void 0, void 0, function* () {
+            const barberActive = yield this._barberRepository.findOne({ status: "active", userId: userId });
+            if (!barberActive) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.ACCOUNT_UNDER_VERIFICATION, constants_1.HTTP_STATUS.NOT_FOUND);
+            }
             yield this._postRepository.save({
                 postId: (0, unique_uuid_helper_1.generateUniqueId)("post"),
                 barberId: userId,
@@ -45,5 +52,6 @@ exports.AddPostUseCase = AddPostUseCase;
 exports.AddPostUseCase = AddPostUseCase = __decorate([
     (0, tsyringe_1.injectable)(),
     __param(0, (0, tsyringe_1.inject)("IPostRepository")),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, tsyringe_1.inject)("IBarberRepository")),
+    __metadata("design:paramtypes", [Object, Object])
 ], AddPostUseCase);

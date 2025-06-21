@@ -9,65 +9,65 @@ import { IReadDirectMessageUseCase } from "../../../entities/useCaseInterfaces/c
 
 @injectable()
 export class DirectChatSocketHandler implements IDirectChatSocketHandler {
-  private _socket!: Socket;
-  private _io!: Server;
-  private _socketUserStore = SocketUserStore.getInstance();
+   private _socket!: Socket;
+   private _io!: Server;
+   private _socketUserStore = SocketUserStore.getInstance();
 
-  constructor(
-    @inject("ISendDirectMessageUseCase")
-    private _sendDirectMessageUseCase: ISendDirectMessageUseCase,
-    @inject("IReadDirectMessageUseCase")
-    private _readDirectMessageUseCase: IReadDirectMessageUseCase
-  ) {}
+   constructor(
+      @inject("ISendDirectMessageUseCase")
+      private _sendDirectMessageUseCase: ISendDirectMessageUseCase,
+      @inject("IReadDirectMessageUseCase")
+      private _readDirectMessageUseCase: IReadDirectMessageUseCase
+   ) {}
 
-  setSocket(socket: Socket, io: Server) {
-    this._socket = socket;
-    this._io = io;
-  }
+   setSocket(socket: Socket, io: Server) {
+      this._socket = socket;
+      this._io = io;
+   }
 
-  handleSendMessage = async (data: any) => {
-    try {
-      socketLogger.info("Message sent", {
-        socketId: this._socket.id,
-        userId: this._socket.data.userId,
-      });
+   handleSendMessage = async (data: any) => {
+      try {
+         socketLogger.info("Message sent", {
+            socketId: this._socket.id,
+            userId: this._socket.data.userId,
+         });
 
-      const receiverSocketId = this._socketUserStore.getSocketId(
-        data.receiverId
-      );
+         const receiverSocketId = this._socketUserStore.getSocketId(
+            data.receiverId
+         );
 
-      const result = await this._sendDirectMessageUseCase.execute(data);
+         const result = await this._sendDirectMessageUseCase.execute(data);
 
-      if (receiverSocketId) {
-        this._io
-          .to(receiverSocketId)
-          .emit(DIRECT_CHAT_EVENTS.RECEIVE_MESSAGE, result);
+         if (receiverSocketId) {
+            this._io
+               .to(receiverSocketId)
+               .emit(DIRECT_CHAT_EVENTS.RECEIVE_MESSAGE, result);
+         }
+
+         // this._socket.emit(DIRECT_CHAT_EVENTS.RECEIVE_MESSAGE, result);
+      } catch (err: any) {
+         this._socket.emit("error", { message: err.message });
       }
+   };
 
-      // this._socket.emit(DIRECT_CHAT_EVENTS.RECEIVE_MESSAGE, result);
-    } catch (err: any) {
-      this._socket.emit("error", { message: err.message });
-    }
-  };
+   handleReadMessage = async (data: any) => {
+      try {
+         const userId = this._socket.data.userId;
+         socketLogger.info("Message read", {
+            socketId: this._socket.id,
+            userId,
+         });
 
-  handleReadMessage = async (data: any) => {
-    try {
-      const userId = this._socket.data.userId;
-      socketLogger.info("Message read", {
-        socketId: this._socket.id,
-        userId,
-      });
+         const chatRoomId = data.chatRoomId;
 
-      const chatRoomId = data.chatRoomId;
+         await this._readDirectMessageUseCase.execute({
+            chatRoomId,
+            userId,
+         });
 
-      await this._readDirectMessageUseCase.execute({
-        chatRoomId,
-        userId,
-      });
-
-      this._socket.emit(DIRECT_CHAT_EVENTS.MARK_AS_READ, chatRoomId);
-    } catch (err: any) {
-      this._socket.emit("error", { message: err.message });
-    }
-  };
+         this._socket.emit(DIRECT_CHAT_EVENTS.MARK_AS_READ, chatRoomId);
+      } catch (err: any) {
+         this._socket.emit("error", { message: err.message });
+      }
+   };
 }

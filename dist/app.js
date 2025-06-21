@@ -1,5 +1,5 @@
 "use strict";
-//* ====== Node module-alias Imports ( to import using @/ ) ====== *//
+//* ====== Node module-alias Imports (to import using @/ ) ====== *//
 // import "module-alias/register";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };

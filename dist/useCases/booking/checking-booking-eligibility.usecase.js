@@ -22,6 +22,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CheckBookingEligibilityUseCase = void 0;
+const date_fns_1 = require("date-fns");
 const tsyringe_1 = require("tsyringe");
 const custom_error_1 = require("../../entities/utils/custom.error");
 const constants_1 = require("../../shared/constants");
@@ -31,10 +32,10 @@ let CheckBookingEligibilityUseCase = class CheckBookingEligibilityUseCase {
     }
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
-            const bookingDateTime = new Date(new Date(date).setUTCHours(0, 0, 0, 0));
             // const bookingDateTime = getExactUTC(date);
             // const bookingDateTime = getBookingDateTimeUTC(date, startTime);
-            if (bookingDateTime.getTime() <= Date.now()) {
+            const bookingDateTime = new Date(new Date(date).setUTCHours(0, 0, 0, 0));
+            if ((0, date_fns_1.parse)(startTime, "hh:mm a", new Date()).getTime() <= new Date().getTime()) {
                 throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, constants_1.HTTP_STATUS.BAD_REQUEST);
             }
             const startOfDayOfBookingDate = new Date(date);
@@ -61,9 +62,9 @@ let CheckBookingEligibilityUseCase = class CheckBookingEligibilityUseCase {
                 // throw new CustomError(ERROR_MESSAGES.MORE_THAN_5_CANCELLED_BOOKING, HTTP_STATUS.BAD_REQUEST);
             }
             const startOfDay = new Date();
-            startOfDay.setHours(0, 0, 0, 0);
+            startOfDay.setUTCHours(0, 0, 0, 0);
             const endOfDay = new Date();
-            endOfDay.setHours(23, 59, 59, 999);
+            endOfDay.setUTCHours(23, 59, 59, 999);
             const bookings = yield this._bookingRepository.find({
                 clientId,
                 shopId,

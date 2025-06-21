@@ -26,8 +26,9 @@ const tsyringe_1 = require("tsyringe");
 const custom_error_1 = require("../../../entities/utils/custom.error");
 const constants_1 = require("../../../shared/constants");
 let BarberJoinCommunityUseCase = class BarberJoinCommunityUseCase {
-    constructor(_communityRepository) {
+    constructor(_communityRepository, _barberRepository) {
         this._communityRepository = _communityRepository;
+        this._barberRepository = _barberRepository;
     }
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ communityId, userId, }) {
@@ -37,6 +38,10 @@ let BarberJoinCommunityUseCase = class BarberJoinCommunityUseCase {
             });
             if (!community) {
                 throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.COMMUNITY_NOT_FOUND, constants_1.HTTP_STATUS.NOT_FOUND);
+            }
+            const barberIsActive = yield this._barberRepository.findOne({ status: "active", userId });
+            if (!barberIsActive) {
+                throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.ACCOUNT_UNDER_VERIFICATION, constants_1.HTTP_STATUS.BAD_REQUEST);
             }
             if (community.members.includes(userId)) {
                 throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.ALREADY_JOINED_IN_COMMUNITY, constants_1.HTTP_STATUS.BAD_REQUEST);
@@ -53,5 +58,6 @@ exports.BarberJoinCommunityUseCase = BarberJoinCommunityUseCase;
 exports.BarberJoinCommunityUseCase = BarberJoinCommunityUseCase = __decorate([
     (0, tsyringe_1.injectable)(),
     __param(0, (0, tsyringe_1.inject)("ICommunityRepository")),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, tsyringe_1.inject)("IBarberRepository")),
+    __metadata("design:paramtypes", [Object, Object])
 ], BarberJoinCommunityUseCase);
