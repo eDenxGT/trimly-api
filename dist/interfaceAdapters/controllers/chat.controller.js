@@ -26,7 +26,7 @@ const tsyringe_1 = require("tsyringe");
 const error_handler_1 = require("../../shared/utils/error.handler");
 const constants_1 = require("../../shared/constants");
 let ChatController = class ChatController {
-    constructor(_getChatByUserUseCase, _getAllChatsByUserUseCase, _getChatByChatIdUseCase, _createCommunityUseCase, _updateCommunityStatusUseCase, _deleteCommunityUseCase, _editCommunityUseCase, _getAllCommunitiesForAdminUseCase, _barberJoinCommunityUseCase, _getCommunityForEditUseCase, _getAllCommunitiesForBarberUseCase, _getAllCommunityChatsByUserUseCase, _getCommunityChatUseCase) {
+    constructor(_getChatByUserUseCase, _getAllChatsByUserUseCase, _getChatByChatIdUseCase, _createCommunityUseCase, _updateCommunityStatusUseCase, _deleteCommunityUseCase, _editCommunityUseCase, _getAllCommunitiesForAdminUseCase, _barberJoinCommunityUseCase, _getCommunityForEditUseCase, _getAllCommunitiesForBarberUseCase, _getAllCommunityChatsByUserUseCase, _getCommunityChatUseCase, _getCommunityMembersUseCase, _removeCommunityMemberUseCase) {
         this._getChatByUserUseCase = _getChatByUserUseCase;
         this._getAllChatsByUserUseCase = _getAllChatsByUserUseCase;
         this._getChatByChatIdUseCase = _getChatByChatIdUseCase;
@@ -40,6 +40,8 @@ let ChatController = class ChatController {
         this._getAllCommunitiesForBarberUseCase = _getAllCommunitiesForBarberUseCase;
         this._getAllCommunityChatsByUserUseCase = _getAllCommunityChatsByUserUseCase;
         this._getCommunityChatUseCase = _getCommunityChatUseCase;
+        this._getCommunityMembersUseCase = _getCommunityMembersUseCase;
+        this._removeCommunityMemberUseCase = _removeCommunityMemberUseCase;
     }
     //* ─────────────────────────────────────────────────────────────
     //*                🛠️  Get Chat By Id
@@ -364,6 +366,56 @@ let ChatController = class ChatController {
         });
     }
     //* ─────────────────────────────────────────────────────────────
+    //*            🛠️  Get Community Members By Community Id
+    //* ─────────────────────────────────────────────────────────────
+    getCommunityMembers(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { communityId } = req.params;
+                if (!communityId) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                const communityMembers = yield this._getCommunityMembersUseCase.execute(communityId);
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    members: communityMembers,
+                });
+            }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
+    }
+    //* ─────────────────────────────────────────────────────────────
+    //*            🛠️  Remove Community Member
+    //* ─────────────────────────────────────────────────────────────
+    removeCommunityMember(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { communityId, userId } = req.params;
+                if (!communityId || !userId) {
+                    res.status(constants_1.HTTP_STATUS.BAD_REQUEST).json({
+                        success: false,
+                        message: constants_1.ERROR_MESSAGES.MISSING_PARAMETERS,
+                    });
+                    return;
+                }
+                yield this._removeCommunityMemberUseCase.execute(communityId, userId);
+                res.status(constants_1.HTTP_STATUS.OK).json({
+                    success: true,
+                    message: constants_1.SUCCESS_MESSAGES.REMOVE_SUCCESS,
+                });
+            }
+            catch (error) {
+                (0, error_handler_1.handleErrorResponse)(req, res, error);
+            }
+        });
+    }
+    //* ─────────────────────────────────────────────────────────────
     //*            🛠️  Get Community Chat By Chat Id For Barber
     //* ─────────────────────────────────────────────────────────────
     getCommunityChatByChatIdForBarber(req, res) {
@@ -409,5 +461,7 @@ exports.ChatController = ChatController = __decorate([
     __param(10, (0, tsyringe_1.inject)("IGetAllCommunitiesForBarberUseCase")),
     __param(11, (0, tsyringe_1.inject)("IGetAllCommunityChatsByUserUseCase")),
     __param(12, (0, tsyringe_1.inject)("IGetCommunityChatUseCase")),
-    __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
+    __param(13, (0, tsyringe_1.inject)("IGetCommunityMembersUseCase")),
+    __param(14, (0, tsyringe_1.inject)("IRemoveCommunityMemberUseCase")),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
 ], ChatController);

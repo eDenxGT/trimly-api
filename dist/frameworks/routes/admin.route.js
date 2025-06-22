@@ -95,6 +95,12 @@ class AdminRoutes extends base_route_1.BaseRoute {
             .post(auth_middleware_1.verifyAuth, (0, auth_middleware_1.authorizeRole)(["admin"]), (req, res) => {
             resolver_1.chatController.createCommunity(req, res);
         });
+        this.router.delete("/admin/community/:communityId/members/:userId", auth_middleware_1.verifyAuth, (0, auth_middleware_1.authorizeRole)(["admin"]), (req, res) => {
+            resolver_1.chatController.removeCommunityMember(req, res);
+        });
+        this.router.get("/admin/community/:communityId/members", auth_middleware_1.verifyAuth, (0, auth_middleware_1.authorizeRole)(["admin"]), (req, res) => {
+            resolver_1.chatController.getCommunityMembers(req, res);
+        });
         this.router.get("/admin/communities", auth_middleware_1.verifyAuth, (0, auth_middleware_1.authorizeRole)(["admin"]), (req, res) => {
             resolver_1.chatController.getAllCommunitiesForAdmin(req, res);
         });

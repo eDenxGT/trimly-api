@@ -27,6 +27,39 @@ let CommunityRepository = class CommunityRepository extends base_repository_1.Ba
     constructor() {
         super(community_chat_room_model_1.CommunityModel);
     }
+    findCommunityMembersByCommunityId(communityId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return community_chat_room_model_1.CommunityModel.aggregate([
+                {
+                    $match: {
+                        communityId,
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "barbers",
+                        localField: "members",
+                        foreignField: "userId",
+                        as: "membersData",
+                    },
+                },
+                {
+                    $unwind: {
+                        path: "$membersData",
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        userId: "$membersData.userId",
+                        shopName: "$membersData.shopName",
+                        avatar: "$membersData.avatar",
+                    },
+                },
+            ]);
+        });
+    }
     findAllCommunitiesForListing(_a) {
         return __awaiter(this, arguments, void 0, function* ({ filter, userId, search, page, limit, }) {
             const skip = (page - 1) * limit;

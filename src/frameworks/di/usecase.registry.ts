@@ -229,6 +229,8 @@ import { ICheckBookingEligibilityUseCase } from "../../entities/useCaseInterface
 import { CheckBookingEligibilityUseCase } from "../../useCases/booking/checking-booking-eligibility.usecase";
 import { IGetCommunityMembersUseCase } from "../../entities/useCaseInterfaces/chat/community/get-community-members-usecase.interface";
 import { GetCommunityMembersUseCase } from "../../useCases/chat/community/get-community-members.usecase";
+import { IRemoveCommunityMemberUseCase } from "../../entities/useCaseInterfaces/chat/community/remove-community-member-usecase.interface";
+import { RemoveCommunityMemberUseCase } from "../../useCases/chat/community/remove-community-member.usecase";
 
 export class UseCaseRegistry {
   static registerUseCases(): void {
@@ -754,6 +756,13 @@ export class UseCaseRegistry {
       "IGetCommunityMembersUseCase",
       {
         useClass: GetCommunityMembersUseCase,
+      }
+    );
+
+    container.register<IRemoveCommunityMemberUseCase>(
+      "IRemoveCommunityMemberUseCase",
+      {
+        useClass: RemoveCommunityMemberUseCase,
       }
     );
 

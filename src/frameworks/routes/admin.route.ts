@@ -200,6 +200,15 @@ export class AdminRoutes extends BaseRoute {
         }
       );
 
+    this.router.delete(
+      "/admin/community/:communityId/members/:userId",
+      verifyAuth,
+      authorizeRole(["admin"]),
+      (req: Request, res: Response) => {
+        chatController.removeCommunityMember(req, res);
+      }
+    );
+
     this.router.get(
       "/admin/community/:communityId/members",
       verifyAuth,

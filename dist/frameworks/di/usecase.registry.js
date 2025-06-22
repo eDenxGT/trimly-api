@@ -114,6 +114,8 @@ const send_notification_by_user_usecase_1 = require("../../useCases/notification
 const mark_single_notification_as_read_by_user_usecase_1 = require("../../useCases/notification/mark-single-notification-as-read-by-user.usecase");
 const mark_all_notifications_as_read_by_user_usecase_1 = require("../../useCases/notification/mark-all-notifications-as-read-by-user.usecase");
 const checking_booking_eligibility_usecase_1 = require("../../useCases/booking/checking-booking-eligibility.usecase");
+const get_community_members_usecase_1 = require("../../useCases/chat/community/get-community-members.usecase");
+const remove_community_member_usecase_1 = require("../../useCases/chat/community/remove-community-member.usecase");
 class UseCaseRegistry {
     static registerUseCases() {
         //* ====== Register UseCases ====== *//
@@ -411,6 +413,12 @@ class UseCaseRegistry {
         });
         tsyringe_1.container.register("ICheckBookingEligibilityUseCase", {
             useClass: checking_booking_eligibility_usecase_1.CheckBookingEligibilityUseCase,
+        });
+        tsyringe_1.container.register("IGetCommunityMembersUseCase", {
+            useClass: get_community_members_usecase_1.GetCommunityMembersUseCase,
+        });
+        tsyringe_1.container.register("IRemoveCommunityMemberUseCase", {
+            useClass: remove_community_member_usecase_1.RemoveCommunityMemberUseCase,
         });
         //* ====== Register Bcrypts ====== *//
         tsyringe_1.container.register("IPasswordBcrypt", {

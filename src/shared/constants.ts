@@ -45,6 +45,7 @@ export const SUCCESS_MESSAGES = {
   REGISTRATION_SUCCESS: "Registration completed",
   OTP_SEND_SUCCESS: "OTP sent",
   OTP_VERIFIED: "OTP verified",
+  REMOVE_SUCCESS: "Removed Successfully",
   COMMUNITY_CREATED: "Community created successfully",
   LOGOUT_SUCCESS: "Logged out",
   REVIEW_ADDED: "Review added successfully",

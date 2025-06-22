@@ -22,6 +22,7 @@ import { IBarberJoinCommunityUseCase } from "../../entities/useCaseInterfaces/ch
 import { IGetAllCommunityChatsByUserUseCase } from "../../entities/useCaseInterfaces/chat/community/get-all-community-chats-by-user-usecase.interface";
 import { IGetCommunityChatUseCase } from "../../entities/useCaseInterfaces/chat/community/get-community-chat-usecase.interface";
 import { IGetCommunityMembersUseCase } from "../../entities/useCaseInterfaces/chat/community/get-community-members-usecase.interface";
+import { IRemoveCommunityMemberUseCase } from "../../entities/useCaseInterfaces/chat/community/remove-community-member-usecase.interface";
 
 @injectable()
 export class ChatController implements IChatController {
@@ -53,7 +54,9 @@ export class ChatController implements IChatController {
     @inject("IGetCommunityChatUseCase")
     private _getCommunityChatUseCase: IGetCommunityChatUseCase,
     @inject("IGetCommunityMembersUseCase")
-    private _getCommunityMembersUseCase: IGetCommunityMembersUseCase
+    private _getCommunityMembersUseCase: IGetCommunityMembersUseCase,
+    @inject("IRemoveCommunityMemberUseCase")
+    private _removeCommunityMemberUseCase: IRemoveCommunityMemberUseCase
   ) {}
 
   //* ─────────────────────────────────────────────────────────────
@@ -431,6 +434,32 @@ export class ChatController implements IChatController {
       res.status(HTTP_STATUS.OK).json({
         success: true,
         members: communityMembers,
+      });
+    } catch (error) {
+      handleErrorResponse(req, res, error);
+    }
+  }
+
+  //* ─────────────────────────────────────────────────────────────
+  //*            🛠️  Remove Community Member
+  //* ─────────────────────────────────────────────────────────────
+  async removeCommunityMember(req: Request, res: Response) {
+    try {
+      const { communityId, userId } = req.params;
+
+      if (!communityId || !userId) {
+        res.status(HTTP_STATUS.BAD_REQUEST).json({
+          success: false,
+          message: ERROR_MESSAGES.MISSING_PARAMETERS,
+        });
+        return;
+      }
+
+      await this._removeCommunityMemberUseCase.execute(communityId, userId);
+
+      res.status(HTTP_STATUS.OK).json({
+        success: true,
+        message: SUCCESS_MESSAGES.REMOVE_SUCCESS,
       });
     } catch (error) {
       handleErrorResponse(req, res, error);
