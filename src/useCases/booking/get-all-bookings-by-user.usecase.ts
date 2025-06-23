@@ -2,9 +2,6 @@ import { inject, injectable } from "tsyringe";
 import { IGetAllBookingsByUserUseCase } from "../../entities/useCaseInterfaces/booking/get-all-bookings-by-user-usecase.interface";
 import { IBookingEntity } from "../../entities/models/booking.entity";
 import { IBookingRepository } from "../../entities/repositoryInterfaces/booking/booking-repository.interface";
-import { IBarberRepository } from "../../entities/repositoryInterfaces/users/barber-repository.interface";
-import { IServiceRepository } from "../../entities/repositoryInterfaces/service/service-repository.interface";
-import { IClientRepository } from "../../entities/repositoryInterfaces/users/client-repository.interface";
 
 @injectable()
 export class GetAllBookingsByUserUseCase

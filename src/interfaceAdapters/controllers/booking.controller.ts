@@ -33,6 +33,10 @@ export class BookingController implements IBookingController {
     @inject("IBookWithWalletUseCase")
     private _bookWithWalletUseCase: IBookWithWalletUseCase
   ) {}
+
+  //* ─────────────────────────────────────────────────────────────
+  //*                    🛠️ Get All Bookings
+  //* ─────────────────────────────────────────────────────────────
   async getAllBookings(req: Request, res: Response): Promise<void> {
     try {
       const { shopId, type } = req.query;

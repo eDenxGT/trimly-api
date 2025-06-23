@@ -36,6 +36,9 @@ let BookingController = class BookingController {
         this._completeBookingUseCase = _completeBookingUseCase;
         this._bookWithWalletUseCase = _bookWithWalletUseCase;
     }
+    //* ─────────────────────────────────────────────────────────────
+    //*                    🛠️ Get All Bookings
+    //* ─────────────────────────────────────────────────────────────
     getAllBookings(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

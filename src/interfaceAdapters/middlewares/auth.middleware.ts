@@ -59,14 +59,14 @@ export const verifyAuth = async (
 		next();
 	} catch (error: any) {
 		if (error.name === "TokenExpiredError") {
-			console.log(error.name);
+			console.error(error.name);
 			res.status(HTTP_STATUS.UNAUTHORIZED).json({
 				message: ERROR_MESSAGES.TOKEN_EXPIRED,
 			});
 			return;
 		}
 
-		console.log("Invalid token response sent");
+		console.error("Invalid token response sent");
 		res.status(HTTP_STATUS.UNAUTHORIZED).json({
 			message: ERROR_MESSAGES.INVALID_TOKEN,
 		});

@@ -46,13 +46,13 @@ const verifyAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
     catch (error) {
         if (error.name === "TokenExpiredError") {
-            console.log(error.name);
+            console.error(error.name);
             res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
                 message: constants_1.ERROR_MESSAGES.TOKEN_EXPIRED,
             });
             return;
         }
-        console.log("Invalid token response sent");
+        console.error("Invalid token response sent");
         res.status(constants_1.HTTP_STATUS.UNAUTHORIZED).json({
             message: constants_1.ERROR_MESSAGES.INVALID_TOKEN,
         });
