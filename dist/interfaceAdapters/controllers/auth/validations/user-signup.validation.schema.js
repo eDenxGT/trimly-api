@@ -27,6 +27,9 @@ const barberSchema = zod_1.z.object({
         name: zod_1.z.string(),
         displayName: zod_1.z.string(),
         zipCode: zod_1.z.string(),
+    }),
+    geoLocation: zod_1.z.object({
+        type: zod_1.z.string(),
         coordinates: zod_1.z
             .tuple([
             zod_1.z.number().min(-180).max(180), // longitude
