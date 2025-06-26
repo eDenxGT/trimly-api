@@ -39,10 +39,11 @@ export class CheckBookingEligibilityUseCase
   }): Promise<{ bookingDateTime: Date }> {
     // const bookingDateTime = getExactUTC(date);
     // const bookingDateTime = getBookingDateTimeUTC(date, startTime);
-    const bookingDateTime = new Date(new Date(date).setUTCHours(0, 0, 0, 0));
-    if (
-      parse(startTime, "hh:mm a", new Date()).getTime() <= new Date().getTime()
-    ) {
+    const bookingDateTime = getExactUTC(date, startTime);
+    console.log("Booking DateTime:", bookingDateTime);
+    console.log("Current Date:", new Date());
+    
+    if (bookingDateTime.getTime() <= new Date().getTime()) {
       throw new CustomError(
         ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE,
         HTTP_STATUS.BAD_REQUEST

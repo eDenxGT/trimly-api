@@ -27,17 +27,25 @@ export function getBookingDateTimeUTC(
   return bookingDateTimeUTC;
 }
 
-export function getExactUTC(dateInput: string | Date): Date {
-  const localDate = new Date(dateInput);
-  return new Date(
-    Date.UTC(
-      localDate.getFullYear(),
-      localDate.getMonth(),
-      localDate.getDate(),
-      localDate.getHours(),
-      localDate.getMinutes(),
-      localDate.getSeconds(),
-      localDate.getMilliseconds()
-    )
-  );
+export function getExactUTC(dateStr: string, timeStr: string): Date {
+  const localDateObj = new Date(dateStr);
+  const year = localDateObj.getFullYear();
+  const month = String(localDateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(localDateObj.getDate()).padStart(2, "0");
+
+  // console.log("Date Str:", dateStr);
+  // console.log("Time Str:", timeStr);
+
+  const localDateStr = `${year}-${month}-${day}`;
+  // console.log("Local Date Str:", localDateStr);
+  const combined = `${localDateStr} ${timeStr}`;
+  const localDate = parse(combined, "yyyy-MM-dd hh:mm a", new Date());
+  // console.log("Local Date:", localDate);
+  if (isNaN(localDate.getTime())) {
+    throw new Error("Invalid combined datetime: " + combined);
+  }
+
+  // const utcDate = new Date(localDate.getTime() - 5.5 * 60 * 60 * 1000);
+// console.log("UTC Date:", utcDate);
+  return localDate;
 }

@@ -14,7 +14,22 @@ function getBookingDateTimeUTC(date, startTime, timeZone = "Asia/Kolkata") {
     //   console.log("Formatted:", format(bookingDateTimeUTC, "yyyy-MM-dd hh:mm a"));
     return bookingDateTimeUTC;
 }
-function getExactUTC(dateInput) {
-    const localDate = new Date(dateInput);
-    return new Date(Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), localDate.getHours(), localDate.getMinutes(), localDate.getSeconds(), localDate.getMilliseconds()));
+function getExactUTC(dateStr, timeStr) {
+    const localDateObj = new Date(dateStr);
+    const year = localDateObj.getFullYear();
+    const month = String(localDateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(localDateObj.getDate()).padStart(2, "0");
+    // console.log("Date Str:", dateStr);
+    // console.log("Time Str:", timeStr);
+    const localDateStr = `${year}-${month}-${day}`;
+    // console.log("Local Date Str:", localDateStr);
+    const combined = `${localDateStr} ${timeStr}`;
+    const localDate = (0, date_fns_1.parse)(combined, "yyyy-MM-dd hh:mm a", new Date());
+    // console.log("Local Date:", localDate);
+    if (isNaN(localDate.getTime())) {
+        throw new Error("Invalid combined datetime: " + combined);
+    }
+    // const utcDate = new Date(localDate.getTime() - 5.5 * 60 * 60 * 1000);
+    // console.log("UTC Date:", utcDate);
+    return localDate;
 }

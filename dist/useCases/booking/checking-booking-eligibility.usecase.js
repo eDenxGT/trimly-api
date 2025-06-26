@@ -22,10 +22,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CheckBookingEligibilityUseCase = void 0;
-const date_fns_1 = require("date-fns");
 const tsyringe_1 = require("tsyringe");
 const custom_error_1 = require("../../entities/utils/custom.error");
 const constants_1 = require("../../shared/constants");
+const get_booking_date_time_utc_helper_1 = require("../../shared/utils/get-booking-date-time-utc.helper");
 let CheckBookingEligibilityUseCase = class CheckBookingEligibilityUseCase {
     constructor(_bookingRepository) {
         this._bookingRepository = _bookingRepository;
@@ -34,8 +34,10 @@ let CheckBookingEligibilityUseCase = class CheckBookingEligibilityUseCase {
         return __awaiter(this, arguments, void 0, function* ({ bookedTimeSlots, clientId, date, duration, services, shopId, startTime, total, }) {
             // const bookingDateTime = getExactUTC(date);
             // const bookingDateTime = getBookingDateTimeUTC(date, startTime);
-            const bookingDateTime = new Date(new Date(date).setUTCHours(0, 0, 0, 0));
-            if ((0, date_fns_1.parse)(startTime, "hh:mm a", new Date()).getTime() <= new Date().getTime()) {
+            const bookingDateTime = (0, get_booking_date_time_utc_helper_1.getExactUTC)(date, startTime);
+            console.log("Booking DateTime:", bookingDateTime);
+            console.log("Current Date:", new Date());
+            if (bookingDateTime.getTime() <= new Date().getTime()) {
                 throw new custom_error_1.CustomError(constants_1.ERROR_MESSAGES.YOU_CAN_ONLY_BOOK_FOR_FUTURE, constants_1.HTTP_STATUS.BAD_REQUEST);
             }
             const startOfDayOfBookingDate = new Date(date);
